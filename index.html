@@ -19,34 +19,33 @@
         .sidebar.active { left: 0; }
         .sidebar a { display: block; padding: 15px; color: var(--text); text-decoration: none; font-weight: bold; border-bottom: 1px solid #ddd; }
 
+        /* বিসমিল্লাহ বার ফিক্সড */
         .bismillah-bar { background: var(--card); text-align: center; padding: 10px; font-size: 1.5rem; color: var(--green); font-weight: bold; border-bottom: 2px solid var(--green); }
+        
         header { background: linear-gradient(rgba(0,119,182,0.8), rgba(45,106,79,0.8)), url('https://i.ibb.co.com/GQh4Kgdb/image.jpg'); background-size: cover; background-position: center; color: white; text-align: center; padding: 60px 20px; }
         .logo { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; object-fit: cover; background: white; margin-bottom: 15px; }
 
         .container { max-width: 900px; margin: auto; padding: 20px; }
         .page-section { background: var(--card); padding: 25px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .hidden { display: none; }
 
-        .about-text p { margin-bottom: 15px; text-align: justify; line-height: 1.8; }
-        .highlight { color: var(--primary); font-weight: bold; }
-
-        .blog-card { border-left: 5px solid var(--primary); padding: 20px; background: rgba(0,0,0,0.02); border-radius: 8px; margin-bottom: 20px; text-align: justify; }
-        .gallery-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 15px; }
-        .cat-card { background: var(--primary); color: white; padding: 20px; text-align: center; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .blog-card { border-left: 5px solid var(--primary); padding: 20px; background: rgba(0,0,0,0.02); border-radius: 8px; margin-bottom: 20px; text-align: justify; transition: 0.3s; }
         
-        .social-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
-        .social-icons a { font-size: 22px; color: white; background: var(--primary); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; transition: 0.3s; }
-        .social-icons a:hover { transform: scale(1.2); background: var(--green); }
+        /* ১০টি দক্ষতা গ্রিড */
+        .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 15px; }
+        .exp-item { background: #fff; border: 2px solid var(--primary); color: var(--primary); padding: 15px; border-radius: 12px; text-align: center; font-weight: bold; transition: 0.3s; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+        .exp-item:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+
+        .p-btn { padding: 10px 15px; border: 1px solid #eee; background: #fff; color: var(--primary); border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; display: flex; align-items: center; gap: 5px; font-size: 14px; }
+        .p-btn.active, .p-btn:hover { background: var(--primary); color: white; }
+        .photo-display { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; padding: 5px; }
+        .p-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
+
+        .social-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; }
+        .s-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-size: 22px; transition: 0.3s; text-decoration: none; }
+        .fb { background: #1877F2; } .wa { background: #25D366; } .ig { background: #E4405F; } .tg { background: #0088cc; } .in { background: #0077b5; } .tw { background: #000000; } .tk { background: #010101; } .yt { background: #FF0000; }
 
         .btn-box { display: inline-block; padding: 12px 25px; background: var(--green); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; transition: 0.3s; }
-        .btn-box:hover { background: #1a4d36; }
-
-        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; }
-        #lightbox img { max-width: 90%; max-height: 75%; border: 3px solid white; border-radius: 5px; object-fit: contain;}
-        .lightbox-nav { margin-top: 20px; display: flex; gap: 20px; }
-        .nav-btn { background: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 5px; }
-
-        footer { text-align: center; padding: 40px; color: #777; font-size: 14px; background: var(--card); border-top: 1px solid #ddd; }
+        footer { text-align: center; padding: 30px; color: #fff; background: #1e1e1e; border-radius: 15px 15px 0 0; margin-top: 50px; }
     </style>
 </head>
 <body data-theme="light">
@@ -56,8 +55,8 @@
     <a href="#home" onclick="toggleMenu()">Home / হোম</a>
     <a href="#about" onclick="toggleMenu()">About / জীবনকথা</a>
     <a href="#blogs" onclick="toggleMenu()">Blogs / ব্লগ</a>
+    <a href="#skills" onclick="toggleMenu()">Skills / দক্ষতা</a>
     <a href="#gallery" onclick="toggleMenu()">Gallery / গ্যালারি</a>
-    <a href="#resources" onclick="toggleMenu()">Resources / ডাউনলোড</a>
     <a href="#contact" onclick="toggleMenu()">Contact / যোগাযোগ</a>
 </div>
 
@@ -77,218 +76,99 @@
 <div class="container">
     <div id="about" class="page-section">
         <h2 class="bn" style="color:var(--primary);">আমার জীবনকথা</h2>
-        <h2 class="en hidden" style="color:var(--primary);">My Biography</h2>
         <div class="bn about-text">
-            <p>আমি <span class="highlight">সালমান ফারসী</span>—বাংলাদেশেরই একজন নাগরিক, এবং শিক্ষার্থী, যিনি দ্বীনি শিক্ষা, সাধারণ শিক্ষা এবং বাস্তব জীবনের দক্ষতাকে একসাথে গড়ে তুলতে নিরলস চেষ্টা করে যাচ্ছি।</p>
-            <p>আমার শিক্ষাজীবনের শুরু আমাদের গ্রামের একটি মাদ্রাসা থেকে। পরবর্তীতে আমি নরসিংদী শহরের দারুল কোরআন রাহমানিয়া হাফিজিয়া মাদ্রাসায় ভর্তি হয়ে পবিত্র কোরআনের ২০ পারা হিফজ সম্পন্ন করি। এরপর ঢাকার মোহাম্মদপুরে অবস্থিত জামিয়া রাহমানিয়া আরাবিয়া কর্তৃক পরিচালিত দারুল আমিন আল ইসলামিয়া মাদ্রাসায় ভর্তি হয়ে আলহামদুলিল্লাহ সম্পূর্ণ কোরআন মাজীদ হিফজ সম্পন্ন করার সৌভাগ্য অর্জন করি।
-একই সাথে আমি সাধারণ শিক্ষার প্রতিও সমান গুরুত্ব দিয়েছি। নরসিংদীতে অবস্থানকালে আমাদের গ্রামের আলিয়া মাদ্রাসায় ভর্তি হয়ে জেনারেল শিক্ষার ধারাও চালিয়ে যাই। ছুটিতে বাড়িতে এলে নিয়মিত ক্লাসে অংশগ্রহণ করতাম। বর্তমানে আমি মাধ্যমিক (SSC 2027) পরীক্ষার প্রস্তুতি নিচ্ছি এবং ১০ম শ্রেণিতে অধ্যয়নরত আছি। ভবিষ্যতে দেশের সেবায় নিজেকে নিয়োজিত করার লক্ষ্য নিয়ে পড়াশোনা চালিয়ে যাচ্ছি।
-শুধু একাডেমিক শিক্ষাই নয়, বাস্তব জীবনের দক্ষতা অর্জনের দিকেও আমি সমান মনোযোগী। আমি বর্তমানে একটি কম্পিউটার ট্রেনিং সেন্টারে প্রশিক্ষণ নিচ্ছি, যেখানে মাইক্রোসফট ওয়ার্ড, এক্সেল, পাওয়ারপয়েন্ট, ফটোশপ, বাংলা ও ইংরেজি টাইপিংসহ বিভিন্ন আইটি দক্ষতা অর্জন করছি। এছাড়াও অনলাইন আবেদন, ডাটা এন্ট্রি, গ্রাফিক্স সংক্রান্ত কাজসহ বিভিন্ন বাস্তবমুখী কাজেও অভিজ্ঞতা অর্জন করেছি।
-আমার জীবনের একটি গুরুত্বপূর্ণ অধ্যায় হলো আনসার ও ভিডিপি প্রশিক্ষণ। আমি অস্ত্রসহ আনসার ভিডিপির প্রশিক্ষণ সফলভাবে সম্পন্ন করেছি, যেখানে শৃঙ্খলা, দায়িত্ববোধ, নেতৃত্ব এবং দেশপ্রেম সম্পর্কে গভীরভাবে শিক্ষা লাভ করি। প্রশিক্ষণ চলাকালে আনসার ব্যাটালিয়নের অভিজ্ঞ প্রশিক্ষকগণের পাশাপাশি বাংলাদেশ সেনাবাহিনী, নির্বাচন কমিশন এবং দুর্যোগ ব্যবস্থাপনা মন্ত্রণালয়ের সম্মানিত কর্মকর্তাদের কাছ থেকে বাস্তব জীবনের মূল্যবান জ্ঞান অর্জনের সুযোগ হয়েছে।
-বিশেষভাবে উল্লেখযোগ্য যে, আমি ত্রয়োদশ জাতীয় সংসদ নির্বাচনে একজন সেকশন কমান্ডার হিসেবে দায়িত্ব পালন করেছি। এই দায়িত্ব পালনের মাধ্যমে আমি নেতৃত্ব, সততা এবং দায়িত্বশীলতার বাস্তব অভিজ্ঞতা অর্জন করেছি, যা আমার ব্যক্তিত্ব গঠনে গুরুত্বপূর্ণ ভূমিকা রেখেছে।
-আমি বিশ্বাস করি—পরিশ্রম, সততা এবং আল্লাহর উপর ভরসা থাকলে জীবনের যেকোনো লক্ষ্য অর্জন সম্ভব। ভবিষ্যতে আমি দেশ ও মানুষের কল্যাণে কাজ করতে চাই, বিশেষ করে আইন-শৃঙ্খলা বাহিনীতে যোগ দিয়ে দেশের নিরাপত্তা রক্ষায় অবদান রাখতে আগ্রহী।
-✨ “আমার লক্ষ্য শুধু নিজের উন্নতি নয়, বরং সমাজ ও দেশের কল্যাণে নিজেকে উৎসর্গ করা।
-</p>
-        </div><div id="skills" class="page-section">
-    <h2 class="bn" style="color:var(--primary); border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px;">
-        <i class="fas fa-laptop-code"></i> দক্ষতা ও অভিজ্ঞতা
-    </h2>
-    <h2 class="en hidden" style="color:var(--primary); border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px;">
-        <i class="fas fa-laptop-code"></i> Skills & Experience
-    </h2>
-
-    <div class="skills-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 25px;">
-        
-        <div style="background: rgba(0, 119, 182, 0.05); padding: 20px; border-radius: 15px; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,119,182,0.1);">
-            <h3 style="color: var(--primary); font-size: 1.2rem; margin-top: 0;">
-                <span class="bn">কম্পিউটার ও আইটি ট্রেনিং:</span>
-                <span class="en hidden">Computer & IT Training:</span>
-            </h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px;">
-                <span class="skill-tag-blue">Ansar Training</span>
-                <span class="skill-tag-blue">Microsoft Word</span>
-                <span class="skill-tag-blue">Microsoft Excel</span>
-                <span class="skill-tag-blue">Microsoft Access</span>
-                <span class="skill-tag-blue">PowerPoint</span>
-                <span class="skill-tag-blue">Adobe Photoshop</span>
-                <span class="skill-tag-blue">Typing (BN/EN)</span>
-            </div>
+            <p>আমি <span class="highlight">সালমান ফারসী</span>—একজন হাফেজে কোরআন এবং বর্তমান ১০ম শ্রেণির শিক্ষার্থী। দ্বীনি শিক্ষা ও আধুনিক শিক্ষার সমন্বয়ে আমি দেশ ও দশের কল্যাণে কাজ করতে আগ্রহী।</p>
         </div>
-
-        <div style="background: rgba(45, 106, 79, 0.05); padding: 20px; border-radius: 15px; border: 2px solid var(--green); box-shadow: 0 4px 10px rgba(45,106,79,0.1);">
-            <h3 style="color: var(--green); font-size: 1.2rem; margin-top: 0;">
-                <span class="bn">অনলাইন সার্ভিস অভিজ্ঞতা:</span>
-                <span class="en hidden">Online Service Experience:</span>
-            </h3>
-            <ul style="padding-left: 20px; line-height: 1.8; font-size: 15px; color: var(--text); margin-top: 15px;">
-                <li><span class="bn">চাকরির আবেদন ও টিকেট বুকিং</span><span class="en hidden">Job Applications & Ticket Booking</span></li>
-                <li><span class="bn">এনআইডি (NID) কার্ড সংশোধন</span><span class="en hidden">NID Card Correction</span></li>
-                <li><span class="bn">জন্ম নিবন্ধন আবেদন ও সংশোধন</span><span class="en hidden">Birth Registration Application & Correction</span></li>
-                <li><span class="bn">ইন্টারনেট ব্রাউজিং ও ডাটা এন্ট্রি</span><span class="en hidden">Internet Browsing & Data Entry</span></li>
-            </ul>
-        </div>
-
-    </div>
-</div>
-
-<style>
-    .skill-tag-blue {
-        background: white;
-        border: 1px solid var(--primary);
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--primary);
-        transition: 0.3s;
-    }
-    .skill-tag-blue:hover {
-        background: var(--primary);
-        color: white;
-    }
-</style>
-
     </div>
 
     <div id="blogs" class="page-section">
-        <h2 class="bn"><i class="fas fa-pen-nib"></i> আমার ব্লগসমূহ</h2>
+        <h2 class="bn" style="color:var(--primary); text-align: center;"><i class="fas fa-pen-nib"></i> জীবন স্মৃতি ও ব্লগসমূহ</h2>
         <div class="blog-card bn">
             <h3>🌟 আমার জীবনের গল্প</h3>
-            <p>সংগ্রাম, ভালোবাসা ও স্বপ্নের পথচলা
-আমি সালমান ফারসী—একজন সাধারণ পরিবারের সন্তান, কিন্তু অসাধারণ কিছু স্বপ্ন নিয়ে পথচলা একজন মানুষ। আমার জীবনটা হয়তো বাইরে থেকে খুব সাধারণ মনে হতে পারে, কিন্তু এর ভেতরে লুকিয়ে আছে সংগ্রাম, ত্যাগ, ভালোবাসা, আর আল্লাহর অশেষ রহমতের গল্প।
-আমার শিক্ষাজীবনের শুরু আমাদের গ্রামের একটি ছোট্ট মাদ্রাসা থেকে। সেই ছোট্ট জায়গাটাতেই আমি প্রথম শিক্ষা পাই—শুধু অক্ষর নয়, বরং মানুষ হওয়ার শিক্ষা। ধীরে ধীরে সেই ছোট জায়গা থেকে আমার স্বপ্ন বড় হতে থাকে।
-পরবর্তীতে আমি নরসিংদী শহরের দারুল কোরআন রাহমানিয়া হাফিজিয়া মাদ্রাসায় ভর্তি হই। সেখান থেকেই শুরু হয় আমার জীবনের এক ভিন্ন অধ্যায়—ক্বওমী মাদ্রাসার জীবন।
-এই জীবনটা ছিল কষ্টের, কিন্তু সেই কষ্টের মাঝেই ছিল সবচেয়ে বেশি শান্তি। দেশের বিভিন্ন প্রান্ত থেকে আসা ছাত্ররা একসাথে থাকতাম—কেউ চট্টগ্রাম, কেউ সিলেট, কেউ রাজশাহী… কিন্তু কিছুদিনের মধ্যেই আমরা সবাই একে অপরের আপন হয়ে যেতাম।
-রক্তের সম্পর্ক না থাকলেও, হৃদয়ের সম্পর্ক তৈরি হয়ে যেত—একেবারে নিজের ভাইয়ের মতো।
-ভোরের আজান দিয়ে ঘুম ভাঙা…
-একসাথে নামাজ আদায় করা…
-কোরআন তিলাওয়াতের সুরে দিন শুরু হওয়া…
-ক্লাস, পড়াশোনা, হাসি-ঠাট্টা—সব মিলিয়ে একটা অন্যরকম জীবন।
-কখনো কখনো রাতের বেলা একা হলে বাড়ির কথা মনে পড়ত… মায়ের কথা মনে পড়ে চোখ ভিজে যেত…
-কিন্তু পাশে থাকা বন্ধুরা সেই কষ্টকে ভাগ করে নিত।
-সবচেয়ে কষ্টের মুহূর্ত ছিল বিদায়…
-যখন কেউ হিফজ শেষ করে চলে যেত, তখন মনে হতো নিজের একজন আপন মানুষকে হারিয়ে ফেললাম।
-হাসিমুখে বিদায় দিলেও, ভেতরে ভেতরে চোখের পানি থামানো যেত না।
-পরবর্তীতে ঢাকার মোহাম্মদপুরে জামিয়া রাহমানিয়া আরাবিয়া কর্তৃক পরিচালিত দারুল আমিন আল ইসলামিয়া মাদ্রাসায় ভর্তি হয়ে আলহামদুলিল্লাহ সম্পূর্ণ কোরআন মাজীদ হিফজ সম্পন্ন করি।
-এই অর্জন শুধু একটি সার্টিফিকেট নয়—এটি আমার জীবনের সবচেয়ে বড় নেয়ামত, সবচেয়ে বড় গর্ব।
-আমি কখনোই নিজেকে শুধু একটি লাইনের মধ্যে সীমাবদ্ধ রাখিনি।
-দ্বীনি শিক্ষার পাশাপাশি সাধারণ শিক্ষাকেও গুরুত্ব দিয়েছি।
-নরসিংদীতে পড়াশোনা করার সময় আমাদের গ্রামের আলিয়া মাদ্রাসায় ভর্তি হয়ে জেনারেল পড়াশোনা চালিয়ে যাই।
-ছুটিতে বাড়িতে এলেই ক্লাস করতাম—কষ্ট হলেও থেমে যাইনি।
-বর্তমানে আমি ১০ম শ্রেণিতে অধ্যয়নরত এবং ২০২৭ সালের এসএসসি পরীক্ষার প্রস্তুতি নিচ্ছি।
-এই আধুনিক যুগে নিজেকে এগিয়ে রাখতে আমি একটি কম্পিউটার ট্রেনিং সেন্টারে ভর্তি হয়েছি।
-মাইক্রোসফট অফিস, গ্রাফিক্স ডিজাইন, টাইপিংসহ বিভিন্ন দক্ষতা শিখছি।
-আমি বিশ্বাস করি—জ্ঞান যত বেশি হবে, মানুষের জন্য তত বেশি কিছু করা যাবে।
-আমার জীবনের আরেকটি গুরুত্বপূর্ণ অধ্যায় হলো আনসার ও ভিডিপি প্রশিক্ষণ।
-আমি অস্ত্রসহ এই প্রশিক্ষণ সম্পন্ন করেছি।
-এই প্রশিক্ষণ আমাকে শিখিয়েছে—শৃঙ্খলা, ধৈর্য, নেতৃত্ব এবং নিজের উপর নিয়ন্ত্রণ।
-ত্রয়োদশ জাতীয় সংসদ নির্বাচনে সেকশন কমান্ডার হিসেবে দায়িত্ব পালন করা আমার জীবনের একটি গর্বের মুহূর্ত।
-দেশের জন্য কিছু করার সুযোগ—এটাই আমার সবচেয়ে বড় পাওয়া।
-👉 আলহামদুলিল্লাহ, আমি যেখানেই গিয়েছি, সেখানেই মানুষের ভালোবাসা পেয়েছি।
-উস্তাদ, শিক্ষক, বন্ধু—সবাই আমাকে আপন করে নিয়েছেন।
-এই ভালোবাসাই আমাকে সামনে এগিয়ে যাওয়ার শক্তি দেয়।
-আমি বিশ্বাস করি—
-“যে মানুষ আল্লাহর উপর ভরসা করে, পরিশ্রম করে এবং সৎ থাকে—তার ব্যর্থতা বলে কিছু নেই।”
-আমার স্বপ্ন—দেশের জন্য কাজ করা, মানুষের জন্য কিছু করা, এবং একজন আদর্শ মানুষ হিসেবে নিজেকে গড়ে তোলা
-।</p>
+            <p>হিফজ শেষ করে বর্তমানে আমি এসএসসি পরীক্ষার প্রস্তুতি নিচ্ছি। ক্বওমী মাদরাসা ও সাধারণ স্কুল—উভয় পরিবেশেই আমি বড় হয়েছি।</p>
         </div>
         <div class="blog-card bn">
-            <h3>🌙 ক্বওমী মাদ্রাসার স্মৃতি</h3>
-            <p>ক্বওমী মাদ্রাসার সেই দিনগুলো—যা আজও হৃদয়ে বেঁচে আছে
-ক্বওমী মাদ্রাসার জীবন…
-এটা শুধু একটি শিক্ষা প্রতিষ্ঠান নয়—এটা একটা অনুভূতি, একটা পরিবার, একটা জীবন।
-যখন আমি প্রথম মাদ্রাসায় যাই, তখন সবকিছুই নতুন ছিল।
-অপরিচিত মানুষ, নতুন পরিবেশ… কিন্তু খুব বেশি সময় লাগেনি—সবকিছু আপন হয়ে যেতে।
-দেশের বিভিন্ন প্রান্ত থেকে আসা ছাত্ররা একসাথে থাকতাম।
-প্রথমে আমরা ছিলাম অপরিচিত, কিন্তু ধীরে ধীরে আমরা একে অপরের হৃদয়ের মানুষ হয়ে উঠেছিলাম।
-আমরা একসাথে খেতাম, একসাথে ঘুমাতাম, একসাথে হাসতাম—একেবারে নিজের ভাইয়ের মতো।
-ভোরে আজানের সুরে ঘুম ভাঙা…
-শীতের সকালে কাঁপতে কাঁপতে অজু করা…
-তারপর একসাথে নামাজে দাঁড়ানো—এই দৃশ্যগুলো আজও চোখের সামনে ভাসে।
-কখনো ক্লান্তি আসত, কখনো মন খারাপ হতো…
-কিন্তু বন্ধুদের হাসি সবকিছু ভুলিয়ে দিত।
-সবচেয়ে কষ্টের সময় ছিল বিদায়…
-যখন কেউ চলে যেত, তখন মনে হতো—এই জায়গাটা আর আগের মতো নেই।
-একটা জায়গা খালি হয়ে গেছে…
-একটা মানুষ কমে গেছে…
-একটা ভালোবাসা দূরে চলে গেছে…
-আজ আমি অনেক দূরে চলে এসেছি…
-কিন্তু সেই দিনগুলো, সেই মানুষগুলো, সেই স্মৃতিগুলো—আজও আমার হৃদয়ের গভীরে জীবন্ত।
-</p>
+            <h3>🌙 ক্বওমী মাদরাসার স্মৃতি</h3>
+            <p>মাদরাসার সেই দিনগুলো ছিল আধ্যাত্মিকতায় ঘেরা। বন্ধুদের সাথে একসাথে ইলম অর্জন আর ওস্তাদদের ভালোবাসা ছিল জীবনের সেরা সম্পদ।</p>
         </div>
         <div class="blog-card bn">
-            <h3>🇧🇩 আনসার প্রশিক্ষণ ও দেশপ্রেম</h3>
-            <p>আনসার প্রশিক্ষণ—শৃঙ্খলা, দায়িত্ব ও জীবনের নতুন উপলব্ধি
-জীবনে কিছু অভিজ্ঞতা থাকে, যা মানুষকে ভেতর থেকে বদলে দেয়—চিন্তা, আচরণ, লক্ষ্য সবকিছু।
-আমার জীবনে আনসার ও ভিডিপি প্রশিক্ষণ ছিল ঠিক তেমনই একটি অধ্যায়, যা আমাকে নতুন করে গড়ে তুলেছে।
-প্রথম দিন যখন ট্রেনিং সেন্টারে যাই, তখন মনে ছিল অজানা এক অনুভূতি—ভয়, কৌতূহল, উত্তেজনা—সবকিছু মিলিয়ে।
-চারপাশে নতুন মানুষ, নতুন পরিবেশ… কিন্তু কিছুদিনের মধ্যেই সেই অচেনা জায়গাটা আমার কাছে আপন হয়ে যায়।
-আমাদের প্রতিটি দিন শুরু হতো শৃঙ্খলার মাধ্যমে।
-ভোরে ঘুম থেকে ওঠা, নির্দিষ্ট সময়ে প্রস্তুত হওয়া, প্যারেডে অংশ নেওয়া, শারীরিক অনুশীলন—সবকিছুই ছিল সময়ের হিসাব অনুযায়ী।
-প্রথমদিকে শরীর ক্লান্ত হয়ে যেত, মনে হতো হয়তো পারব না…
-কিন্তু ধীরে ধীরে বুঝলাম—এই কষ্টই আমাকে শক্তিশালী করে তুলছে।
-এই প্রশিক্ষণের সবচেয়ে গুরুত্বপূর্ণ দিক ছিল—ভ্রাতৃত্ব ও ঐক্য।
-আমরা সবাই একসাথে থাকতাম, একসাথে খেতাম, একসাথে কষ্ট করতাম।
-একজন ক্লান্ত হলে আরেকজন তাকে সাহস দিত, একজন পিছিয়ে পড়লে অন্যজন তাকে সামনে নিয়ে আসত।
-ঠিক ক্বওমী মাদ্রাসার জীবনের মতোই এখানেও আমরা একটি পরিবার হয়ে উঠেছিলাম।
-এই প্রশিক্ষণ শুধু শারীরিক না—এটা ছিল মানসিক ও নৈতিক শিক্ষার একটি পূর্ণাঙ্গ প্রক্রিয়া।
-আমাদেরকে প্রশিক্ষণ দিয়েছেন অভিজ্ঞ আনসার ব্যাটালিয়নের প্রশিক্ষকগণ, যারা আমাদের শিখিয়েছেন—
-✔ শৃঙ্খলা কাকে বলে
-✔ দায়িত্ব কীভাবে পালন করতে হয়
-✔ কঠিন পরিস্থিতিতে কীভাবে নিজেকে নিয়ন্ত্রণে রাখতে হয়
-এর পাশাপাশি আমরা বিশেষ সুযোগ পেয়েছি দেশের বিভিন্ন গুরুত্বপূর্ণ সেক্টরের সম্মানিত কর্মকর্তাদের কাছ থেকে সরাসরি শিক্ষা গ্রহণ করার।
-🇧🇩 বাংলাদেশ সেনাবাহিনীর সদস্যরা আমাদেরকে শিখিয়েছেন—
-দেশপ্রেম, সাহস, কৌশল এবং দায়িত্ব পালনের বাস্তব অভিজ্ঞতা।
-তাদের কথায় আমরা বুঝতে পেরেছি—দেশ রক্ষা শুধু একটি দায়িত্ব নয়, এটি একটি সম্মানের বিষয়।
-🗳️ নির্বাচন কমিশনের কর্মকর্তারা আমাদেরকে শিখিয়েছেন—
-নির্বাচনের সময় কীভাবে সঠিকভাবে দায়িত্ব পালন করতে হয়, কীভাবে নিরপেক্ষ থাকতে হয় এবং জনগণের ভোটাধিকার রক্ষা করতে হয়।
-🔥 ফায়ার সার্ভিস ও সিভিল ডিফেন্সের সদস্যরা আমাদেরকে প্রশিক্ষণ দিয়েছেন—
-দুর্যোগ মোকাবেলা, আগুন নিয়ন্ত্রণ, জরুরি উদ্ধার কাজ—এসব বিষয়ে বাস্তবভিত্তিক ধারণা।
-তাদের কাছ থেকে আমরা শিখেছি—একটি জীবন বাঁচানো কত বড় কাজ।
-🌪️ দুর্যোগ ব্যবস্থাপনা বিভাগের কর্মকর্তারা আমাদেরকে শিখিয়েছেন—
-প্রাকৃতিক দুর্যোগের সময় কীভাবে কাজ করতে হয়, কীভাবে মানুষের পাশে দাঁড়াতে হয়, এবং সংকটের সময় কীভাবে নেতৃত্ব দিতে হয়।
-📚 শিক্ষা অফিসারদের ক্লাসগুলো আমাদের মানসিক উন্নয়নে বড় ভূমিকা রেখেছে।
-তারা আমাদেরকে শিখিয়েছেন—নৈতিকতা, দায়িত্ববোধ, নেতৃত্ব এবং জীবনে সফল হওয়ার পথ।
-এই পুরো প্রশিক্ষণ আমাকে শিখিয়েছে—
-👉 শৃঙ্খলা ছাড়া সফলতা সম্ভব নয়
-👉 দায়িত্ব পালনই একজন মানুষের আসল পরিচয়
-👉 দলবদ্ধভাবে কাজ করলেই বড় কিছু অর্জন করা যায়
-এরপর আসে আমার জীবনের একটি গর্বের মুহূর্ত—
-ত্রয়োদশ জাতীয় সংসদ নির্বাচনে সেকশন কমান্ডার হিসেবে দায়িত্ব পালন।
-এই দায়িত্ব পালন করতে গিয়ে আমি বাস্তব জীবনের চ্যালেঞ্জের মুখোমুখি হই।
-কিন্তু ট্রেনিং থেকে পাওয়া শিক্ষা আমাকে আত্মবিশ্বাস দিয়েছে, সঠিক সিদ্ধান্ত নিতে সাহায্য করেছে।
-আজ আমি গর্ব করে বলতে পারি—
-এই প্রশিক্ষণ আমাকে শুধু শক্তিশালী করেনি, আমাকে একজন দায়িত্বশীল, সচেতন এবং দেশপ্রেমিক মানুষ হিসেবে গড়ে তুলেছে।
-✨ “এই ট্রেনিং আমাকে শিখিয়েছে—নিজের জন্য বাঁচা সহজ, কিন্তু দেশের জন্য কিছু করা—সেটাই সত্যিকারের গর্ব।”।</p>
+            <h3>🇧🇩 আনসার ও ভিডিপি প্রশিক্ষণ</h3>
+            <p>অস্ত্রসহ আনসার ভিডিপি প্রশিক্ষণ আমাকে শৃঙ্খলাবদ্ধ জীবন ও দেশপ্রেম শিখিয়েছে। সংসদ নির্বাচনে সেকশন কমান্ডার হিসেবে কাজ করা আমার জীবনের গর্বের একটি অভিজ্ঞতা।</p>
         </div>
     </div>
 
-   <div id="gallery" class="page-section" style="text-align: center; padding: 20px 10px; background: #ffffff; border-radius: 20px;">
-    <h2 class="bn" style="color:var(--primary); font-size: 24px; margin-bottom: 20px;"><i class="fas fa-images"></i> গ্যালারি ও ফটো</h2>
-
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 25px;">
-        <button class="p-btn" onclick="loadPhotos('personal', this)"><i class="fas fa-user"></i> আমার ছবি</button>
-        <button class="p-btn" onclick="loadPhotos('madrasa', this)"><i class="fas fa-mosque"></i> মাদরাসা</button>
-        <button class="p-btn" onclick="loadPhotos('training', this)"><i class="fas fa-shield-alt"></i> ট্রেনিং</button>
-        <button class="p-btn" onclick="loadPhotos('election', this)"><i class="fas fa-vote-yea"></i> নির্বাচন</button>
+    <div id="skills" class="page-section">
+        <h2 class="bn" style="color:var(--primary); text-align: center;"><i class="fas fa-laptop-code"></i> দক্ষতা ও অভিজ্ঞতা</h2>
+        <div class="exp-grid">
+            <div class="exp-item">Ansar Training</div>
+            <div class="exp-item">Microsoft Word</div>
+            <div class="exp-item">Microsoft Excel</div>
+            <div class="exp-item">Microsoft Access</div>
+            <div class="exp-item">PowerPoint</div>
+            <div class="exp-item">Adobe Photoshop</div>
+            <div class="exp-item">Typing (BN/EN)</div>
+            <div class="exp-item">Online Applications</div> <div class="exp-item">Madrasa & School Education</div> <div class="exp-item">Section Commandership</div> </div>
     </div>
 
-    <div id="photo-display" class="photo-display">
-        <p class="bn" style="color: #ccc; font-size: 14px; padding: 20px;">বাটনে ক্লিক করলে ছবিগুলো লোড হবে</p>
+    <div id="gallery" class="page-section" style="text-align: center;">
+        <h2 class="bn" style="color:var(--primary); font-size: 24px; margin-bottom: 20px;"><i class="fas fa-images"></i> গ্যালারি ও ফটো</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 25px;">
+            <button class="p-btn" onclick="loadPhotos('personal', this)"><i class="fas fa-user"></i> আমার ছবি</button>
+            <button class="p-btn" onclick="loadPhotos('madrasa', this)"><i class="fas fa-mosque"></i> মাদরাসা</button>
+            <button class="p-btn" onclick="loadPhotos('training', this)"><i class="fas fa-shield-alt"></i> ট্রেনিং</button>
+            <button class="p-btn" onclick="loadPhotos('election', this)"><i class="fas fa-vote-yea"></i> নির্বাচন</button>
+        </div>
+        <div id="photo-display" class="photo-display">
+            <p class="bn" style="color: #ccc; font-size: 14px; padding: 20px;">বাটনে ক্লিক করে ছবিগুলো দেখুন</p>
+        </div>
+    </div>
+
+    <div id="resources" class="page-section">
+        <h2 class="bn" style="color:var(--primary); text-align: center;"><i class="fas fa-download"></i> রিসোর্স ও ডাউনলোড</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <div style="flex: 1; min-width: 250px; background: rgba(0,119,182,0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                <h3>📖 ইসলামিক বই</h3>
+                <a href="https://drive.google.com/drive/folders/1LN45UWOFNsS8olqcDPpLKhMNuTjglkeJ" target="_blank" class="btn-box">বই পড়ুন</a>
+            </div>
+            <div style="flex: 1; min-width: 250px; background: rgba(45,106,79,0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                <h3>📜 সার্টিফিকেট</h3>
+                <a href="https://drive.google.com/drive/folders/1iv79NKalAjIvzIajZQXtUsU7_RK5K7yL" target="_blank" class="btn-box">সনদ দেখুন</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section" style="text-align: center;">
+        <h2 class="bn" style="color:var(--primary);">📩 যোগাযোগ ও সোশ্যাল মিডিয়া</h2>
+        <p>📞 01917295342 | 📧 salmanfarshi1630@gmail.com</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/share/1A5kpXAVc6/" target="_blank" class="s-icon fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/qr/BFKFLQVGDULFA1" target="_blank" class="s-icon wa"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/mdsalmanfarae?igsh=MTlpZGwwNG85YmN2dQ==" target="_blank" class="s-icon ig"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/+8801706674628" target="_blank" class="s-icon tg"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://linkedin.com/comm/mynetwork/discovery-see-all?followMember=md-salman-farshe-3b9a8b367" target="_blank" class="s-icon in"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/FarseMd17925" target="_blank" class="s-icon tw"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.tiktok.com/@salman.farshi739?_r=1&_t=ZS-95OcZ2DKpyH" target="_blank" class="s-icon tk"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@MdSalmanFarse-s7i" target="_blank" class="s-icon yt"><i class="fab fa-youtube"></i></a>
+        </div>
     </div>
 </div>
-    .p-btn { padding: 10px 15px; border: 1px solid #eee; background: #fff; color: var(--primary); border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; display: flex; align-items: center; gap: 5px; font-size: 14px; }
-    .p-btn.active, .p-btn:hover { background: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .photo-display { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; padding: 5px; }
-    .p-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-</style>
+
+<footer>
+    <p>© 2024-2026 SALMAN FARSHI | All Rights Reserved</p>
+</footer>
 
 <script>
-    // এই ফাংশনটি ImgBB এর লিঙ্কগুলোকে সরাসরি ইমেজে রূপান্তর করবে
-    function fixLink(url) {
-        // ImgBB পেজ লিঙ্ক থেকে সরাসরি ইমেজ লিঙ্কে রূপান্তর
-        const id = url.split('/').pop();
-        return "https://i.ibb.co/" + id + "/image.jpg";
+    function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        if(body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            body.setAttribute('data-theme', 'light');
+            icon.classList.replace('fa-sun', 'fa-moon');
+        }
     }
 
     const myCollection = {
@@ -303,110 +183,16 @@
         element.classList.add('active');
         const display = document.getElementById('photo-display');
         display.innerHTML = "";
-        
         myCollection[category].forEach(id => {
             const img = document.createElement('img');
-            img.src = "https://i.ibb.co/" + id + "/image.jpg"; // সরাসরি ডিরেক্ট লিঙ্ক
+            img.src = "https://i.ibb.co.com/" + id + "/image.jpg";
             img.className = 'p-img';
-            img.onclick = () => window.open("https://ibb.co/" + id, '_blank');
-            img.onerror = function() { 
-                // যদি প্রথম লিঙ্কে কাজ না করে, তবে দ্বিতীয় ফরম্যাট ট্রাই করবে
-                this.src = "https://i.ibb.co.com/" + id + "/image.jpg"; 
-            };
+            img.onclick = () => window.open("https://ibb.co.com/" + id, '_blank');
+            img.onerror = function() { this.src = "https://i.ibb.co/" + id + "/image.jpg"; };
             display.appendChild(img);
         });
     }
 </script>
-
-    <div id="photo-display" class="photo-display">
-        <p class="bn" style="color: #ccc; font-size: 14px; padding: 20px;">বাটনে ক্লিক করে ছবিগুলো দেখুন</p>
-    </div>
-</div>
-
-<style>
-    .p-btn { padding: 10px 15px; border: 1px solid #eee; background: #fff; color: var(--primary); border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; display: flex; align-items: center; gap: 5px; font-size: 14px; }
-    .p-btn.active, .p-btn:hover { background: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .photo-display { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; padding: 5px; }
-    .p-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-</style>
-
-<script>
-    // এই স্ক্রিপ্টটি অন্য সব কোডের সাথে মিশবে না, এটি আলাদাভাবে কাজ করবে
-    function fixLink(url) { 
-        return url.replace("ibb.co.com", "i.ibb.co") + ".jpg"; 
-    }
-    
-    const myCollection = {
-        training: ["https://ibb.co.com/1GCPXNyq","https://ibb.co.com/mC76D7jT","https://ibb.co.com/r2f4bHb6","https://ibb.co.com/8DKBXHVL","https://ibb.co.com/Q31qJRxH","https://ibb.co.com/Z6YtHL06","https://ibb.co.com/ccgWG3gM","https://ibb.co.com/kVtpmCQ0","https://ibb.co.com/tp7WgxJC","https://ibb.co.com/tPTp9Hrq","https://ibb.co.com/TpWsnry","https://ibb.co.com/QvhBhSnL","https://ibb.co.com/BVCNK1Gr","https://ibb.co.com/ZzXfB9pf","https://ibb.co.com/kkxvh75","https://ibb.co.com/S26f1k0","https://ibb.co.com/Psfsrwg2","https://ibb.co.com/r26VtTJH"],
-        election: ["https://ibb.co.com/kVgc2Znj","https://ibb.co.com/wh8DxxjF","https://ibb.co.com/d0d7fkp5","https://ibb.co.com/VWx6dXxg","https://ibb.co.com/R4DVKHCQ","https://ibb.co.com/XxxXTNQ9","https://ibb.co.com/Dx4sWcm","https://ibb.co.com/67Y1tLrq","https://ibb.co.com/b58PZS6K","https://ibb.co.com/Jj1JN3d5"],
-        madrasa: ["https://ibb.co.com/MxrNgzBK","https://ibb.co.com/w2KvnpN","https://ibb.co.com/N6dT6Vhc","https://ibb.co.com/spqnvtM2","https://ibb.co.com/8g2WFWtF","https://ibb.co.com/W4mdZr90","https://ibb.co.com/nMHCwQrB","https://ibb.co.com/dw6B10Lx","https://ibb.co.com/LDQcq5zd","https://ibb.co.com/5xWbYQKh","https://ibb.co.com/0Vh6xXfJ","https://ibb.co.com/V0VS5RLx","https://ibb.co.com/wFrSqdNf","https://ibb.co.com/5gF3wzH0"],
-        personal: ["https://ibb.co.com/pBJPyPxZ","https://ibb.co.com/JRgVV795","https://ibb.co.com/G4QszZx3","https://ibb.co.com/WWWhsNhk","https://ibb.co.com/QvWtFryG","https://ibb.co.com/wN3chGfq","https://ibb.co.com/6RXTLR9d","https://ibb.co.com/kdv6r7D","https://ibb.co.com/ns90dzs1","https://ibb.co.com/q3NkP1C2","https://ibb.co.com/twxvgjTK","https://ibb.co.com/vvzQmq3x","https://ibb.co.com/Xxz5ZLFz","https://ibb.co.com/hRkjRfFs","https://ibb.co.com/GQh4Kgdb","https://ibb.co.com/7xYTx9YR","https://ibb.co.com/4wy3ds9t","https://ibb.co.com/WvTdHFTk","https://ibb.co.com/4Z7bM2nZ","https://ibb.co.com/zhzJtGDw"]
-    };
-
-    function loadPhotos(category, element) {
-        document.querySelectorAll('.p-btn').forEach(btn => btn.classList.remove('active'));
-        element.classList.add('active');
-        const display = document.getElementById('photo-display');
-        display.innerHTML = "";
-        myCollection[category].forEach(url => {
-            const img = document.createElement('img');
-            img.src = fixLink(url);
-            img.className = 'p-img';
-            img.onclick = () => window.open(url, '_blank');
-            img.onerror = function() { this.style.display='none'; };
-            display.appendChild(img);
-        });
-    }
-</script>
- div idiv id="resources" class="page-section">
-        <h2 class="bn"><i class="fas fa-download"></i> রিসোর্স ও ডাউনলোড</h2>
-        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
-        div <div style="flex: 1; min-width: 250px; background: rgba(0,119,182,0.1); padding: 20px; border-radius: 10px; text-align: center;">
-                <h3>📖 ইসলামিক বই</h3>
-                <a href="https://drive.google.com/drive/folders/1LN45UWOFNsS8olqcDPpLKhMNuTjglkeJ" target="_blank" class="btn-box">বই পড়ুন</a>
-            </div>
-            <div style="flex: 1; min-width: 250px; background: rgba(45,106,79,0.1); padding: 20px; border-radius: 10px; text-align: center;">
-                <h3>📜 সার্টিফিকেট</h3>
-                <a href="https://drive.google.com/drive/folders/1iv79NKalAjIvzIajZQXtUsU7_RK5K7yL" target="_blank" class="btn-box">সনদ দেখুন</a>
-            </div>
-        </div>
-    </div>
-
-      <div id="contact" class="page-section" style="text-align: center; background: #ffffff; border-radius: 20px; padding: 40px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 30px; font-family: 'Poppins', sans-serif;">
-        
-        <div style="font-size: 24px; font-weight: bold; color: #333; margin-bottom: 25px;">
-            <span class="bn">📩 যোগাযোগ</span><span class="en hidden">📩 Contact</span>
-        </div>
-
-        <div class="contact-details" style="margin-bottom: 30px;">
-            <div style="font-size: 18px; color: #444; margin-bottom: 10px;">📞 01917295342</div>
-            <div style="font-size: 18px; color: #444; margin-bottom: 15px;">📧 salmanfarshi1630@gmail.com</div>
-            <div style="font-size: 16px; color: #666; font-style: italic; line-height: 1.6;">
-                📍 <span class="bn">বাঁশগাড়ী, রায়পুরা, নরসিংদী, ঢাকা, বাংলাদেশ।</span>
-                <span class="en hidden">Bashgari, Raipura, Narsingdi, Dhaka, Bangladesh.</span>
-            </div>
-        </div>
-
-        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;">
-            <a href="https://www.facebook.com/share/1A5kpXAVc6/" target="_blank" class="s-btn"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="30" alt="FB"></a>
-            <a href="https://wa.me/8801706674628" target="_blank" class="s-btn"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30" alt="WA"></a>
-            <a href="https://t.me/+8801706674628" target="_blank" class="s-btn"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="30" alt="TG"></a>
-            <a href="https://www.instagram.com/mdsalmanfarae" target="_blank" class="s-btn"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="30" alt="IG"></a>
-            <a href="https://linkedin.com/comm/mynetwork/discovery-see-all?followMember=md-salman-farshe-3b9a8b367" target="_blank" class="s-btn"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" width="30" alt="IN"></a>
-            <a href="https://www.tiktok.com/@salman.farshi739" target="_blank" class="s-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" width="30" alt="TK"></a>
-            <a href="https://youtube.com/@salmanfarshi1630" target="_blank" class="s-btn"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="30" alt="YT"></a>
-        </div>
-    </div>
-</div> <footer style="background: #1e1e1e; color: #ffffff; text-align: center; padding: 25px 10px; margin-top: 50px; border-radius: 10px 10px 0 0;">
-    <p style="margin: 0; font-size: 14px;">© 2024-2026 SALMAN FARSHI | All Rights Reserved</p>
-</footer>
-
-<style>
-    .s-btn { width: 50px; height: 50px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s; border: 1px solid #ddd; }
-    .s-btn:hover { transform: translateY(-5px); background: #ffffff; box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
-</style>
 
 </body>
 </html>
-im
