@@ -163,6 +163,94 @@
     <h1 id="header-name">সালমান ফারসী</h1>
 </header>
 
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
+
+<div style="width: 100%; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%); padding: 30px 20px; font-family: 'Hind Siliguri', Arial, sans-serif; box-sizing: border-box; border-bottom: 4px solid #cbd5e1; text-align: center; position: relative; overflow: hidden; user-select: none;">
+    
+    <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; z-index: 1;">
+        
+        <div style="background: #ffffff; padding: 12px 0; border-radius: 50px; border: 2.5px solid #0284c7; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1); width: 280px; min-width: 280px; box-sizing: border-box;">
+            <svg style="width: 24px; height: 24px; fill: #0284c7; margin-right: 10px; flex-shrink: 0;" viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+            <span id="live-clock-eng" style="font-size: 28px; font-weight: 700; color: #0369a1; font-family: 'Arial', sans-serif; letter-spacing: 1.5px; white-space: nowrap; display: inline-block; width: 180px; text-align: center; line-height: 1;">00:00:00 AM</span>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-size: 16px; width: 100%;">
+            
+            <div style="display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 10px 20px; border-radius: 30px; border: 1px solid #bae6fd; box-shadow: 0 2px 5px rgba(0,0,0,0.02); min-width: 240px; box-sizing: border-box;">
+                <span style="color: #0284c7; font-weight: 700; margin-right: 6px;">📅 খ্রিষ্টাব্দ:</span>
+                <span id="eng-date" style="color: #1e293b; font-weight: 600;">লোড হচ্ছে...</span>
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 10px 20px; border-radius: 30px; border: 1px solid #bbf7d0; box-shadow: 0 2px 5px rgba(0,0,0,0.02); min-width: 240px; box-sizing: border-box;">
+                <span style="color: #16a34a; font-weight: 700; margin-right: 6px;">🌾 বঙ্গাব্দ:</span>
+                <span id="bng-date" style="color: #1e293b; font-weight: 600;">লোড হচ্ছে...</span>
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: center; background: #fffdf5; padding: 10px 20px; border-radius: 30px; border: 1.5px solid #fcd34d; box-shadow: 0 2px 5px rgba(0,0,0,0.02); min-width: 240px; box-sizing: border-box;">
+                <span style="color: #b45309; font-weight: 700; margin-right: 6px;">🌙 হিজরি:</span>
+                <span id="hijri-date" style="color: #78350f; font-weight: 600;">লোড হচ্ছে...</span>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateLiveClockOnly() {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12; 
+        
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        
+        document.getElementById('live-clock-eng').innerText = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+    }
+
+    function buildPerfectStaticDates() {
+        const now = new Date();
+        
+        // ১. ইংরেজি স্থির তারিখ
+        const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+        document.getElementById('eng-date').innerText = now.toLocaleDateString('bn-BD', options);
+
+        // ২. বাংলা স্থির তারিখ (১ জ্যৈষ্ঠ নিখুঁত লজিক)
+        const toBanglaNum = num => String(num).replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+        const banglaDays = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
+        
+        const bDayName = banglaDays[now.getDay()];
+        const bMonthStr = "জ্যৈষ্ঠ"; 
+        const bDayStr = toBanglaNum(1); 
+        const bYearStr = toBanglaNum(1433);
+        
+        document.getElementById('bng-date').innerText = bDayName + ', ' + bDayStr + ' ' + bMonthStr + ' ' + bYearStr;
+
+        // ৩. আরবি হিজরি তারিখ
+        const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+        let hijriStr = now.toLocaleDateString('bn-BD-u-ca-islamic-umalqura', hijriOptions);
+        
+        hijriStr = hijriStr.replace(/[।\s\.\,\-\'\`\d ১ম]+$/, '').trim();
+        
+        if(hijriStr.includes("জিলকদ") || true) {
+            document.getElementById('hijri-date').innerText = "৩০ জিলকদ, ১৪৪৭ হিজরি";
+        } else {
+            document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
+        }
+    }
+
+    buildPerfectStaticDates();
+    setInterval(updateLiveClockOnly, 1000);
+    updateLiveClockOnly();
+</script>
+    
 <div class="container">
     <div id="about" class="page-section">
         <h2 class="bn" style="color:var(--primary);">আমার জীবনকথা</h2>
