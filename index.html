@@ -366,6 +366,100 @@
     100% { opacity: 0.3; }
 }
 </style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div style="width: 100%; margin: 15px 0 15px 0; font-family: 'Hind Siliguri', Arial, sans-serif; box-sizing: border-box; text-align: center; user-select: none;">
+    
+    <div style="cursor: pointer; width: 100%; background: #f0f9ff; padding: 16px 0; border-radius: 8px; border: 1px solid #bae6fd; transition: background 0.3s ease; box-sizing: border-box; margin: 0;" onclick="toggleSalmanCombinedAIChat()" id="salman-combined-main-box">
+        <div style="display: inline-flex; align-items: center; justify-content: center; padding: 0 15px;">
+            <span id="salman-combined-text-span" style="color: #0369a1; font-size: 18px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s ease;">
+                <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block; animation: salmanCombinedBlink 1.5s infinite;"></span>
+                Salman Farshi's AI Assistant (এখানে ক্লিক করুন)
+                <svg style="width: 16px; height: 16px; fill: currentColor; transition: transform 0.3s;" id="salman-combined-arrow-icon" viewBox="0 0 24 24">
+                    <path d="M7 10l5 5 5-5z"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+    
+    <div id="salman-combined-ai-window" style="display: none; width: 100%; max-width: 500px; margin: 0 auto; background: #ffffff; border-radius: 0 0 16px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #bae6fd; border-top: none; flex-direction: column; overflow: hidden; box-sizing: border-box; animation: salmanCombinedSlideDown 0.3s ease;">
+        
+        <div style="background: linear-gradient(to right, #f0f9ff, #e0f2fe); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #bae6fd; box-sizing: border-box;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: salmanCombinedBlink 1.5s infinite;"></div>
+                <h4 style="margin: 0; color: #0369a1; font-size: 15px; font-weight: 700;">সালমান এআই এসিস্ট্যান্ট গেটওয়ে</h4>
+            </div>
+            <button onclick="toggleSalmanCombinedAIChat()" style="background: none; border: none; color: #64748b; cursor: pointer; font-size: 14px;"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div style="padding: 20px; background: #f8fafc; display: flex; flex-direction: column; gap: 15px; box-sizing: border-box;">
+            
+            <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
+                <div style="background: #e0f2fe; color: #0369a1; padding: 14px 16px; border-radius: 0 18px 18px 18px; font-size: 14px; line-height: 1.6; box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align: left; width: 100%; box-sizing: border-box;">
+                    আসসালামু আলাইকুম, আমি সালমান ফারসী ভাইয়ের এআই এসিস্ট্যান্ট, আপনার কোন কিছু জানতে হলে এখানে ক্লিক করুন।
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; box-sizing: border-box; margin-top: 5px;">
+                
+                <a href="https://chatgpt.com/" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #10a37f; color: white; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(16,163,127,0.15); transition: all 0.2s ease;" class="salman-combined-btn">
+                    <i class="fas fa-bolt" style="font-size: 14px;"></i> ChatGPT-র সাথে কথা বলুন
+                </a>
+
+                <a href="https://gemini.google.com/" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #1a73e8; color: white; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(26,115,232,0.15); transition: all 0.2s ease;" class="salman-combined-btn">
+                    <i class="fas fa-wand-magic-sparkles" style="font-size: 14px;"></i> Google Gemini (উত্তর ও ছবি)
+                </a>
+                
+            </div>
+            
+            <p style="margin: 5px 0 0 0; font-size: 11px; color: #94a3b8; text-align: center; font-weight: 500;">© সালমান ফারসী ড্যাশবোর্ড সিস্টেম</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // হোভার ইফেক্ট লজিক
+    const salmanCombinedArea = document.getElementById('salman-combined-main-box');
+    if (salmanCombinedArea) {
+        salmanCombinedArea.onmouseenter = function() { 
+            this.style.background = '#e0f2fe'; 
+            document.getElementById('salman-combined-text-span').style.color = '#ef4444'; 
+        };
+        salmanCombinedArea.onmouseleave = function() { 
+            this.style.background = '#f0f9ff'; 
+            document.getElementById('salman-combined-text-span').style.color = '#0369a1'; 
+        };
+    }
+
+    // ড্রপডাউন অন/অফ করার লজিক
+    function toggleSalmanCombinedAIChat() {
+        const combinedWindow = document.getElementById('salman-combined-ai-window');
+        const combinedArrow = document.getElementById('salman-combined-arrow-icon');
+        const mainBox = document.getElementById('salman-combined-main-box');
+        
+        if (combinedWindow.style.display === 'none' || combinedWindow.style.display === '') {
+            combinedWindow.style.display = 'flex';
+            mainBox.style.borderRadius = '8px 8px 0 0'; // উইন্ডো খুললে উপরের কোনাকুনি মিলবে
+            if(combinedArrow) combinedArrow.style.transform = 'rotate(180deg)';
+            
+            setTimeout(() => {
+                combinedWindow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        } else {
+            combinedWindow.style.display = 'none';
+            mainBox.style.borderRadius = '8px'; // বন্ধ হলে আবার আগের মতো গোল হবে
+            if(combinedArrow) combinedArrow.style.transform = 'rotate(0deg)';
+        }
+    }
+</script>
+
+<style>
+@keyframes salmanCombinedBlink { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+@keyframes salmanCombinedSlideDown { from { transform: translateY(-5px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.salman-combined-btn:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 6px 15px rgba(0,0,0,0.12) !important; }
+</style>
     
 <div class="container">
     <div id="about" class="page-section">
