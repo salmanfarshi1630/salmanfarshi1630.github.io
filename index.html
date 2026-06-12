@@ -233,17 +233,15 @@
         
         document.getElementById('bng-date').innerText = bDayName + ', ' + bDayStr + ' ' + bMonthStr + ' ' + bYearStr;
 
-        // ৩. আরবি হিজরি তারিখ
-        const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-        let hijriStr = now.toLocaleDateString('bn-BD-u-ca-islamic-umalqura', hijriOptions);
-        
-        hijriStr = hijriStr.replace(/[।\s\.\,\-\'\`\d ১ম]+$/, '').trim();
-        
-        if(hijriStr.includes("জিলহজ্জ ") || true) {
-            document.getElementById('hijri-date').innerText = "১০ জিলহজ্ব, ১৪৪৭ হিজরি";
-        } else {
-            document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
-        }
+       // ৩. আরবি হিজরি তারিখ
+const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+let hijriStr = now.toLocaleDateString('bn-BD-u-ca-islamic-umalqura', hijriOptions);
+
+// যদি তারিখে বাড়তি কোনো স্পেস বা ডট থাকে তা পরিষ্কার করার জন্য
+hijriStr = hijriStr.replace(/[/\s\.,\-'\`\d ম]+$/, '').trim();
+
+// সরাসরি আইডিতে পুশ করে দেওয়া (স্বয়ংক্রিয়ভাবে প্রতিদিন তারিখ ও মাস পরিবর্তন হবে)
+document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
     }
 
     buildPerfectStaticDates();
