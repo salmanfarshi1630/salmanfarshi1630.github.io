@@ -751,7 +751,7 @@ document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
         });
     }
 
-    // ৩. PDF to JPG ফাংশনালিটি
+  // ৩. PDF to JPG ফাংশনালিটি (১০০% মেমোরি অপ্টিমাইজড - ৪ জিবি র‍্যাম ফ্রেন্ডলি)
     function handlePdfSelection(input) {
         const file = input.files[0];
         if (!file) return;
@@ -763,9 +763,15 @@ document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
                 const previewArea = document.getElementById('pdfPreviewArea');
                 previewArea.innerHTML = ''; 
                 
-                for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-                    pdf.getPage(pageNum).then(function(page) {
-                        const viewport = page.getViewport({scale: 1.5});
+                const renderScale = 1.2; // স্ট্যান্ডার্ড কোয়ালিটি ও হালকা সাইজ
+                let currentPage = 1;
+                
+                // একটা একটা করে পেজ প্রসেস করার জন্য রিকার্সিভ ফাংশন (Sequential Processing)
+                function renderNextPage() {
+                    if (currentPage > pdf.numPages) return; // সব পেজ শেষ হলে থামবে
+                    
+                    pdf.getPage(currentPage).then(function(page) {
+                        const viewport = page.getViewport({scale: renderScale});
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
                         canvas.height = viewport.height;
@@ -773,7 +779,7 @@ document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
                         
                         const renderContext = { canvasContext: ctx, viewport: viewport };
                         page.render(renderContext).promise.then(function() {
-                            const imgData = canvas.toDataURL('image/jpeg');
+                            const imgData = canvas.toDataURL('image/jpeg', 0.7);
                             
                             const box = document.createElement('div');
                             box.style.border = '1px solid #e2e8f0';
@@ -783,13 +789,24 @@ document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
                             box.style.background = '#f8fafc';
                             
                             box.innerHTML = `
-                                <span style="font-size:12px; font-weight:700; color:#475569;">পেজ নম্বর: ${pageNum}</span>
-                                <a href="${imgData}" download="Page_${pageNum}.jpg" style="display:block; margin-top:8px; background:#0284c7; color:white; padding:6px; font-size:12px; font-weight:700; text-decoration:none; border-radius:6px;">⬇️ ডাউনলোড</a>
+                                <span style="font-size:12px; font-weight:700; color:#475569;">পেজ নম্বর: ${currentPage}</span>
+                                <a href="${imgData}" download="Page_${currentPage}.jpg" style="display:block; margin-top:8px; background:#0284c7; color:white; padding:6px; font-size:12px; font-weight:700; text-decoration:none; border-radius:6px;">⬇️ ডাউনলোড</a>
                             `;
                             previewArea.appendChild(box);
+                            
+                            // ব্রাউজারের র‍্যাম ক্লিয়ার করার জন্য ক্যানভাস ধ্বংস করা
+                            canvas.width = 0;
+                            canvas.height = 0;
+                            
+                            // বর্তমান পেজ শেষ, এবার পরবর্তী পেজে যাবে
+                            currentPage++;
+                            renderNextPage();
                         });
                     });
                 }
+                
+                // প্রথম পেজ দিয়ে রেন্ডারিং শুরু করা
+                renderNextPage();
             });
         };
         reader.readAsArrayBuffer(file);
