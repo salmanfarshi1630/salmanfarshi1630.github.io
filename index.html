@@ -422,6 +422,383 @@ document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
     </div>
 </div>
 
+<!-- ========================================== -->
+<!-- সালমান স্মার্ট অনলাইন সেবা সেকশন (শুরু) -->
+<!-- ========================================== -->
+
+<!-- SEO এর জন্য মেটা কিওয়ার্ডস এবং ডেসক্রিপশন (সার্চ ইঞ্জিনের জন্য উপকারী) -->
+<!-- দ্রষ্টব্য: এই মেটা ট্যাগগুলো আপনার ওয়েবসাইটের <head> সেকশনে রাখলে সবচেয়ে ভালো হয়, তবে এখানে থাকলেও কাজ করবে -->
+<meta name="description" content="সালমান অনলাইন স্মার্ট সেবা সমূহ - ফ্রি বয়স ক্যালকুলেটর, JPG থেকে PDF এবং PDF থেকে JPG কনভার্টার টুল।">
+<meta name="keywords" content="Age Calculator, JPG to PDF Converter, PDF to JPG, সালমান অনলাইন সেবা, অনলাইন বয়স হিসাব">
+
+<!-- কনভারশনের জন্য প্রয়োজনীয় গ্লোবাল লাইব্রেরি সমূহ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
+<div style="max-width: 920px; margin: 50px auto; padding: 0 20px; font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;">
+    
+    <!-- বিশেষ স্টাইলিশ টাইটেল বাটন -->
+    <div style="text-align: center; margin-bottom: 35px;">
+        <div style="display: inline-block; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 2px solid #0284c7; padding: 12px 35px; border-radius: 50px; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1); margin-bottom: 10px;">
+            <h2 style="font-size: 22px; color: #0f172a; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 10px;">
+                🛠️ সালমান অনলাইন স্মার্ট সেবা সমূহ
+            </h2>
+        </div>
+        <p style="font-size: 14px; color: #64748b; font-weight: 500; margin-top: 5px;">যেকোনো একটি সেবার ওপর ক্লিক করুন</p>
+    </div>
+
+    <!-- প্রধান বাটন গ্রিড (ভবিষ্যতে নতুন বাটন এখানে যোগ হবে) -->
+    <div id="salman-buttons-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-bottom: 30px;">
+        
+        <!-- বাটন ১: বয়স ক্যালকুলেটর -->
+        <div onclick="toggleTool('salman-age-picker-box')" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ffffff; border: 1px solid #cbd5e1; padding: 22px; border-radius: 16px; cursor: pointer; transition: 0.3s; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02);" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-3px)';" onmouseout="this.style.borderColor='#cbd5e1'; this.style.transform='translateY(0)';">
+            <span style="font-size: 32px; margin-bottom: 8px;">📅</span>
+            <span style="font-size: 16px; font-weight: 700; color: #1e293b;">বয়স ক্যালকুলেটর</span>
+            <span style="font-size: 12px; color: #94a3b8; margin-top: 4px;">অনলাইন বয়স হিসাবকারী টুল (Age Calculator)</span>
+        </div>
+
+        <!-- বাটন ২: JPG থেকে PDF -->
+        <div onclick="toggleTool('salman-jpg-box')" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ffffff; border: 1px solid #cbd5e1; padding: 22px; border-radius: 16px; cursor: pointer; transition: 0.3s; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02);" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-3px)';" onmouseout="this.style.borderColor='#cbd5e1'; this.style.transform='translateY(0)';">
+            <span style="font-size: 32px; margin-bottom: 8px;">🖼️</span>
+            <span style="font-size: 16px; font-weight: 700; color: #1e293b;">JPG থেকে PDF কনভার্টার</span>
+            <span style="font-size: 12px; color: #94a3b8; margin-top: 4px;">ছবি থেকে স্ট্যান্ডার্ড A4 সাইজ পিডিএফ তৈরি ও ডাউনলোড</span>
+        </div>
+
+        <!-- বাটন ৩: PDF থেকে JPG -->
+        <div onclick="toggleTool('salman-pdf-box')" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ffffff; border: 1px solid #cbd5e1; padding: 22px; border-radius: 16px; cursor: pointer; transition: 0.3s; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02);" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-3px)';" onmouseout="this.style.borderColor='#cbd5e1'; this.style.transform='translateY(0)';">
+            <span style="font-size: 32px; margin-bottom: 8px;">📄</span>
+            <span style="font-size: 16px; font-weight: 700; color: #1e293b;">PDF থেকে JPG কনভার্টার</span>
+            <span style="font-size: 12px; color: #94a3b8; margin-top: 4px;">পিডিএফ ফাইল থেকে প্রতিটি পেজ ছবি হিসেবে কনভার্ট</span>
+        </div>
+
+        <!-- 🧱 [🧱 নতুন বাটন যোগ করার জায়গা] -->
+        <!-- ভবিষ্যতে নতুন কোনো বাটন লাগলে ঠিক এই লাইনের নিচে কোড পেস্ট করবেন -->
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- টুলস গুলোর ইন্টারফেস বক্স সমূহ -->
+    <!-- ========================================== -->
+
+    <!-- ১. বয়স ক্যালকুলেটর ইন্টারফেস -->
+    <div id="salman-age-picker-box" class="salman-tool-box" style="display: none; background: #ffffff; border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto; animation: salmanSlideDown 0.3s ease-out;">
+        <h3 style="font-size: 18px; color: #0284c7; text-align: center; margin-bottom: 20px; font-weight: 700;">📅 বয়স ক্যালকুলেটর (অনলাইন ফ্রি টুল)</h3>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 6px; font-weight: 600; color: #475569;">আজকের তারিখ:</label>
+            <input type="text" id="salmanTodayDisplay" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 16px; background: #f8fafc; color: #334155; font-weight: 600;" readonly>
+        </div>
+
+        <div style="margin-bottom: 20px; position: relative;">
+            <label style="display: block; margin-bottom: 6px; font-weight: 600; color: #475569;">আপনার জন্মতারিখ (দিন-মাস-বছর):</label>
+            <input type="text" id="salmanBirthDisplay" placeholder="DD-MM-YYYY" readonly onclick="document.getElementById('salmanHiddenDate').showPicker();" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 16px; background: #ffffff; color: #334155; font-weight: 600; cursor: pointer;">
+            <input type="date" id="salmanHiddenDate" onchange="updateBirthDisplay(this.value)" style="position: absolute; opacity: 0; right: 10px; bottom: 12px; width: 40px; height: 30px; cursor: pointer;">
+            <span onclick="document.getElementById('salmanHiddenDate').showPicker();" style="position: absolute; right: 15px; bottom: 12px; font-size: 20px; cursor: pointer;">📅</span>
+        </div>
+
+        <button onclick="salmanCalculateAgeActual()" style="width: 100%; background: #0284c7; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s;">বয়স হিসাব করুন 🚀</button>
+
+        <!-- রেজাল্ট এরিয়া -->
+        <div id="salmanAgeResultArea" style="display: none; margin-top: 25px;">
+            <p style="font-size: 14px; font-weight: 700; color: #475569; margin-bottom: 8px;">আপনার বর্তমান বয়স (Your Age)</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div style="background: white; border-radius: 14px; border: 1px solid #e2e8f0; text-align: center; overflow: hidden;"><div id="resBoxYears" style="background: #0284c7; color: white; font-size: 26px; font-weight: 700; padding: 12px 0;">0</div><div style="font-size: 13px; font-weight: 600; color: #475569; padding: 6px 0;">বছর</div></div>
+                <div style="background: white; border-radius: 14px; border: 1px solid #e2e8f0; text-align: center; overflow: hidden;"><div id="resBoxMonths" style="background: #0284c7; color: white; font-size: 26px; font-weight: 700; padding: 12px 0;">0</div><div style="font-size: 13px; font-weight: 600; color: #475569; padding: 6px 0;">মাস</div></div>
+                <div style="background: white; border-radius: 14px; border: 1px solid #e2e8f0; text-align: center; overflow: hidden;"><div id="resBoxDays" style="background: #0284c7; color: white; font-size: 26px; font-weight: 700; padding: 12px 0;">0</div><div style="font-size: 13px; font-weight: 600; color: #475569; padding: 6px 0;">দিন</div></div>
+            </div>
+
+            <p style="font-size: 14px; font-weight: 700; color: #475569; margin-bottom: 8px;">বিস্তারিত স্ট্যাটাস (Age Status)</p>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: #f8fafc; padding: 12px; border-radius: 14px; border: 1px solid #e2e8f0; text-align: center; margin-bottom: 20px;">
+                <div><span style="font-size: 12px; color: #64748b; display:block;">মোট বছর</span><span id="stYears" style="font-size: 15px; font-weight: 700; color: #0f172a;">-</span></div>
+                <div><span style="font-size: 12px; color: #64748b; display:block;">মোট মাস</span><span id="stMonths" style="font-size: 15px; font-weight: 700; color: #0f172a;">-</span></div>
+                <div><span style="font-size: 12px; color: #64748b; display:block;">মোট সপ্তাহ</span><span id="stWeeks" style="font-size: 15px; font-weight: 700; color: #0f172a;">-</span></div>
+                <div><span style="font-size: 12px; color: #64748b; display:block;">মোট দিন</span><span id="stDays" style="font-size: 15px; font-weight: 700; color: #0f172a;">-</span></div>
+            </div>
+            <p style="font-size: 14px; font-weight: 700; color: #475569; margin-bottom: 8px;">জন্মের দিন (Your Born Day)</p>
+            <div id="stBornDay" style="background: white; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 15px; color: #0f172a; font-weight: 600; margin-bottom: 20px;">-</div>
+            <p style="font-size: 14px; font-weight: 700; color: #475569; margin-bottom: 8px;">পরবর্তী জন্মদিন (Birthday Countdown)</p>
+            <div id="stCountdown" style="background: white; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 15px; color: #0284c7; font-weight: 700; text-align: center;">-</div>
+        </div>
+    </div>
+
+    <!-- ২. JPG থেকে PDF কনভার্টার ইন্টারফেস -->
+    <div id="salman-jpg-box" class="salman-tool-box" style="display: none; background: #ffffff; border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto; text-align: center; animation: salmanSlideDown 0.3s ease-out;">
+        <h3 style="color: #0284c7; margin-bottom: 15px; font-weight: 700;">🖼️ JPG থেকে PDF কনভার্টার (ফ্রি ডাউনলোড)</h3>
+        <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">আপনার ছবি সিলেক্ট করুন। এটি স্ট্যান্ডার্ড A4 সাইজে জুম-ফ্রেন্ডলি পিডিএফ ফাইল তৈরি করবে।</p>
+        
+        <input type="file" id="jpgInput" accept="image/jpeg, image/png" multiple style="display: none;" onchange="handleJpgSelection(this)">
+        <div onclick="document.getElementById('jpgInput').click()" style="border: 2px dashed #cbd5e1; padding: 30px; border-radius: 12px; cursor: pointer; background: #f8fafc; transition: 0.2s;" onmouseover="this.style.borderColor='#0284c7'" onmouseout="this.style.borderColor='#cbd5e1'">
+            <span style="font-size: 40px;">📤</span>
+            <p style="font-weight: 600; color: #475569; margin-top: 10px;">এখানে ক্লিক করে ছবি সিলেক্ট করুন</p>
+        </div>
+        
+        <div id="jpgPreviewArea" style="margin-top: 15px; font-size: 14px; color: #0284c7; font-weight: 600;"></div>
+        <button id="btnDownloadPdf" onclick="generateAndDownloadPdf()" style="display: none; width: 100%; background: #22c55e; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 20px;">⬇️ পিডিএফ ফাইল ডাউনলোড করুন</button>
+    </div>
+
+    <!-- ৩. PDF থেকে JPG কনভার্টার ইন্টারফেস -->
+    <div id="salman-pdf-box" class="salman-tool-box" style="display: none; background: #ffffff; border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto; text-align: center; animation: salmanSlideDown 0.3s ease-out;">
+        <h3 style="color: #0284c7; margin-bottom: 15px; font-weight: 700;">📄 PDF থেকে JPG কনভার্টার (ফ্রি ইমেজ এক্সট্রাক্টর)</h3>
+        <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">আপনার পিডিএফ ফাইলটি আপলোড করুন, প্রতিটি পেজ আলাদা ছবি হিসেবে ডাউনলোড করার অপশন চলে আসবে।</p>
+        
+        <input type="file" id="pdfInput" accept="application/pdf" style="display: none;" onchange="handlePdfSelection(this)">
+        <div onclick="document.getElementById('pdfInput').click()" style="border: 2px dashed #cbd5e1; padding: 30px; border-radius: 12px; cursor: pointer; background: #f8fafc; transition: 0.2s;" onmouseover="this.style.borderColor='#0284c7'" onmouseout="this.style.borderColor='#cbd5e1'">
+            <span style="font-size: 40px;">📁</span>
+            <p style="font-weight: 600; color: #475569; margin-top: 10px;">এখানে ক্লিক করে PDF ফাইল দিন</p>
+        </div>
+        
+        <div id="pdfPreviewArea" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;"></div>
+    </div>
+
+    <!-- 📦 [📦 নতুন ইন্টারফেস বক্স যোগ করার জায়গা] -->
+    <!-- নতুন বাটনে ক্লিক করলে যে ইন্টারফেস ভেসে উঠবে, তার কোড ঠিক এই লাইনের নিচে পেস্ট করবেন -->
+
+</div>
+
+<!-- CSS অ্যানিমেশন -->
+<style>
+    @keyframes salmanSlideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<!-- জাভাস্ক্রিপ্ট মূল লজিক সেকশন -->
+<script>
+    // লাইব্রেরি ইনিশিয়েট
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+    // পেজ লোডে আজকের দিন-মাস-বছর সেট করা
+    (function setTodayDate() {
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        document.getElementById('salmanTodayDisplay').value = `${dd}-${mm}-${yyyy}`;
+    })();
+
+    // জন্মতারিখ ইনপুটের ডিসপ্লে আপডেট করা (DD-MM-YYYY ফরম্যাট নিশ্চিতকরণ)
+    function updateBirthDisplay(val) {
+        if(!val) return;
+        const parts = val.split('-'); // yyyy-mm-dd
+        document.getElementById('salmanBirthDisplay').value = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+
+    // স্মার্ট টগল এবং অল ডাটা ক্লিয়ারিং লজিক
+    function toggleTool(boxId) {
+        const targetBox = document.getElementById(boxId);
+        
+        // ভবিষ্যতে নতুন কোনো বক্সের আইডি তৈরি করলে শুধু এই অ্যারের ভেতর কমা দিয়ে লিখে দিলেই হবে
+        const allBoxes = ['salman-age-picker-box', 'salman-jpg-box', 'salman-pdf-box'];
+        
+        allBoxes.forEach(id => {
+            if(id !== boxId) {
+                const otherBox = document.getElementById(id);
+                if(otherBox) otherBox.style.display = 'none';
+            }
+        });
+
+        // টগল লজিক এবং বন্ধের সময় ইনস্ট্যান্ট ডাটা রিসেট
+        if (targetBox.style.display === 'block') {
+            targetBox.style.display = 'none';
+            resetAllToolsData();
+        } else {
+            resetAllToolsData(); 
+            targetBox.style.display = 'block';
+        }
+    }
+
+    // সমস্ত তথ্য এক ক্লিকে মুছে ফেলার ফাংশন
+    function resetAllToolsData() {
+        // বয়স ক্যালকুলেটর রিসেট
+        document.getElementById('salmanBirthDisplay').value = '';
+        document.getElementById('salmanHiddenDate').value = '';
+        document.getElementById('salmanAgeResultArea').style.display = 'none';
+        
+        // JPG to PDF রিসেট
+        document.getElementById('jpgInput').value = '';
+        document.getElementById('jpgPreviewArea').innerText = '';
+        document.getElementById('btnDownloadPdf').style.display = 'none';
+        savedJpgImages = [];
+
+        // PDF to JPG রিসেট
+        document.getElementById('pdfInput').value = '';
+        document.getElementById('pdfPreviewArea').innerHTML = '';
+    }
+
+    // ১. বয়স ক্যালকুলেটর অ্যাকচুয়াল ক্যালকুলেশন
+    function salmanCalculateAgeActual() {
+        const rawDate = document.getElementById('salmanHiddenDate').value;
+        if (!rawDate) { alert('দয়া করে ক্যালেন্ডার আইকনে ক্লিক করে জন্মতারিখ দিন!'); return; }
+
+        const birthDate = new Date(rawDate);
+        const today = new Date();
+        if (birthDate > today) { alert('জন্মতারিখ আজকের দিনের চেয়ে বড় হতে পারে না!'); return; }
+
+        let years = today.getFullYear() - birthDate.getFullYear();
+        let months = today.getMonth() - birthDate.getMonth();
+        let days = today.getDate() - birthDate.getDate();
+
+        if (days < 0) {
+            months--;
+            days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        document.getElementById('resBoxYears').innerText = years;
+        document.getElementById('resBoxMonths').innerText = months;
+        document.getElementById('resBoxDays').innerText = days;
+
+        const diffTime = Math.abs(today - birthDate);
+        const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const totalWeeks = Math.floor(totalDays / 7);
+
+        document.getElementById('stYears').innerText = years;
+        document.getElementById('stMonths').innerText = (years * 12) + months;
+        document.getElementById('stWeeks').innerText = totalWeeks;
+        document.getElementById('stDays').innerText = totalDays;
+
+        const daysBangla = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
+        document.getElementById('stBornDay').innerText = `আপনি জন্মেছিলেন: ${daysBangla[birthDate.getDay()]}`;
+
+        let nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+        if (today > nextBirthday) { nextBirthday.setFullYear(today.getFullYear() + 1); }
+        const daysLeft = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+        
+        document.getElementById('stCountdown').innerText = (daysLeft === 365 || daysLeft === 0) 
+            ? "🎉 শুভ জন্মদিন! আজই আপনার আনন্দের দিন! 🎉" 
+            : `আপনার পরবর্তী জন্মদিনের আর মাত্র ${daysLeft} দিন বাকি।`;
+
+        document.getElementById('salmanAgeResultArea').style.display = 'block';
+    }
+
+    // ২. JPG to PDF ফাংশনালিটি (স্ট্যান্ডার্ড A4 স্কেলিং রেন্ডার)
+    let savedJpgImages = [];
+    function handleJpgSelection(input) {
+        if(input.files.length === 0) return;
+        savedJpgImages = Array.from(input.files);
+        document.getElementById('jpgPreviewArea').innerText = `📊 মোট ${savedJpgImages.length}টি ছবি সিলেক্ট করা হয়েছে।`;
+        document.getElementById('btnDownloadPdf').style.display = 'block';
+    }
+
+    function generateAndDownloadPdf() {
+        if(savedJpgImages.length === 0) return;
+        const { jsPDF } = window.jspdf;
+        
+        let processed = 0;
+        let pdf = null;
+
+        savedJpgImages.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const a4Width = 210;
+                    const a4Height = 297;
+                    const imgRatio = img.width / img.height;
+                    
+                    let pageOrientation = 'p';
+                    let finalPageWidth = a4Width;
+                    let finalPageHeight = a4Height;
+                    
+                    let printWidth = a4Width;
+                    let printHeight = a4Width / imgRatio;
+                    
+                    if (img.width > img.height) {
+                        pageOrientation = 'l';
+                        finalPageWidth = a4Height;
+                        finalPageHeight = a4Width;
+                        printWidth = a4Height;
+                        printHeight = a4Height / imgRatio;
+                        
+                        if (printHeight > finalPageHeight) {
+                            printHeight = finalPageHeight;
+                            printWidth = finalPageHeight * imgRatio;
+                        }
+                    } else {
+                        if (printHeight > a4Height) {
+                            printHeight = a4Height;
+                            printWidth = a4Height * imgRatio;
+                        }
+                    }
+                    
+                    const xOffset = (finalPageWidth - printWidth) / 2;
+                    const yOffset = (finalPageHeight - printHeight) / 2;
+
+                    if (index === 0) {
+                        pdf = new jsPDF({
+                            orientation: pageOrientation,
+                            unit: 'mm',
+                            format: 'a4'
+                        });
+                    } else {
+                        pdf.addPage('a4', pageOrientation);
+                    }
+                    
+                    pdf.addImage(e.target.result, 'JPEG', xOffset, yOffset, printWidth, printHeight, undefined, 'FAST');
+                    
+                    processed++;
+                    if(processed === savedJpgImages.length) {
+                        pdf.save('Salman-Smart-Service-Doc.pdf');
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // ৩. PDF to JPG ফাংশনালিটি
+    function handlePdfSelection(input) {
+        const file = input.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const typedarray = new Uint8Array(e.target.result);
+            pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                const previewArea = document.getElementById('pdfPreviewArea');
+                previewArea.innerHTML = ''; 
+                
+                for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    pdf.getPage(pageNum).then(function(page) {
+                        const viewport = page.getViewport({scale: 1.5});
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+                        
+                        const renderContext = { canvasContext: ctx, viewport: viewport };
+                        page.render(renderContext).promise.then(function() {
+                            const imgData = canvas.toDataURL('image/jpeg');
+                            
+                            const box = document.createElement('div');
+                            box.style.border = '1px solid #e2e8f0';
+                            box.style.padding = '8px';
+                            box.style.borderRadius = '8px';
+                            box.style.textAlign = 'center';
+                            box.style.background = '#f8fafc';
+                            
+                            box.innerHTML = `
+                                <span style="font-size:12px; font-weight:700; color:#475569;">পেজ নম্বর: ${pageNum}</span>
+                                <a href="${imgData}" download="Page_${pageNum}.jpg" style="display:block; margin-top:8px; background:#0284c7; color:white; padding:6px; font-size:12px; font-weight:700; text-decoration:none; border-radius:6px;">⬇️ ডাউনলোড</a>
+                            `;
+                            previewArea.appendChild(box);
+                        });
+                    });
+                }
+            });
+        };
+        reader.readAsArrayBuffer(file);
+    }
+</script>
+<!-- ========================================== -->
+<!-- সালমান স্মার্ট অনলাইন সেবা সেকশন (শেষ) -->
+<!-- ========================================== -->
+    
 <script>
     // হোভার ইফেক্ট লজিক
     const salmanCombinedArea = document.getElementById('salman-combined-main-box');
