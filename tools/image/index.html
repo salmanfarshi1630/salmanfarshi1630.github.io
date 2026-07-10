@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>ফ্রি অনলাইন ইমেজ টুলস ও সেবাসমূহ | সালমান অনলাইন স্মার্ট সেবা</title>
+    <title>ফ্রি অনলাইন ইমেজ টুল ও সেবাসমূহ | সালমান অনলাইন স্মার্ট সেবা</title>
     <meta name="description" content="সালমান অনলাইন স্মার্ট সেবার ফ্রি ইমেজ টুলস। এক ক্লিকেই ইমেজ কম্প্রেশার, সাইজ পরিবর্তন (300*300 পিক্সেল), ক্রপার, ব্যাকগ্রাউন্ড রিমুভার ও পাসপোর্ট সাইজ ছবি তৈরি করুন সম্পূর্ণ ফ্রিতে।">
     <meta name="keywords" content="ইমেজ কম্প্রেশার, ইমেজ রিসাইজার, 300*300 picture resizer, 300*80 signature resize, ছবি ছোট করা, ব্যাকগ্রাউন্ড রিমুভার, পাসপোর্ট সাইজ ফটো মেকার, সালমান অনলাইন সেবা, ফ্রি অনলাইন টুলস">
     <meta name="author" content="Salman Farshi">
@@ -24,6 +24,19 @@
         h2 { color: #1e293b; font-size: 24px; margin-bottom: 5px; }
         h3 { font-size: 16px; color: #1e293b; margin: 5px 0; font-weight: 700; }
         p { font-size: 12px; color: #64748b; margin: 0; line-height: 1.4; }
+
+        /* ১. ইমেজ কম্প্রেশার ইন্টারফেস স্টাইল */
+        .tool-section { display: none; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-top: 20px; text-align: center; }
+        .upload-box { border: 2px dashed #cbd5e1; padding: 40px 20px; border-radius: 12px; cursor: pointer; background: #f8fafc; transition: 0.2s; }
+        .upload-box:hover { border-color: #1e3a8a; background: #f1f5f9; }
+        .btn-action { background: #10b981; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; transition: 0.2s; }
+        .btn-action:hover { background: #059669; }
+        .close-btn { background: #ef4444; margin-left: 10px; }
+        .close-btn:hover { background: #dc2626; }
+        .preview-box { display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap; }
+        .preview-box img { max-width: 250px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .status-txt { font-weight: bold; color: #1e3a8a; margin-top: 10px; }
+        .range-slider { margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -31,79 +44,186 @@
 <div class="container">
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
-    <h2>🖼️ ইমেজ টুলস ও সেবাসমূহ</h2>
-    <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ (৩০০×৩০০) ও কনভার্ট করার ১০টি প্রিমিয়াম টুলস নিচে দেওয়া হলো।</p>
-    <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
-    
-    <div class="grid">
+    <div id="main-menu">
+        <h2>🖼️ 이미지ツール ও সেবাসমূহ</h2>
+        <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ (৩০০×৩০০) ও কনভার্ট করার ১০টি প্রিমিয়ামツール নিচে দেওয়া হলো।</p>
+        <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
         
-        <div class="card" onclick="openTool('compressor')">
-            <span class="icon">📉</span>
-            <h3>১. ইমেজ কম্প্রেশার</h3>
-            <p>ছবির সাইজ বা কেবি (KB) অনেক কমিয়ে ফেলুন</p>
-        </div>
+        <div class="grid">
+            <div class="card" onclick="openTool('compressor')">
+                <span class="icon">📉</span>
+                <h3>১. ইমেজ কম্প্রেশার</h3>
+                <p>ছবির সাইজ বা কেবি (KB) অনেক কমিয়ে ফেলুন</p>
+            </div>
 
-        <div class="card" onclick="openTool('resizer')">
-            <span class="icon">📐</span>
-            <h3>২. ইমেজ রিসাইজার</h3>
-            <p>ছবির দৈর্ঘ্য ও প্রস্থ পরিবর্তন করুন (300×300 ও 300×80)</p>
-        </div>
+            <div class="card" onclick="openTool('resizer')">
+                <span class="icon">📐</span>
+                <h3>২. ইমেজ রিসাইজার</h3>
+                <p>ছবির দৈর্ঘ্য ও প্রস্থ পরিবর্তন করুন (300×300 ও 300×80)</p>
+            </div>
 
-        <div class="card" onclick="openTool('jpg-to-pdf')">
-            <span class="icon">🖼️</span>
-            <h3>৩. JPG থেকে PDF</h3>
-            <p>জেপিজি ছবিকে সহজে পিডিএফ ফাইলে রূপান্তর</p>
-        </div>
+            <div class="card" onclick="openTool('jpg-to-pdf')">
+                <span class="icon">🖼️</span>
+                <h3>৩. JPG থেকে PDF</h3>
+                <p>জেপিজি ছবিকে সহজে পিডিএফ ফাইলে রূপান্তর</p>
+            </div>
 
-        <div class="card" onclick="openTool('cropper')">
-            <span class="icon">✂️</span>
-            <h3>৪. ইমেজ ক্রপার</h3>
-            <p>ছবির যেকোনো নির্দিষ্ট অংশ কেটে আলাদা করুন</p>
-        </div>
+            <div class="card" onclick="openTool('cropper')">
+                <span class="icon">✂️</span>
+                <h3>৪. ইমেজ ক্রপার</h3>
+                <p>ছবির যেকোনো নির্দিষ্ট অংশ কেটে আলাদা করুন</p>
+            </div>
 
-        <div class="card" onclick="openTool('bg-remover')">
-            <span class="icon">🪄</span>
-            <h3>৫. ব্যাকগ্রাউন্ড রিমুভার</h3>
-            <p>ছবির পিছনের ব্যাকগ্রাউন্ড সহজে রিমুভ করুন</p>
-        </div>
+            <div class="card" onclick="openTool('bg-remover')">
+                <span class="icon">🪄</span>
+                <h3>৫. ব্যাকগ্রাউন্ড রিমুভার</h3>
+                <p>ছবির পিছনের ব্যাকগ্রাউন্ড সহজে রিমুভ করুন</p>
+            </div>
 
-        <div class="card" onclick="openTool('ocr')">
-            <span class="icon">📝</span>
-            <h3>৬. ইমেজ টু টেক্সট (OCR)</h3>
-            <p>ছবি থেকে বাংলা বা ইংরেজি লেখা আলাদা করুন</p>
-        </div>
+            <div class="card" onclick="openTool('ocr')">
+                <span class="icon">📝</span>
+                <h3>৬. ইমেজ টু টেক্সট (OCR)</h3>
+                <p>ছবি থেকে বাংলা বা ইংরেজি লেখা আলাদা করুন</p>
+            </div>
 
-        <div class="card" onclick="openTool('watermark')">
-            <span class="icon">🧼</span>
-            <h3>৭. ওয়াটারমার্ক রিমুভার</h3>
-            <p>ছবি থেকে যেকোনো লোগো, নাম বা দাগ মুছুন</p>
-        </div>
+            <div class="card" onclick="openTool('watermark')">
+                <span class="icon">🧼</span>
+                <h3>৭. ওয়াটারমার্ক রিমুভার</h3>
+                <p>ছবি থেকে যেকোনো লোগো, নাম বা দাগ মুছুন</p>
+            </div>
 
-        <div class="card" onclick="openTool('hd-enhancer')">
-            <span class="icon">✨</span>
-            <h3>৮. ফটো ইনহ্যান্সার (HD)</h3>
-            <p>ঝাপসা বা পুরোনো ছবিকে একদম পরিষ্কার করুন</p>
-        </div>
+            <div class="card" onclick="openTool('hd-enhancer')">
+                <span class="icon">✨</span>
+                <h3>৮. ফটো ইনহ্যান্সার (HD)</h3>
+                <p>ঝাপসা বা পুরোনো ছবিকে একদম পরিষ্কার করুন</p>
+            </div>
 
-        <div class="card" onclick="openTool('converter')">
-            <span class="icon">🔄</span>
-            <h3>৯. ইমেজ কনভার্টার</h3>
-            <p>PNG, WEBP, JPG এক ফরম্যাট থেকে অন্য ফরম্যাটে নিন</p>
-        </div>
+            <div class="card" onclick="openTool('converter')">
+                <span class="icon">🔄</span>
+                <h3>৯. ইমেজ কনভার্টার</h3>
+                <p>PNG, WEBP, JPG এক ফরম্যাট থেকে অন্য ফরম্যাটে নিন</p>
+            </div>
 
-        <div class="card" onclick="openTool('passport-photo')">
-            <span class="icon">👤</span>
-            <h3>১০. পাসপোর্ট ফটো মেকার</h3>
-            <p>যেকোনো ছবিকে পাসপোর্ট ও স্ট্যাম্প সাইজে রূপান্তর করুন</p>
+            <div class="card" onclick="openTool('passport-photo')">
+                <span class="icon">👤</span>
+                <h3>১০. পাসপোর্ট ফটো মেকার</h3>
+                <p>যেকোনো ছবিকে পাসপোর্ট ও স্ট্যাম্প সাইজে রূপান্তর করুন</p>
+            </div>
         </div>
-
     </div>
+
+    <div id="tool-compressor" class="tool-section">
+        <h2>📉 ইমেজ কম্প্রেশার</h2>
+        <p>আপনার ছবি আপলোড করুন এবং মান ঠিক রেখে ফাইলের সাইজ ছোট করুন।</p>
+        
+        <div class="upload-box" onclick="document.getElementById('file-input').click()">
+            <span style="font-size: 40px;">📁</span>
+            <p>এখানে ক্লিক করে ছবি সিলেক্ট করুন</p>
+            <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+        </div>
+
+        <div id="compress-controls" style="display:none;">
+            <div class="range-slider">
+                <label for="quality-range" style="font-weight:bold;">ছবির কোয়ালিটি (Quality): <span id="quality-val">70</span>%</label><br>
+                <input type="range" id="quality-range" min="10" max="100" value="70" style="width:80%; max-width:400px;" oninput="updateQuality(this.value)">
+            </div>
+
+            <div class="preview-box">
+                <div>
+                    <h4>আসল ছবি:</h4>
+                    <img id="orig-preview" src="" alt="">
+                    <p class="status-txt" id="orig-size"></p>
+                </div>
+                <div>
+                    <h4>কম্প্রেসড ছবি:</h4>
+                    <img id="comp-preview" src="" alt="">
+                    <p class="status-txt" id="comp-size" style="color: #10b981;"></p>
+                </div>
+            </div>
+
+            <button class="btn-action" id="download-btn" onclick="downloadImage()">⬇️ ছবি ডাউনলোড করুন</button>
+        </div>
+
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
+
 </div>
 
 <script>
-// টুলস ওপেন করার জন্য জাভাস্ক্রিপ্ট কন্ট্রোলার
+let originalFile = null;
+
+// মেনু এবং টুল ওপেন-ক্লোজ করার ফাংশন
 function openTool(toolName) {
-    alert(toolName + " টুলটির মূল কোডিংয়ের কাজ আমরা এরপর শুরু করব!");
+    if(toolName === 'compressor') {
+        document.getElementById('main-menu').style.display = 'none';
+        document.getElementById('tool-compressor').style.display = 'block';
+    } else {
+        alert(toolName + " টুলটির মূল কোডিংয়ের কাজ আমরা এর পরের ধাপে যুক্ত করব!");
+    }
+}
+
+function closeAllTools() {
+    document.getElementById('tool-compressor').style.display = 'none';
+    document.getElementById('main-menu').style.display = 'block';
+    // আগের ডেটা ক্লিয়ার করা
+    document.getElementById('compress-controls').style.display = 'none';
+    document.getElementById('file-input').value = '';
+}
+
+// কম্প্রেশার লজিক (জাভাস্ক্রিপ্ট)
+function updateQuality(val) {
+    document.getElementById('quality-val').innerText = val;
+    if(originalFile) {
+        compressImage(originalFile, val / 100);
+    }
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    originalFile = file;
+
+    document.getElementById('orig-size').innerText = "সাইজ: " + (file.size / 1024).toFixed(2) + " KB";
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('orig-preview').src = e.target.result;
+        document.getElementById('compress-controls').style.display = 'block';
+        compressImage(file, document.getElementById('quality-range').value / 100);
+    };
+    reader.readAsDataURL(file);
+}
+
+function compressImage(file, quality) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            canvas.toBlob(function(blob) {
+                if(!blob) return;
+                document.getElementById('comp-size').innerText = "নতুন সাইজ: " + (blob.size / 1024).toFixed(2) + " KB";
+                document.getElementById('comp-preview').src = URL.createObjectURL(blob);
+            }, file.type, quality);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function downloadImage() {
+    const compImg = document.getElementById('comp-preview');
+    if(!compImg.src) return;
+    const link = document.createElement('a');
+    link.href = compImg.src;
+    link.download = "compressed_salman_service_" + (originalFile ? originalFile.name : "image.jpg");
+    link.click();
 }
 </script>
 
