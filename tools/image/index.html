@@ -3,35 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইমেজ টুলস ক্যাটাগরি | সালমান অনলাইন সেবা</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <title>ফ্রি অনলাইন ইমেজ টুলস ও সেবাসমূহ | সালমান অনলাইন স্মার্ট সেবা</title>
+    <meta name="description" content="সালমান অনলাইন স্মার্ট সেবার ফ্রি ইমেজ টুলস। এক ক্লিকেই ইমেজ কম্প্রেশার, সাইজ পরিবর্তন (300*300 পিক্সেল), ক্রপার, ব্যাকগ্রাউন্ড রিমুভার ও পাসপোর্ট সাইজ ছবি তৈরি করুন সম্পূর্ণ ফ্রিতে।">
+    <meta name="keywords" content="ইমেজ কম্প্রেশার, ইমেজ রিসাইজার, 300*300 picture resizer, 300*80 signature resize, ছবি ছোট করা, ব্যাকগ্রাউন্ড রিমুভার, পাসপোর্ট সাইজ ফটো মেকার, সালমান অনলাইন সেবা, ফ্রি অনলাইন টুলস">
+    <meta name="author" content="Salman Farshi">
+    <meta name="robots" content="index, follow">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; background: #f8fafc; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; }
-        .back-btn { display: inline-block; padding: 10px 20px; background: #0284c7; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-bottom: 20px; transition: 0.2s; }
-        .back-btn:hover { background: #0369a1; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; }
-        h2 { color: #1e293b; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .back-btn { display: inline-block; padding: 10px 22px; background: #1e3a8a; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s; }
+        .back-btn:hover { background: #1e40af; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+        .card { background: white; padding: 25px 15px; border-radius: 14px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+        .icon { font-size: 35px; margin-bottom: 10px; display: block; }
+        h2 { color: #1e293b; font-size: 24px; margin-bottom: 5px; }
+        h3 { font-size: 16px; color: #1e293b; margin: 5px 0; font-weight: 700; }
+        p { font-size: 12px; color: #64748b; margin: 0; line-height: 1.4; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- মেইন পেজে ফিরে যাওয়ার বাটন -->
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
-    <h2>🖼️ ইমেজ টুলস ও সেবাসমূহ (প্রথম ২০টি)</h2>
-    <p style="color: #64748b; margin-top: -10px;">এখানে আপনার ইমেজ ক্যাটাগরির ২০টি বিশেষ টুলস থাকবে।</p>
-    <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 20px;">
+    <h2>🖼️ ইমেজ টুলস ও সেবাসমূহ</h2>
+    <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ (৩০০×৩০০) ও কনভার্ট করার ১০টি প্রিমিয়াম টুলস নিচে দেওয়া হলো।</p>
+    <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
     
     <div class="grid">
-        <!-- আপাতত ডামি ৩টি বাটন দিয়ে রাখলাম, পরে এখানে আমরা আসল কোড ঢুকাবো -->
-        <div class="card"><span style="font-size:30px;">📉</span><h3>১. ইমেজ কম্প্রেশার</h3></div>
-        <div class="card"><span style="font-size:30px;">📐</span><h3>২. ইমেজ রিসাইজার</h3></div>
-        <div class="card"><span style="font-size:30px;">🖼️</span><h3>৩. JPG থেকে PDF</h3></div>
+        
+        <div class="card" onclick="openTool('compressor')">
+            <span class="icon">📉</span>
+            <h3>১. ইমেজ কম্প্রেশার</h3>
+            <p>ছবির সাইজ বা কেবি (KB) অনেক কমিয়ে ফেলুন</p>
+        </div>
+
+        <div class="card" onclick="openTool('resizer')">
+            <span class="icon">📐</span>
+            <h3>২. ইমেজ রিসাইজার</h3>
+            <p>ছবির দৈর্ঘ্য ও প্রস্থ পরিবর্তন করুন (300×300 ও 300×80)</p>
+        </div>
+
+        <div class="card" onclick="openTool('jpg-to-pdf')">
+            <span class="icon">🖼️</span>
+            <h3>৩. JPG থেকে PDF</h3>
+            <p>জেপিজি ছবিকে সহজে পিডিএফ ফাইলে রূপান্তর</p>
+        </div>
+
+        <div class="card" onclick="openTool('cropper')">
+            <span class="icon">✂️</span>
+            <h3>৪. ইমেজ ক্রপার</h3>
+            <p>ছবির যেকোনো নির্দিষ্ট অংশ কেটে আলাদা করুন</p>
+        </div>
+
+        <div class="card" onclick="openTool('bg-remover')">
+            <span class="icon">🪄</span>
+            <h3>৫. ব্যাকগ্রাউন্ড রিমুভার</h3>
+            <p>ছবির পিছনের ব্যাকগ্রাউন্ড সহজে রিমুভ করুন</p>
+        </div>
+
+        <div class="card" onclick="openTool('ocr')">
+            <span class="icon">📝</span>
+            <h3>৬. ইমেজ টু টেক্সট (OCR)</h3>
+            <p>ছবি থেকে বাংলা বা ইংরেজি লেখা আলাদা করুন</p>
+        </div>
+
+        <div class="card" onclick="openTool('watermark')">
+            <span class="icon">🧼</span>
+            <h3>৭. ওয়াটারমার্ক রিমুভার</h3>
+            <p>ছবি থেকে যেকোনো লোগো, নাম বা দাগ মুছুন</p>
+        </div>
+
+        <div class="card" onclick="openTool('hd-enhancer')">
+            <span class="icon">✨</span>
+            <h3>৮. ফটো ইনহ্যান্সার (HD)</h3>
+            <p>ঝাপসা বা পুরোনো ছবিকে একদম পরিষ্কার করুন</p>
+        </div>
+
+        <div class="card" onclick="openTool('converter')">
+            <span class="icon">🔄</span>
+            <h3>৯. ইমেজ কনভার্টার</h3>
+            <p>PNG, WEBP, JPG এক ফরম্যাট থেকে অন্য ফরম্যাটে নিন</p>
+        </div>
+
+        <div class="card" onclick="openTool('passport-photo')">
+            <span class="icon">👤</span>
+            <h3>১০. পাসপোর্ট ফটো মেকার</h3>
+            <p>যেকোনো ছবিকে পাসপোর্ট ও স্ট্যাম্প সাইজে রূপান্তর করুন</p>
+        </div>
+
     </div>
 </div>
+
+<script>
+// টুলস ওপেন করার জন্য জাভাস্ক্রিপ্ট কন্ট্রোলার
+function openTool(toolName) {
+    alert(toolName + " টুলটির মূল কোডিংয়ের কাজ আমরা এরপর শুরু করব!");
+}
+</script>
 
 </body>
 </html>
