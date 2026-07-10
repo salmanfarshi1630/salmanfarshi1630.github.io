@@ -55,19 +55,19 @@
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
     <div id="main-menu">
-        <h2>🖼️ ইমেজ টুলস ও সেবাসমূহ</h2>
+        <h2>🖼️ 이미지 টুলস ও সেবাসমূহ</h2>
         <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ (৩০০×৩০০) ও কনভার্ট করার ১০টি প্রিমিয়াম টুল নিচে দেওয়া হলো।</p>
         <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
         
         <div class="grid">
             <div class="card" onclick="openTool('compressor')">
                 <span class="icon">📉</span>
-                <h3>১. ইমেজ কম্প্রেশার</h3>
+                <h3>১. 이미지 কম্প্রেশার</h3>
                 <p>ছবির সাইজ বা কেবি (KB) অনেক কমিয়ে ফেলুন</p>
             </div>
             <div class="card" onclick="openTool('resizer')">
                 <span class="icon">📐</span>
-                <h3>২. ইমেজ রিসাইজার</h3>
+                <h3>২. 이미지 রিসাইজার</h3>
                 <p>ছবির দৈর্ঘ্য ও প্রস্থ পরিবর্তন করুন (300×300 ও 300×80)</p>
             </div>
             <div class="card" onclick="openTool('jpg-to-pdf')">
@@ -77,7 +77,7 @@
             </div>
             <div class="card" onclick="openTool('cropper')">
                 <span class="icon">✂️</span>
-                <h3>৪. ইমেজ ক্রপার</h3>
+                <h3>৪. 이미지 ক্রপার</h3>
                 <p>ছবির যেকোনো নির্দিষ্ট অংশ কেটে আলাদা করুন</p>
             </div>
             <div class="card" onclick="openTool('bg-remover')">
@@ -87,7 +87,7 @@
             </div>
             <div class="card" onclick="openTool('ocr')">
                 <span class="icon">📝</span>
-                <h3>৬. ইমেজ টু টেক্সট (OCR)</h3>
+                <h3>৬. 이미지 টু টেক্সট (OCR)</h3>
                 <p>ছবি থেকে বাংলা বা ইংরেজি লেখা আলাদা করুন</p>
             </div>
             <div class="card" onclick="openTool('watermark')">
@@ -102,7 +102,7 @@
             </div>
             <div class="card" onclick="openTool('converter')">
                 <span class="icon">🔄</span>
-                <h3>৯. ইমেজ কনভার্টার</h3>
+                <h3>৯. 이미지 কনভার্টার</h3>
                 <p>PNG, WEBP, JPG এক ফরম্যাট থেকে অন্য ফরম্যাটে নিন</p>
             </div>
             <div class="card" onclick="openTool('passport-photo')">
@@ -115,7 +115,7 @@
 
     <!-- 📉 ১. ইমেজ কম্প্রেশার ইন্টারফেস -->
     <div id="tool-compressor" class="tool-section">
-        <h2>📉 ইমেজ কম্প্রেশার</h2>
+        <h2>📉 이미지 কম্প্রেশার</h2>
         <p>আপনার ছবি আপলোড করুন এবং মান ঠিক রেখে ফাইলের সাইজ ছোট করুন।</p>
         <div class="upload-box" onclick="document.getElementById('file-input-comp').click()">
             <span style="font-size: 40px;">📁</span>
@@ -138,7 +138,7 @@
 
     <!-- 📐 ২. ইমেজ রিসাইজার ইন্টারফেস -->
     <div id="tool-resizer" class="tool-section">
-        <h2>📐 ইমেজ রিসাইজার (পিক্সেল ও ইঞ্চি ফিক্সার)</h2>
+        <h2>📐 ইমেজ রিসাইজার (স্মার্ট ক্রপ ফিচার যুক্ত)</h2>
         <p>চাকরি, এডমিশন বা পাসপোর্ট সাইজের জন্য ছবির সাইজ নিখুঁতভাবে পরিবর্তন করুন।</p>
         <div class="upload-box" onclick="document.getElementById('file-input-resize').click()">
             <span style="font-size: 40px;">📸</span>
@@ -321,7 +321,23 @@ function processResize() {
             const ctx = canvas.getContext('2d');
             canvas.width = targetWidth;
             canvas.height = targetHeight;
-            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+            // 🌟 স্মার্ট ক্রপ লজিক (Smart Centered Cropping) 🌟
+            let srcX = 0, srcY = 0, srcWidth = img.width, srcHeight = img.height;
+            const imgRatio = img.width / img.height;
+            const targetRatio = targetWidth / targetHeight;
+
+            if (imgRatio > targetRatio) {
+                // ছবি বেশি চওড়া হলে দুপাশ থেকে সমান করে কাটা হবে
+                srcWidth = img.height * targetRatio;
+                srcX = (img.width - srcWidth) / 2;
+            } else if (imgRatio < targetRatio) {
+                // ছবি বেশি লম্বা হলে ওপর-নিচ থেকে সমান করে কাটা হবে
+                srcHeight = img.width / targetRatio;
+                srcY = (img.height - srcHeight) / 2;
+            }
+
+            ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, 0, 0, targetWidth, targetHeight);
             document.getElementById('resize-out-preview').src = canvas.toDataURL('image/jpeg', 0.9);
         };
         img.src = e.target.result;
