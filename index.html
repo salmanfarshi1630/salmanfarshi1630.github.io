@@ -815,6 +815,139 @@ document.getElementById('hijri-date').innerText = hijriStr + ' হিজরি';
 <!-- ========================================== -->
 <!-- সালমান স্মার্ট অনলাইন সেবা সেকশন (শেষ) -->
 <!-- ========================================== -->
+
+<div style="max-width: 960px; margin: 30px auto; padding: 0 15px; font-family: inherit; box-sizing: border-box;">
+    
+    <div style="text-align: center; margin-bottom: 25px;">
+        <div onclick="toggleTools()" style="display: inline-block; background: #f8fafc; border: 2px solid #1e3a8a; border-radius: 50px; padding: 12px 45px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.05); cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#1e3a8a'; this.querySelector('h2').style.color='#ffffff';" onmouseout="this.style.background='#f8fafc'; this.querySelector('h2').style.color='#1e293b';">
+            <h2 style="font-size: 22px; color: #1e293b; font-weight: 700; margin: 0; display: inline-flex; align-items: center; gap: 10px; transition: color 0.2s;">
+                📂 আমাদের সেবাসমূহ ও টুলস (ক্যাটাগরি) <span id="toggle-arrow" style="font-size: 16px;">▼</span>
+            </h2>
+        </div>
+        <p style="color: #64748b; font-size: 13px; margin: 12px 0 0 0; font-weight: 500;">টুলসগুলো দেখতে বা লুকাতে ওপরের বাটনটিতে ক্লিক করুন।</p>
+    </div>
+
+    <div id="tools-grid" style="display: none; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; box-sizing: border-box; opacity: 0; transition: opacity 0.3s ease-in-out;">
+
+        <a href="tools/image/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">🖼️</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">ইমেজ টুলস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">রিসাইজার, কম্প্রেশার ও ফটো</p>
+            </div>
+        </a>
+
+        <a href="tools/pdf/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">📄</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">পিডিএফ টুলস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">মার্জ, স্প্লিট ও কনভার্টার</p>
+            </div>
+        </a>
+
+        <a href="tools/text/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">📝</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">টেক্সট টুলস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">ইউনিকোর্ড, বিজয় ও কাউন্টার</p>
+            </div>
+        </a>
+
+        <a href="tools/converter/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">🔄</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">কনভার্টার টুলস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">JPG, PNG ও ফরম্যাট চেঞ্জার</p>
+            </div>
+        </a>
+
+        <a href="tools/qr/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">📷</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">QR ও বারকোড</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">কিউআর মেকার ও কোড জেনারেটর</p>
+            </div>
+        </a>
+
+        <a href="tools/security/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">🔐</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">সিকিউরিটি টুলস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">পাসওয়ার্ড ও হ্যাশ মেকার</p>
+            </div>
+        </a>
+
+        <a href="tools/calculator/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">🧮</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">ক্যালকুলেটরস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">বয়স, ইএমআই ও জাকাত হিসাব</p>
+            </div>
+        </a>
+
+        <a href="tools/developer/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">💻</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">ডেভেলপার টুলস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">JSON, HTML ও CSS ফরমেট</p>
+            </div>
+        </a>
+
+        <a href="tools/document/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">📋</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">ডকুমেন্ট ও সিভি</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">ডিজিটাল সিগনেচার ও সিভি মেকার</p>
+            </div>
+        </a>
+
+        <a href="tools/daily/index.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">⭐</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">দৈনিক দরকারী</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">বাংলা ক্যালেন্ডার ও সাইজ গাইড</p>
+            </div>
+        </a>
+
+        <a href="all-tools.html#popular" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">🔥</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">জনপ্রিয় টুলস</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">সবচেয়ে বেশি ব্যবহৃত টুলসসমূহ</p>
+            </div>
+        </a>
+
+        <a href="all-tools.html" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; height: 135px; padding: 15px 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; transition: all 0.2s ease;" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0px)';">
+                <div style="font-size: 20px; margin-bottom: 6px;">🌐</div>
+                <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 4px 0; font-weight: 700;">সবগুলো টুলস দেখুন</h3>
+                <p style="font-size: 11px; color: #64748b; margin: 0; line-height: 1.4;">আমাদের সকল টুলের তালিকা</p>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<script>
+function toggleTools() {
+    var grid = document.getElementById("tools-grid");
+    var arrow = document.getElementById("toggle-arrow");
+    
+    if (grid.style.display === "none" || grid.style.display === "") {
+        grid.style.display = "grid";
+        setTimeout(function() {
+            grid.style.opacity = "1";
+        }, 10);
+        arrow.innerHTML = "▲"; // বাটন ওপেন হলে তীর উপরে যাবে
+    } else {
+        grid.style.opacity = "0";
+        setTimeout(function() {
+            grid.style.display = "none";
+        }, 300);
+        arrow.innerHTML = "▼"; // বাটন ক্লোজ হলে তীর নিচে যাবে
+    }
+}
+</script>
     
 <script>
     // হোভার ইফেক্ট লজিক
