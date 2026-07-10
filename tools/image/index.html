@@ -55,7 +55,7 @@
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
     <div id="main-menu">
-        <h2>🖼️ ইমেজツール ও সেবাসমূহ</h2>
+        <h2>🖼️ ইমেজ টুলস ও সেবাসমূহ</h2>
         <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ (৩০০×৩০০) ও কনভার্ট করার ১০টি প্রিমিয়াম টুল নিচে দেওয়া হলো।</p>
         <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
         
@@ -201,7 +201,7 @@ function closeAllTools() {
     document.getElementById('file-input-resize').value = '';
 }
 
-// --- ১. ইমেজ কম্প্রেশার লজিক (মোবাইল অপ্টিমাইজড) ---
+// --- ১. ইমেজ কম্প্রেশার লজিক ---
 function updateQuality(val) {
     document.getElementById('quality-val').innerText = val;
     if(originalFileComp) compressImage(originalFileComp, val / 100);
@@ -230,7 +230,6 @@ function compressImage(file, quality) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            // মোবাইল ক্র্যাশ রোধ করতে ম্যাক্স সাইজ ফিক্সড করা
             let width = img.width;
             let height = img.height;
             if (width > 2000) { height *= 2000 / width; width = 2000; }
@@ -266,7 +265,7 @@ function downloadImageComp() {
     document.body.removeChild(link);
 }
 
-// --- ২. ইমেজ রিসাইজার লজিক (ইঞ্চি ও পিক্সেল সাপোর্টেড) ---
+// --- ২. ইমেজ রিসাইজার লজিক ---
 function handleImageUploadResize(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -301,7 +300,6 @@ function applyCustomResize() {
     let h = parseFloat(document.getElementById('resize-h').value) || 300;
     
     if (unit === 'inch') {
-        // ১ ইঞ্চি = ৯৬ পিক্সেল (স্ট্যান্ডার্ড ওয়েব কনভার্সন)
         targetWidth = Math.round(w * 96);
         targetHeight = Math.round(h * 96);
     } else {
@@ -328,7 +326,7 @@ function processResize() {
         };
         img.src = e.target.result;
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(originalFileResize);
 }
 
 function downloadImageResize() {
