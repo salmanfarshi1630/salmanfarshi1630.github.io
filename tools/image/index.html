@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>ফ্রি অনলাইন ইমেজ টুলস ও সেবাসমূহ | সালমান অনলাইন স্মার্ট সেবা</title>
-    <meta name="description" content="সালমান অনলাইন স্মার্ট সেবার ফ্রি ইমেজ টুলস। এক ক্লিকেই ইমেজ কম্প্রেশার, সাইজ পরিবর্তন (300*300 পিক্সেল), ক্রপার, ব্যাকগ্রাউন্ড রিমুভার ও পাসপোর্ট সাইজ ছবি তৈরি করুন সম্পূর্ণ ফ্রিতে।">
-    <meta name="keywords" content="ইমেজ কম্প্রেশার, ইমেজ রিসাইজার, 300*300 picture resizer, 300*80 signature resize, ছবি ছোট করা, ব্যাকগ্রাউন্ড রিমুভার, পাসপোর্ট সাইজ ফটো মেকার, সালমান অনলাইন সেবা, ফ্রি অনলাইন টুলস">
-    <meta name="author" content="Salman Farshi">
-    <meta name="robots" content="index, follow">
-    
+    <title>ফ্রি অনলাইন ইমেজ টুল ও সেবাসমূহ | سلمان অনলাইন স্মার্ট সেবা</title>
+    <meta name="description" content="সালমান অনলাইন স্মার্ট সেবার ফ্রি ইমেজ টুলস। এক ক্লিকেই ইমেজ কম্প্রেশার, সাইজ পরিবর্তন, ক্রপার, ব্যাকগ্রাউন্ড রিমুভার ও পাসপোর্ট সাইজ ছবি তৈরি করুন সম্পূর্ণ ফ্রিতে।">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
         * { font-family: 'Hind Siliguri', sans-serif !important; box-sizing: border-box; }
-        body { background: #f8fafc; margin: 0; padding: 15px; }
+        body { background: #f8fafc; margin: 0; padding: 15px; -webkit-tap-highlight-color: transparent; }
         .container { max-width: 1000px; margin: 0 auto; }
         .back-btn { display: inline-block; padding: 10px 22px; background: #1e3a8a; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s; }
         .back-btn:hover { background: #1e40af; }
@@ -25,31 +21,35 @@
         h2 { color: #1e293b; font-size: 24px; margin-bottom: 5px; }
         h3 { font-size: 16px; color: #1e293b; margin: 5px 0; font-weight: 700; }
         p { font-size: 13px; color: #64748b; margin: 0; line-height: 1.4; }
-
         .tool-section { display: none; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-top: 20px; text-align: center; }
-        .upload-box { border: 2px dashed #cbd5e1; padding: 30px 15px; border-radius: 12px; cursor: pointer; background: #f8fafc; transition: 0.2s; margin-bottom: 15px; }
+        .upload-box { border: 2px dashed #cbd5e1; padding: 30px 15px; border-radius: 12px; cursor: pointer; background: #f8fafc; transition: 0.2s; margin-bottom: 15px; word-break: break-all; }
         .upload-box:hover { border-color: #1e3a8a; background: #f1f5f9; }
-        
-        .btn-action { background: #10b981; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; transition: 0.2s; display: inline-block; }
+        .btn-action { background: #10b981; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; transition: 0.2s; display: inline-block; width: 100%; max-width: 300px; text-decoration: none; }
         .btn-action:hover { background: #059669; }
         .close-btn { background: #ef4444; margin-top: 15px; }
         .close-btn:hover { background: #dc2626; }
-        
         .preview-box { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
-        .preview-box div { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; min-width: 260px; max-width: 100%; }
-        .preview-box img { max-width: 100%; height: auto; max-height: 250px; border-radius: 4px; object-fit: contain; }
+        .preview-box div { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; min-width: 260px; max-width: 100%; flex: 1; }
+        .preview-box img, .preview-box canvas { max-width: 100%; height: auto; max-height: 350px; border-radius: 6px; object-fit: contain; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .status-txt { font-weight: bold; color: #1e3a8a; margin-top: 10px; font-size: 14px; }
-        .range-slider { margin: 15px 0; }
-        
+        .crop-workspace { background: #1e293b; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px solid #334155; }
         .position-controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin: 15px 0; display: none; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         .position-controls label { font-weight: bold; font-size: 14px; color: #1e293b; display: block; margin-bottom: 5px; }
-
         .preset-container { display: flex; justify-content: center; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
         .btn-preset { background: #e2e8f0; color: #1e293b; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; }
         .btn-preset:hover, .btn-preset.active { background: #1e3a8a; color: white; }
-        
         .custom-size-inputs { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 15px 0; flex-wrap: wrap; background: #f1f5f9; padding: 15px; border-radius: 8px; }
         .custom-size-inputs input, .custom-size-inputs select { padding: 8px; text-align: center; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: white; }
+        textarea { width: 100%; height: 180px; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 15px; font-size: 14px; resize: vertical; line-height: 1.5; }
+        .pad-grid { display: grid; grid-template-columns: repeat(3, 55px); gap: 8px; justify-content: center; margin: 15px 0; }
+        .pad-btn { width: 55px; height: 55px; background: #1e3a8a; color: white; border: none; border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.1s; }
+        .pad-btn:active { background: #10b981; transform: scale(0.95); }
+        
+        /* ৫ নম্বর স্পেশাল বক্স স্টাইল */
+        .bg-remover-box { background: #f8fafc; border: 2px dashed #10b981; padding: 40px 20px; border-radius: 16px; max-width: 600px; margin: 20px auto; }
+        .bg-remover-box h4 { margin: 0 0 10px 0; color: #1e293b; font-size: 18px; }
+        .btn-open-web { background: #1e3a8a; color: white; text-decoration: none; padding: 14px 30px; font-weight: bold; border-radius: 8px; display: inline-block; margin-top: 15px; box-shadow: 0 4px 12px rgba(30,58,138,0.2); transition: 0.2s; }
+        .btn-open-web:hover { background: #1e40af; transform: translateY(-1px); }
     </style>
 </head>
 <body>
@@ -58,259 +58,318 @@
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
     <div id="main-menu">
-        <h2>🖼️ ইমেজ টুলস ও সেবাসমূহ</h2>
-        <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ (৩০০×৩০০) ও কনভার্ট করার ১০টি প্রিমিয়াম টুল নিচে দেওয়া হলো।</p>
+        <h2>🖼️ ইমেজ টুলস ও সেবা সমূহ</h2>
+        <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ ও কনভার্ট করার ১০টি অল-ইন-ওয়ান প্রфেশনাল টুল।</p>
         <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
         
         <div class="grid">
-            <div class="card" onclick="openTool('compressor')">
-                <span class="icon">📉</span>
-                <h3>১. ইমেজ কম্প্রেশার</h3>
-                <p>ছবির সাইজ বা কেবি (KB) অনেক কমিয়ে ফেলুন</p>
-            </div>
-            <div class="card" onclick="openTool('resizer')">
-                <span class="icon">📐</span>
-                <h3>২. ইমেজ রিসাইজার</h3>
-                <p>ছবির দৈর্ঘ্য ও প্রস্থ পরিবর্তন করুন (300×300 ও 300×80)</p>
-            </div>
-            <div class="card" onclick="openTool('jpg-to-pdf')">
-                <span class="icon">🖼️</span>
-                <h3>৩. JPG থেকে PDF</h3>
-                <p>জেপিজি ছবিকে সহজে পিডিএফ ফাইলে রূপান্তর</p>
-            </div>
-            <div class="card" onclick="openTool('cropper')">
-                <span class="icon">✂️</span>
-                <h3>৪. ইমেজ ক্রপার</h3>
-                <p>ছবির যেকোনো নির্দিষ্ট অংশ কেটে আলাদা করুন</p>
-            </div>
-            <div class="card" onclick="openTool('bg-remover')">
-                <span class="icon">🪄</span>
-                <h3>৫. ব্যাকগ্রাউন্ড রিমুভার</h3>
-                <p>ছবির পিছনের ব্যাকগ্রাউন্ড সহজে রিমুভ করুন</p>
-            </div>
-            <div class="card" onclick="openTool('ocr')">
-                <span class="icon">📝</span>
-                <h3>৬. ইমেজ টু টেক্সট (OCR)</h3>
-                <p>ছবি থেকে বাংলা বা ইংরেজি লেখা আলাদা করুন</p>
-            </div>
-            <div class="card" onclick="openTool('watermark')">
-                <span class="icon">🧼</span>
-                <h3>৭. ওয়াটারমার্ক রিমুভার</h3>
-                <p>ছবি থেকে যেকোনো লোগো, নাম বা দাগ মুছুন</p>
-            </div>
-            <div class="card" onclick="openTool('hd-enhancer')">
-                <span class="icon">✨</span>
-                <h3>৮. ফটো ইনহ্যান্সার (HD)</h3>
-                <p>ঝাপসা বা পুরোনো ছবিকে একদম পরিষ্কার করুন</p>
-            </div>
-            <div class="card" onclick="openTool('converter')">
-                <span class="icon">🔄</span>
-                <h3>৯. ইমেজ কনভার্টার</h3>
-                <p>PNG, WEBP, JPG এক ফরম্যাট থেকে অন্য ফরম্যাটে নিন</p>
-            </div>
-            <div class="card" onclick="openTool('passport-photo')">
-                <span class="icon">👤</span>
-                <h3>১০. পাসপোর্ট ফটো মেকার</h3>
-                <p>যেকোনো ছবিকে পাসপোর্ট ও স্ট্যাম্প সাইজে রূপান্তর করুন</p>
-            </div>
+            <div class="card" onclick="openTool('compressor')"><span class="icon">📉</span><h3>১. ইমেজ কম্প্রেশার</h3><p>ছবির সাইজ বা কেবি (KB) অনেক কমিয়ে ফেলুন</p></div>
+            <div class="card" onclick="openTool('resizer')"><span class="icon">📐</span><h3>২. ইমেজ রিসাইজার</h3><p>ছবির দৈর্ঘ্য ও প্রস্থ পরিবর্তন করুন</p></div>
+            <div class="card" onclick="openTool('jpg-to-pdf')"><span class="icon">📄</span><h3>৩. JPG থেকে PDF</h3><p>জেপিজি ছবিকে সহজে পিডিএফ ফাইলে রূপান্তর</p></div>
+            <div class="card" onclick="openTool('cropper')"><span class="icon">✂️</span><h3>৪. ইমেজ ক্রপার ও ফ্লিপ</h3><p>ছবির নির্দিষ্ট অংশ কাটা ও ডানে-বামে ঘোরানো</p></div>
+            <div class="card" onclick="openTool('bg-remover')"><span class="icon">🪄</span><h3>৫. ব্যাকগ্রাউন্ড রিমুভার (AI)</h3><p>এক ক্লিকে ছবির ব্যাকগ্রাউন্ড ১০০% অটোমেটিক রিমুভ করুন</p></div>
+            <div class="card" onclick="openTool('ocr')"><span class="icon">📝</span><h3>৬. ছবি থেকে টেক্সট (OCR)</h3><p>ছবি থেকে যেকোনো লেখা আলাদা করে টেক্সট করুন</p></div>
+            <div class="card" onclick="openTool('watermark')"><span class="icon">🧼</span><h3>৭. ছবিতে ওয়াটারমার্ক</h3><p>নিজের ছবির ওপর নাম বা ব্র্যান্ড লোগো বসান</p></div>
+            <div class="card" onclick="openTool('hd-enhancer')"><span class="icon">✨</span><h3>৮. ফটো ব্রাইটনেস ও ফিল্টার</h3><p>ঝাপসা বা অন্ধকার ছবিকে পরিষ্কার ও উজ্জ্বল করুন</p></div>
+            <div class="card" onclick="openTool('converter')"><span class="icon">🔄</span><h3>৯. ইমেজ কনভার্টার</h3><p>PNG, WEBP, JPG ফরম্যাট পরিবর্তন করুন</p></div>
+            <div class="card" onclick="openTool('passport-photo')"><span class="icon">👤</span><h3>১০. পাসপোর্ট ফটো মেকার</h3><p>যেকোনো ছবিকে পাসপোর্ট ও স্ট্যাম্প সাইজে রূপান্তর করুন</p></div>
         </div>
     </div>
 
-    <!-- 📉 ১. ইমেজ কম্প্রেশার ইন্টারফেস -->
     <div id="tool-compressor" class="tool-section">
         <h2>📉 ইমেজ কম্প্রেশার</h2>
-        <p>আপনার ছবি আপলোড করুন এবং মান ঠিক রেখে ফাইলের সাইজ ছোট করুন।</p>
         <div class="upload-box" onclick="document.getElementById('file-input-comp').click()">
-            <span style="font-size: 40px;">📁</span>
-            <p>এখানে ক্লিক করে ছবি সিলেক্ট করুন</p>
+            <span style="font-size: 40px;">📁</span> <p>এখানে ক্লিক করে ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-comp" accept="image/*" style="display:none" onchange="handleImageUploadComp(event)">
         </div>
         <div id="compress-controls" style="display:none;">
             <div class="range-slider">
                 <label style="font-weight:bold;">ছবির কোয়ালিটি: <span id="quality-val">70</span>%</label><br>
-                <input type="range" id="quality-range" min="10" max="100" value="70" style="width:80%; max-width:400px;" oninput="updateQuality(this.value)">
+                <input type="range" id="quality-range" min="10" max="100" value="70" style="width:80%;" oninput="updateQuality(this.value)">
             </div>
             <div class="preview-box">
-                <div><h4>আসল ছবি:</h4><img id="orig-preview" src=""><p class="status-txt" id="orig-size"></p></div>
-                <div><h4>কম্প্রেসড ছবি:</h4><img id="comp-preview" src=""><p class="status-txt" id="comp-size" style="color: #10b981;"></p></div>
+                <div><h4>আসল ছবি:</h4><img id="orig-preview"></div>
+                <div><h4>কম্প্রেসড ছবি:</h4><img id="comp-preview"><p class="status-txt" id="orig-size"></p><p class="status-txt" id="comp-size" style="color: #10b981;"></p></div>
             </div>
             <button class="btn-action" onclick="downloadImageComp()">⬇️ ছবি ডাউনলোড করুন</button>
         </div>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
-    <!-- 📐 ২. ইমেজ রিসাইজার ইন্টারফেস -->
     <div id="tool-resizer" class="tool-section">
-        <h2>📐 ইমেজ রিসাইজার (ফটোশপ স্টাইল ম্যানুয়াল ক্রপ)</h2>
-        <p>ছবি চ্যাপ্টা না করে স্লাইডার দিয়ে পজিশন সেট করে নিখুঁতভাবে ছবি কেটে নিন।</p>
-        <div class="upload-box" id="upload-box-resize" onclick="document.getElementById('file-input-resize').click()">
-            <span style="font-size: 40px;">📸</span>
-            <p>রিসাইজ করার জন্য ছবি বা স্বাক্ষর সিলেক্ট করুন</p>
+        <h2>📐 ইমেজ রিসাইজার (স্মার্ট ক্রপ)</h2>
+        <div class="upload-box" onclick="document.getElementById('file-input-resize').click()">
+            <span style="font-size: 40px;">📸</span> <p>রিসাইজ করার জন্য ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-resize" accept="image/*" style="display:none" onchange="handleImageUploadResize(event)">
         </div>
         <div id="resize-controls" style="display:none;">
             <div class="preset-container">
-                <button class="btn-preset active" id="preset-300" onclick="setPreset(300, 300, 'preset-300')">👤 ছবি (300 × 300 px)</button>
-                <button class="btn-preset" id="preset-80" onclick="setPreset(300, 80, 'preset-80')">✍️ স্বাক্ষর (300 × 80 px)</button>
+                <button class="btn-preset active" id="preset-300" onclick="setPreset(300, 300, 'preset-300')">👤 ছবি (300×300 px)</button>
+                <button class="btn-preset" id="preset-80" onclick="setPreset(300, 80, 'preset-80')">✍️ স্বাক্ষর (300×80 px)</button>
                 <button class="btn-preset" id="preset-custom" onclick="enableCustomSize()">⚙️ কাস্টম সাইজ</button>
             </div>
-            
             <div class="custom-size-inputs" id="custom-inputs" style="display:none;">
-                <label>ইউনিট: 
-                    <select id="resize-unit" onchange="applyCustomResize()">
-                        <option value="px">Pixel (px)</option>
-                        <option value="inch">Inch (ইঞ্চি)</option>
-                    </select>
-                </label>
-                <label>প্রস্থ (Width): <input type="number" id="resize-w" value="300" step="0.1" oninput="applyCustomResize()"></label>
-                <label>উচ্চতা (Height): <input type="number" id="resize-h" value="300" step="0.1" oninput="applyCustomResize()"></label>
+                <select id="resize-unit" onchange="applyCustomResize()"><option value="px">Pixel (px)</option><option value="inch">Inch</option></select>
+                <input type="number" id="resize-w" value="300" oninput="applyCustomResize()">
+                <input type="number" id="resize-h" value="300" oninput="applyCustomResize()">
             </div>
-
-            <!-- 🎛️ ম্যানুয়াল পজিশন কন্ট্রোলার স্লাইডারসমূহ -->
             <div class="position-controls" id="crop-position-sliders">
-                <h4 style="margin: 0 0 10px 0; color: #1e3a8a; text-align: center;">🎛️ ছবি এডজাস্টমেন্ট (ফটোশপ ক্রপ টুল)</h4>
-                <div id="slider-x-container">
-                    <label>↔️ ডানে / বামে সরান:</label>
-                    <input type="range" id="crop-offset-x" min="0" max="100" value="50" style="width: 100%; margin-bottom: 10px;" oninput="processResize()">
-                </div>
-                <div id="slider-y-container">
-                    <label>↕️ ওপরে / নিচে সরান:</label>
-                    <input type="range" id="crop-offset-y" min="0" max="100" value="50" style="width: 100%;" oninput="processResize()">
-                </div>
+                <div id="slider-x-container"><label>↔️ ডানে / বামে সরান:</label><input type="range" id="crop-offset-x" min="0" max="100" value="50" oninput="processResize()"></div>
+                <div id="slider-y-container"><label>↕️ ওপরে / নিচে সরান:</label><input type="range" id="crop-offset-y" min="0" max="100" value="50" oninput="processResize()"></div>
             </div>
-            
             <div class="preview-box">
-                <div><h4>আসল ছবি:</h4><img id="resize-orig-preview" src=""></div>
-                <div><h4>রিসাইজড ছবি (<span id="current-dim">300x300</span> px):</h4><img id="resize-out-preview" src=""></div>
+                <div><h4>আসল ছবি:</h4><img id="resize-orig-preview"></div>
+                <div><h4>রিসাইজড ছবি (<span id="current-dim">300x300</span> px):</h4><img id="resize-out-preview"></div>
             </div>
-            <button class="btn-action" onclick="downloadImageResize()">⬇️ রিসাইজড ছবি ডাউনলোড করুন</button>
+            <button class="btn-action" onclick="downloadImageResize()">⬇️ ডাউনলোড করুন</button>
         </div>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
+    <div id="tool-jpg-to-pdf" class="tool-section">
+        <h2>📄 JPG থেকে PDF কনভার্টার</h2>
+        <div class="upload-box" onclick="document.getElementById('file-input-pdf').click()">
+            <span style="font-size: 40px;">📂</span> <p>ছবিসমূহ সিলেক্ট করুন</p>
+            <input type="file" id="file-input-pdf" accept="image/*" multiple style="display:none" onchange="handlePdfUpload(event)">
+        </div>
+        <div id="pdf-controls" style="display:none;">
+            <p id="pdf-file-count" class="status-txt"></p>
+            <button class="btn-action" onclick="generatePdf()">⬇️ PDF ডাউনলোড করুন</button>
+        </div>
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
+
+    <div id="tool-cropper" class="tool-section">
+        <h2>✂️ ইমেজ ক্রপার ও মিরর রোটেশন</h2>
+        <p>ছবির চারপাশ থেকে অপ্রয়োজনীয় অংশ কাটুন এবং নিচের সাদা অংশ এক ক্লিকে ছেঁটে ফেলুন।</p>
+        <div class="upload-box" onclick="document.getElementById('file-input-crop').click()">
+            <span style="font-size: 40px;">📐</span> <p>ছবি সিলেক্ট করুন</p>
+            <input type="file" id="file-input-crop" accept="image/*" style="display:none" onchange="handleCropUpload(event)">
+        </div>
+        <div id="crop-tool-controls" style="display:none;">
+            <div class="preset-container">
+                <button class="btn-preset" onclick="flipImage()">🔄 ডানে-বামে উল্টান (Flip)</button>
+                <button class="btn-preset" style="background:#dc2626; color:white;" onclick="trimBottomWhite()">📐 নিচের সাদা অংশ কাটুন (Trim Bottom)</button>
+                <button class="btn-preset" style="background:#1e3a8a; color:white;" onclick="resetCropTrim()">🔄 রিসেট করুন</button>
+            </div>
+            <div class="crop-workspace">
+                <div style="color:#94a3b8; text-align:left; font-size:14px;">
+                    <label style="color:#fff; font-weight:bold;">🔍 জুম ইন/আউট (Scale):</label>
+                    <input type="range" id="crop-size-slider" min="10" max="150" value="100" style="width:100%; margin-bottom:12px;" oninput="processCrop()">
+                    <label style="color:#fff; font-weight:bold;">↔️ ডানে-বামে সরান:</label>
+                    <input type="range" id="crop-move-x" min="-100" max="100" value="0" style="width:100%; margin-bottom:12px;" oninput="processCrop()">
+                    <label style="color:#fff; font-weight:bold;">↕️ উপর-নিচে সরান:</label>
+                    <input type="range" id="crop-move-y" min="-100" max="100" value="0" style="width:100%;" oninput="processCrop()">
+                </div>
+            </div>
+            <div class="preview-box">
+                <div><h4>আউটপুট ছবি:</h4><canvas id="crop-canvas"></canvas></div>
+            </div>
+            <button class="btn-action" onclick="downloadImageCrop()">⬇️ ক্রপ করা ছবি ডাউনলোড</button>
+        </div>
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
+
+    <div id="tool-bg-remover" class="tool-section">
+        <h2>🪄 এআই ব্যাকগ্রাউন্ড রিমুভার (AI Background Remover)</h2>
+        <p>নিচের বাটনে ক্লিক করলে সম্পূর্ণ ফ্রিতে এবং ১ ক্লিকে ব্যাকগ্রাউন্ড রিমুভ করার ওয়েবসাইটটি ওপেন হবে।</p>
+        
+        <div class="bg-remover-box">
+            <span style="font-size: 50px; display: block; margin-bottom: 10px;">✨</span>
+            <h4>অটোমেটিক ব্যাকগ্রাউন্ড রিমুভার</h4>
+            <p>কাজ শেষ হলে ট্যাবটি কেটে দিয়ে সহজেই আবার আপনার এই সেবা পেজে ফিরে আসতে পারবেন।</p>
+            <a href="https://www.remove.bg" target="_blank" class="btn-open-web">🔗 ব্যাকগ্রাউন্ড মুছুন (এখানে ক্লিক করুন)</a>
+        </div>
+        
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন ও মূল মেনুতে ফিরুন</button>
+    </div>
+
+    <div id="tool-ocr" class="tool-section">
+        <h2>📝 ছবি থেকে টেক্সট কনভার্টার (OCR)</h2>
+        <div class="upload-box" onclick="document.getElementById('file-input-ocr').click()">
+            <span style="font-size: 40px;">📄</span> <p>ছবি সিলেক্ট করুন</p>
+            <input type="file" id="file-input-ocr" accept="image/*" style="display:none" onchange="handleOcr(event)">
+        </div>
+        <p id="ocr-status" style="color:#1e3a8a; font-weight:bold; margin-top:10px;"></p>
+        <textarea id="ocr-result" placeholder="ছবির সম্পূর্ণ লেখা নিখুঁতভাবে স্ক্যান হয়ে এখানে প্রদর্শিত হবে..."></textarea>
+        <button class="btn-action" onclick="navigator.clipboard.writeText(document.getElementById('ocr-result').value); alert('সম্পূর্ণ টেক্সট কপি হয়েছে!');">📋 টেক্সট কপি করুন</button>
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
+
+    <div id="tool-watermark" class="tool-section">
+        <h2>🧼 ছবিতে ওয়াটারমার্ক ও নাম যুক্তকরণ</h2>
+        <p>ছবির ওপর যেকোনো স্থানে আপনার টেক্সট নিখুঁতভাবে বসিয়ে লাইভ প্রিভিউ দেখে ডাউনলোড করুন।</p>
+        <div class="upload-box" onclick="document.getElementById('file-input-wm').click()">
+            <span style="font-size: 40px;">✍️</span> <p>ছবি সিলেক্ট করুন</p>
+            <input type="file" id="file-input-wm" accept="image/*" style="display:none" onchange="handleWmUpload(event)">
+        </div>
+        <div id="wm-controls" style="display:none;">
+            <input type="text" id="wm-text" value="সালমান অনলাইন স্মার্ট সেবা" placeholder="আপনার টেক্সট লিখুন" style="padding:12px; width:90%; max-width:400px; border-radius:8px; border:2px solid #cbd5e1; text-align:center; font-size:16px; font-weight:bold;" oninput="processWatermark()"><br>
+            
+            <div style="margin-top:15px;">
+                <label style="font-weight:bold; font-size:14px;">🔎 লেখার সাইজ ছোট-বড় করুন:</label><br>
+                <input type="range" id="wm-size-slider" min="10" max="150" value="50" style="width:70%;" oninput="processWatermark()">
+            </div>
+
+            <h4 style="margin:15px 0 5px 0; color:#1e293b;">🎛️ ওয়াটারমার্ক পজিশন কন্ট্রোল প্যাড:</h4>
+            <div class="pad-grid">
+                <div></div><button class="pad-btn" onclick="moveWm('up')">▲</button><div></div>
+                <button class="pad-btn" onclick="moveWm('left')">◀</button>
+                <button class="pad-btn" style="background:#10b981;" onclick="moveWm('center')">🔘</button>
+                <button class="pad-btn" onclick="moveWm('right')">▶</button>
+                <div></div><button class="pad-btn" onclick="moveWm('down')">▼</button><div></div>
+            </div>
+
+            <div class="preview-box">
+                <div><h4>প্রিভিউ ছবি:</h4><canvas id="wm-canvas"></canvas></div>
+            </div>
+            <button class="btn-action" onclick="downloadImageWm()">⬇️ ওয়াটারমার্কসহ ডাউনলোড করুন</button>
+        </div>
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
+
+    <div id="tool-hd-enhancer" class="tool-section">
+        <h2>✨ ফটো ব্রাইটনেস, কন্ট্রাস্ট ও ফিল্টার এডিটর</h2>
+        <div class="upload-box" onclick="document.getElementById('file-input-hd').click()">
+            <span style="font-size: 40px;">🪄</span> <p>ছবি সিলেক্ট করুন</p>
+            <input type="file" id="file-input-hd" accept="image/*" style="display:none" onchange="handleHdUpload(event)">
+        </div>
+        <div id="hd-controls" style="display:none;">
+            <div class="range-slider">
+                <label>☀️ ব্রাইটনেস (আলো):</label> <input type="range" id="hd-b" min="50" max="150" value="100" oninput="processHd()"><br>
+                <label>🌗 কন্ট্রাস্ট (নিখুঁত রঙ):</label> <input type="range" id="hd-c" min="50" max="150" value="100" oninput="processHd()">
+            </div>
+            <div class="preview-box">
+                <div><h4>আউটপুট ছবি:</h4><img id="hd-out-preview"></div>
+            </div>
+            <button class="btn-action" onclick="downloadImageHd()">⬇️ ডাউনলোড করুন</button>
+        </div>
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
+
+    <div id="tool-converter" class="tool-section">
+        <h2>🔄 ইমেজ ফরম্যাট কনভার্টার (JPG/PNG/WEBP)</h2>
+        <div class="upload-box" onclick="document.getElementById('file-input-conv').click()">
+            <span style="font-size: 40px;">🔄</span> <p>ছবি সিলেক্ট করুন</p>
+            <input type="file" id="file-input-conv" accept="image/*" style="display:none" onchange="handleConvUpload(event)">
+        </div>
+        <div id="conv-controls" style="display:none;">
+            <label style="font-weight:bold;">কোন ফরম্যাটে কনভার্ট করবেন:</label><br>
+            <select id="conv-format" class="dropdown-style">
+                <option value="image/jpeg">JPG / JPEG ফরম্যাট</option>
+                <option value="image/png">PNG (স্বচ্ছ ব্যাকগ্রাউন্ড)</option>
+                <option value="image/webp">WEBP (ওয়েব অপ্টিমাইজড)</option>
+            </select><br>
+            <button class="btn-action" onclick="downloadConvertedImage()">⬇️ কনভার্ট ও ডাউনলোড</button>
+        </div>
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
+
+    <div id="tool-passport-photo" class="tool-section">
+        <h2>👤 পাসপোর্ট ও স্ট্যাম্প সাইজ ফটো মেকার</h2>
+        <div class="upload-box" onclick="document.getElementById('file-input-pass').click()">
+            <span style="font-size: 40px;">🪪</span> <p>ছবি সিলেক্ট করুন</p>
+            <input type="file" id="file-input-pass" accept="image/*" style="display:none" onchange="handlePassUpload(event)">
+        </div>
+        <div id="pass-controls" style="display:none;">
+            <div class="preset-container">
+                <button class="btn-preset active" id="btn-pass-p" onclick="setPassSize(40, 50, 'btn-pass-p')">👤 পাসপোর্ট সাইজ (40x50 mm)</button>
+                <button class="btn-preset" id="btn-pass-s" onclick="setPassSize(20, 25, 'btn-pass-s')">📑 স্ট্যাম্প সাইজ (20x25 mm)</button>
+            </div>
+            <div class="preview-box">
+                <div><h4>পাসপোর্ট/স্ট্যাম্প রেডি ছবি:</h4><img id="pass-out-preview"></div>
+            </div>
+            <button class="btn-action" onclick="downloadImagePass()">⬇️ রেডি ছবি ডাউনলোড করুন</button>
+        </div>
+        <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
+    </div>
 </div>
 
 <script>
-let originalFileComp = null;
-let originalFileResize = null;
-let targetWidth = 300;
-let targetHeight = 300;
-let loadedImageObject = null; // রিয়েল-টাইম স্লাইডারের পারফরম্যান্স ভালো রাখার জন্য
+let originalFileComp = null, originalFileResize = null, loadedImageObject = null;
+let pdfFiles = [], isFlipped = false;
+let wmImgObj = null, hdImgObj = null, convImgObj = null, passImgObj = null;
+let targetWidth = 300, targetHeight = 300, passW = 154, passH = 192; 
+let wmXPercent = 50, wmYPercent = 50;
+
+// ৪ নম্বর ক্রপার ভেরিয়েবল
+let cropImgObj = null;
+let bottomTrimPixels = 0;
 
 function openTool(toolName) {
     closeAllTools();
     document.getElementById('main-menu').style.display = 'none';
-    if(toolName === 'compressor') {
-        document.getElementById('tool-compressor').style.display = 'block';
-    } else if(toolName === 'resizer') {
-        document.getElementById('tool-resizer').style.display = 'block';
-    } else {
-        alert(toolName + " টুলটির কাজ পরের ধাপে যুক্ত হবে!");
-        document.getElementById('main-menu').style.display = 'block';
-    }
+    const element = document.getElementById('tool-' + toolName);
+    if(element) element.style.display = 'block';
 }
 
 function closeAllTools() {
-    // স্ক্রিন ও ডেটা রিসেট এবং মেমোরি ক্লিয়ার লজিক
-    document.getElementById('tool-compressor').style.display = 'none';
-    document.getElementById('tool-resizer').style.display = 'none';
     document.getElementById('main-menu').style.display = 'block';
-    
-    // ইনপুট ক্লিয়ার
-    document.getElementById('file-input-comp').value = '';
-    document.getElementById('file-input-resize').value = '';
-    
-    // প্রিভিউ এবং ভেরিয়েবল রিসেট
-    if(document.getElementById('comp-preview').src) URL.revokeObjectURL(document.getElementById('comp-preview').src);
-    if(document.getElementById('resize-out-preview').src) document.getElementById('resize-out-preview').src = '';
-    
-    document.getElementById('orig-preview').src = '';
-    document.getElementById('comp-preview').src = '';
-    document.getElementById('resize-orig-preview').src = '';
+    const sections = document.querySelectorAll('.tool-section');
+    sections.forEach(s => s.style.display = 'none');
+    const inputs = document.querySelectorAll('input[type="file"]');
+    inputs.forEach(i => i.value = '');
+    pdfFiles = [];
+    document.getElementById('ocr-result').value = '';
+    document.getElementById('ocr-status').innerText = '';
     
     document.getElementById('compress-controls').style.display = 'none';
     document.getElementById('resize-controls').style.display = 'none';
-    document.getElementById('crop-position-sliders').style.display = 'none';
-    
-    originalFileComp = null;
-    originalFileResize = null;
-    loadedImageObject = null;
-    
-    // স্লাইডার ডিফল্ট পজিশন
-    document.getElementById('crop-offset-x').value = 50;
-    document.getElementById('crop-offset-y').value = 50;
+    document.getElementById('pdf-controls').style.display = 'none';
+    document.getElementById('crop-tool-controls').style.display = 'none';
+    document.getElementById('wm-controls').style.display = 'none';
+    document.getElementById('hd-controls').style.display = 'none';
+    document.getElementById('conv-controls').style.display = 'none';
+    document.getElementById('pass-controls').style.display = 'none';
+    isFlipped = false; 
+    bottomTrimPixels = 0;
+    wmXPercent = 50; wmYPercent = 50;
 }
 
-// --- ১. ইমেজ কম্প্রেশার লজিক ---
+// --- ১. ইমেজ কম্প্রেশার ---
 function updateQuality(val) {
     document.getElementById('quality-val').innerText = val;
     if(originalFileComp) compressImage(originalFileComp, val / 100);
 }
-
 function handleImageUploadComp(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    const file = event.target.files[0]; if (!file) return;
     originalFileComp = file;
     document.getElementById('orig-size').innerText = "সাইজ: " + (file.size / 1024).toFixed(2) + " KB";
-    
     const reader = new FileReader();
     reader.onload = function(e) {
         document.getElementById('orig-preview').src = e.target.result;
         document.getElementById('compress-controls').style.display = 'block';
-        compressImage(file, document.getElementById('quality-range').value / 100);
+        compressImage(file, 0.7);
     };
     reader.readAsDataURL(file);
 }
-
 function compressImage(file, quality) {
     const img = new Image();
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            let width = img.width;
-            let height = img.height;
-            if (width > 2000) { height *= 2000 / width; width = 2000; }
-            
-            canvas.width = width; canvas.height = height;
-            ctx.drawImage(img, 0, 0, width, height);
-            
-            const type = file.type === 'image/png' ? 'image/jpeg' : file.type;
-            
-            canvas.toBlob(function(blob) {
-                if(!blob) return;
-                document.getElementById('comp-size').innerText = "নতুন সাইজ: " + (blob.size / 1024).toFixed(2) + " KB";
-                document.getElementById('comp-preview').src = URL.createObjectURL(blob);
-            }, type, quality);
-        };
-        img.src = e.target.result;
+    img.onload = function() {
+        const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+        let width = img.width, height = img.height;
+        if (width > 1200) { height *= 1200 / width; width = 1200; }
+        canvas.width = width; canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(function(blob) {
+            if(!blob) return;
+            document.getElementById('comp-size').innerText = "নতুন সাইজ: " + (blob.size / 1024).toFixed(2) + " KB";
+            document.getElementById('comp-preview').src = URL.createObjectURL(blob);
+        }, 'image/jpeg', quality);
     };
-    reader.readAsDataURL(file);
+    img.src = document.getElementById('orig-preview').src;
 }
-
 function downloadImageComp() {
-    const compImg = document.getElementById('comp-preview');
-    if(!compImg.src) return;
-    const link = document.createElement('a');
-    link.href = compImg.src;
-    link.download = "compressed_" + (originalFileComp ? originalFileComp.name.split('.')[0] : "image") + ".jpg";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const a = document.createElement('a'); a.href = document.getElementById('comp-preview').src;
+    a.download = "compressed_image.jpg"; a.click();
 }
 
-// --- ২. ইমেজ রিসাইজার লজিক (ম্যানুয়াল পজিশনিং ও ক্রপ ফিচার) ---
+// --- ২. ইমেজ রিসাইজার ---
 function handleImageUploadResize(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    originalFileResize = file;
-    const reader = new FileReader();
+    const file = event.target.files[0]; if (!file) return;
+    originalFileResize = file; const reader = new FileReader();
     reader.onload = function(e) {
         document.getElementById('resize-orig-preview').src = e.target.result;
-        
-        // ইমেজ অবজেক্ট প্রিলোড করে রাখা দ্রুত স্লাইড করার সুবিধার্থে
         loadedImageObject = new Image();
         loadedImageObject.onload = function() {
             document.getElementById('resize-controls').style.display = 'block';
@@ -320,96 +379,291 @@ function handleImageUploadResize(event) {
     };
     reader.readAsDataURL(file);
 }
-
 function setPreset(w, h, btnId) {
-    document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#tool-resizer .btn-preset').forEach(b => b.classList.remove('active'));
     document.getElementById(btnId).classList.add('active');
     document.getElementById('custom-inputs').style.display = 'none';
-    targetWidth = w; targetHeight = h;
-    processResize();
+    targetWidth = w; targetHeight = h; processResize();
 }
-
 function enableCustomSize() {
-    document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#tool-resizer .btn-preset').forEach(b => b.classList.remove('active'));
     document.getElementById('preset-custom').classList.add('active');
     document.getElementById('custom-inputs').style.display = 'flex';
     applyCustomResize();
 }
-
 function applyCustomResize() {
     const unit = document.getElementById('resize-unit').value;
     let w = parseFloat(document.getElementById('resize-w').value) || 300;
     let h = parseFloat(document.getElementById('resize-h').value) || 300;
-    
-    if (unit === 'inch') {
-        targetWidth = Math.round(w * 96);
-        targetHeight = Math.round(h * 96);
-    } else {
-        targetWidth = Math.round(w);
-        targetHeight = Math.round(h);
-    }
+    targetWidth = unit === 'inch' ? Math.round(w * 96) : Math.round(w);
+    targetHeight = unit === 'inch' ? Math.round(h * 96) : Math.round(h);
     processResize();
 }
-
 function processResize() {
     if (!loadedImageObject) return;
     document.getElementById('current-dim').innerText = targetWidth + "x" + targetHeight;
-    
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = targetWidth;
-    canvas.height = targetHeight;
-
-    const imgWidth = loadedImageObject.width;
-    const imgHeight = loadedImageObject.height;
-    
-    const imgRatio = imgWidth / imgHeight;
-    const targetRatio = targetWidth / targetHeight;
-
-    let srcX = 0, srcY = 0, srcWidth = imgWidth, srcHeight = imgHeight;
-    const slidersContainer = document.getElementById('crop-position-sliders');
-
-    // অনুপাত চেক করে প্রয়োজনীয় স্লাইডার শো/হাইড করা
-    if (imgRatio > targetRatio) {
-        // ছবি বেশি চওড়া হলে ডানে-বামে সরানোর স্লাইডার দেখাবে
-        slidersContainer.style.display = 'block';
+    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+    canvas.width = targetWidth; canvas.height = targetHeight;
+    let srcX = 0, srcY = 0, srcW = loadedImageObject.width, srcH = loadedImageObject.height;
+    const r = srcW / srcH, tr = targetWidth / targetHeight;
+    if (r > tr) {
+        document.getElementById('crop-position-sliders').style.display = 'block';
         document.getElementById('slider-x-container').style.display = 'block';
         document.getElementById('slider-y-container').style.display = 'none';
-        
-        srcWidth = imgHeight * targetRatio;
-        const maxOffsetX = imgWidth - srcWidth;
-        const sliderValX = document.getElementById('crop-offset-x').value; // 0 to 100
-        srcX = maxOffsetX * (sliderValX / 100);
-    } else if (imgRatio < targetRatio) {
-        // ছবি বেশি লম্বা হলে ওপর-নিচে সরানোর স্লাইডার দেখাবে
-        slidersContainer.style.display = 'block';
+        srcW = srcH * tr; srcX = (loadedImageObject.width - srcW) * (document.getElementById('crop-offset-x').value / 100);
+    } else if (r < tr) {
+        document.getElementById('crop-position-sliders').style.display = 'block';
         document.getElementById('slider-x-container').style.display = 'none';
         document.getElementById('slider-y-container').style.display = 'block';
-        
-        srcHeight = imgWidth / targetRatio;
-        const maxOffsetY = imgHeight - srcHeight;
-        const sliderValY = document.getElementById('crop-offset-y').value; // 0 to 100
-        srcY = maxOffsetY * (sliderValY / 100);
-    } else {
-        // ছবি এবং টার্গেট সাইজ একদম সমান রেশিও হলে স্লাইডার লাগবে না
-        slidersContainer.style.display = 'none';
-    }
-
-    ctx.drawImage(loadedImageObject, srcX, srcY, srcWidth, srcHeight, 0, 0, targetWidth, targetHeight);
+        srcH = srcW / tr; srcY = (loadedImageObject.height - srcH) * (document.getElementById('crop-offset-y').value / 100);
+    } else { document.getElementById('crop-position-sliders').style.display = 'none'; }
+    ctx.drawImage(loadedImageObject, srcX, srcY, srcW, srcH, 0, 0, targetWidth, targetHeight);
     document.getElementById('resize-out-preview').src = canvas.toDataURL('image/jpeg', 0.95);
 }
-
 function downloadImageResize() {
-    const outImg = document.getElementById('resize-out-preview');
-    if(!outImg.src) return;
-    const link = document.createElement('a');
-    link.href = outImg.src;
-    link.download = `resized_${targetWidth}x${targetHeight}.jpg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const a = document.createElement('a'); a.href = document.getElementById('resize-out-preview').src;
+    a.download = `resized_${targetWidth}x${targetHeight}.jpg`; a.click();
+}
+
+// --- ৩. JPG থেকে PDF ---
+function handlePdfUpload(event) {
+    pdfFiles = Array.from(event.target.files);
+    if(pdfFiles.length > 0) {
+        document.getElementById('pdf-file-count').innerText = `${pdfFiles.length} টি ছবি লোড হয়েছে।`;
+        document.getElementById('pdf-controls').style.display = 'block';
+    }
+}
+async function generatePdf() {
+    const { jsPDF } = window.jspdf; const doc = new jsPDF();
+    for(let i=0; i<pdfFiles.length; i++) {
+        const imgData = await new Promise(res => {
+            const r = new FileReader(); r.onload = (e) => res(e.target.result); r.readAsDataURL(pdfFiles[i]);
+        });
+        if(i > 0) doc.addPage();
+        doc.addImage(imgData, 'JPEG', 10, 10, 190, 277);
+    }
+    doc.save('converted_documents.pdf');
+}
+
+// --- ৪. ইমেজ ক্রপার ও ফ্লিপ ---
+function handleCropUpload(event) {
+    const file = event.target.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = function(e) {
+        cropImgObj = new Image();
+        cropImgObj.onload = function() {
+            bottomTrimPixels = 0; 
+            document.getElementById('crop-size-slider').value = 100;
+            document.getElementById('crop-move-x').value = 0;
+            document.getElementById('crop-move-y').value = 0;
+            document.getElementById('crop-tool-controls').style.display = 'block';
+            processCrop();
+        };
+        cropImgObj.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+}
+function flipImage() { isFlipped = !isFlipped; processCrop(); }
+function trimBottomWhite() {
+    if(!cropImgObj) return;
+    bottomTrimPixels += Math.round(cropImgObj.height * 0.05); 
+    if(bottomTrimPixels >= cropImgObj.height - 20) bottomTrimPixels = cropImgObj.height - 20;
+    processCrop();
+}
+function resetCropTrim() {
+    bottomTrimPixels = 0; isFlipped = false;
+    document.getElementById('crop-size-slider').value = 100;
+    document.getElementById('crop-move-x').value = 0;
+    document.getElementById('crop-move-y').value = 0;
+    processCrop();
+}
+function processCrop() {
+    if(!cropImgObj) return;
+    const canvas = document.getElementById('crop-canvas'); const ctx = canvas.getContext('2d');
+    
+    let baseW = cropImgObj.width;
+    let baseH = cropImgObj.height - bottomTrimPixels;
+    if(baseH < 10) baseH = 10;
+    
+    canvas.width = baseW; canvas.height = baseH;
+    ctx.clearRect(0,0,baseW,baseH);
+    ctx.save();
+    
+    if(isFlipped) { ctx.translate(baseW, 0); ctx.scale(-1, 1); }
+    
+    const scale = parseFloat(document.getElementById('crop-size-slider').value) / 100;
+    const moveX = parseFloat(document.getElementById('crop-move-x').value) * (baseW / 100);
+    const moveY = parseFloat(document.getElementById('crop-move-y').value) * (baseH / 100);
+    
+    ctx.translate(baseW/2 + moveX, baseH/2 + moveY);
+    ctx.scale(scale, scale);
+    ctx.drawImage(cropImgObj, -cropImgObj.width/2, -cropImgObj.height/2);
+    ctx.restore();
+}
+function downloadImageCrop() {
+    const canvas = document.getElementById('crop-canvas');
+    const a = document.createElement('a'); a.href = canvas.toDataURL('image/jpeg', 0.95);
+    a.download = 'cropped_final.jpg'; a.click();
+}
+
+// --- ৬৬. ছবি থেকে টেক্সট ---
+function handleOcr(event) {
+    const file = event.target.files[0]; if(!file) return;
+    const statusBox = document.getElementById('ocr-status');
+    statusBox.innerText = "লেখা পড়া হচ্ছে... ⏳ 0%";
+    Tesseract.recognize(file, 'ben+eng', {
+        logger: m => {
+            if(m.status === 'recognizing text') { statusBox.innerText = `স্ক্যান হচ্ছে: ${Math.round(m.progress * 100)}%... ⏳`; }
+        }
+    }).then(({ data: { text } }) => {
+        document.getElementById('ocr-result').value = text;
+        statusBox.innerText = "সম্পূর্ণ হয়েছে! ✅";
+    }).catch(err => { statusBox.innerText = "ভুল হয়েছে, আবার চেষ্টা করুন।"; });
+}
+
+// --- ৭. ছবিতে ওয়াটারমার্ক ---
+function handleWmUpload(event) {
+    const file = event.target.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = function(e) {
+        wmImgObj = new Image();
+        wmImgObj.onload = function() {
+            wmXPercent = 50; wmYPercent = 50; 
+            document.getElementById('wm-controls').style.display = 'block';
+            processWatermark();
+        };
+        wmImgObj.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+}
+function moveWm(dir) {
+    if(dir === 'up') wmYPercent -= 4;
+    if(dir === 'down') wmYPercent += 4;
+    if(dir === 'left') wmXPercent -= 4;
+    if(dir === 'right') wmXPercent += 4;
+    if(dir === 'center') { wmXPercent = 50; wmYPercent = 50; }
+    if(wmXPercent < 0) wmXPercent = 0; if(wmXPercent > 100) wmXPercent = 100;
+    if(wmYPercent < 0) wmYPercent = 0; if(wmYPercent > 100) wmYPercent = 100;
+    processWatermark();
+}
+function processWatermark() {
+    if(!wmImgObj) return;
+    const canvas = document.getElementById('wm-canvas'); const ctx = canvas.getContext('2d');
+    
+    let dW = wmImgObj.width;
+    let dH = wmImgObj.height;
+    if(dW > 1000) { dH = (1000/dW)*dH; dW = 1000; }
+    
+    canvas.width = dW; canvas.height = dH;
+    ctx.drawImage(wmImgObj, 0, 0, dW, dH);
+    
+    const sizeSlider = document.getElementById('wm-size-slider').value;
+    const fontSize = Math.round((dW / 25) * (sizeSlider / 50));
+    
+    ctx.font = `bold ${fontSize}px 'Hind Siliguri'`;
+    ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+    ctx.shadowBlur = 4;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    
+    const text = document.getElementById('wm-text').value || "সালমান অনলাইন স্মার্ট সেবা";
+    let realX = dW * (wmXPercent / 100);
+    let realY = dH * (wmYPercent / 100);
+    
+    ctx.fillText(text, realX, realY);
+    ctx.shadowBlur = 0; 
+}
+function downloadImageWm() {
+    const canvas = document.getElementById('wm-canvas');
+    const a = document.createElement('a'); a.href = canvas.toDataURL('image/jpeg', 0.95);
+    a.download = 'watermark_final.jpg'; a.click();
+}
+
+// --- ৮. ফটো ব্রাইটনেস ---
+function handleHdUpload(event) {
+    const file = event.target.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = function(e) {
+        hdImgObj = new Image(); hdImgObj.onload = function() {
+            document.getElementById('hd-controls').style.display = 'block';
+            processHd();
+        };
+        hdImgObj.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+}
+function processHd() {
+    if(!hdImgObj) return;
+    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+    canvas.width = hdImgObj.width; canvas.height = hdImgObj.height;
+    const b = document.getElementById('hd-b').value;
+    const c = document.getElementById('hd-c').value;
+    ctx.filter = `brightness(${b}%) contrast(${c}%)`;
+    ctx.drawImage(hdImgObj, 0, 0);
+    document.getElementById('hd-out-preview').src = canvas.toDataURL('image/jpeg');
+}
+function downloadImageHd() {
+    const a = document.createElement('a'); a.href = document.getElementById('hd-out-preview').src;
+    a.download = 'enhanced.jpg'; a.click();
+}
+
+// --- ৯. ইমেজ কনভার্টার ---
+function handleConvUpload(event) {
+    const file = event.target.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = function(e) {
+        convImgObj = new Image(); convImgObj.onload = function() {
+            document.getElementById('conv-controls').style.display = 'block';
+        };
+        convImgObj.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+}
+function downloadConvertedImage() {
+    if(!convImgObj) return;
+    const canvas = document.createElement('canvas'); canvas.width = convImgObj.width; canvas.height = convImgObj.height;
+    canvas.getContext('2d').drawImage(convImgObj, 0, 0);
+    const fmt = document.getElementById('conv-format').value;
+    const ext = fmt.split('/')[1];
+    const a = document.createElement('a'); a.href = canvas.toDataURL(fmt);
+    a.download = `converted_image.${ext}`; a.click();
+}
+
+// --- ১০. পাসপোর্ট ফটো মেকার ---
+function handlePassUpload(event) {
+    const file = event.target.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = function(e) {
+        passImgObj = new Image(); passImgObj.onload = function() {
+            document.getElementById('pass-controls').style.display = 'block';
+            processPassPhoto();
+        };
+        passImgObj.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+}
+function setPassSize(w, h, btnId) {
+    document.querySelectorAll('#tool-passport-photo .btn-preset').forEach(b => b.classList.remove('active'));
+    document.getElementById(btnId).classList.add('active');
+    passW = w === 40 ? 154 : 77; passH = h === 50 ? 192 : 96;
+    processPassPhoto();
+}
+function processPassPhoto() {
+    if(!passImgObj) return;
+    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+    canvas.width = passW; canvas.height = passH;
+    let srcX = 0, srcY = 0, srcW = passImgObj.width, srcH = passImgObj.height;
+    const r = srcW / srcH, tr = passW / passH;
+    if (r > tr) { srcW = srcH * tr; srcX = (passImgObj.width - srcW) / 2; }
+    else { srcH = srcW / tr; srcY = (passImgObj.height - srcH) / 2; }
+    ctx.drawImage(passImgObj, srcX, srcY, srcW, srcH, 0, 0, passW, passH);
+    document.getElementById('pass-out-preview').src = canvas.toDataURL('image/jpeg', 0.95);
+}
+function downloadImagePass() {
+    const a = document.createElement('a'); a.href = document.getElementById('pass-out-preview').src;
+    a.download = 'passport_photo.jpg'; a.click();
 }
 </script>
-
 </body>
 </html>
