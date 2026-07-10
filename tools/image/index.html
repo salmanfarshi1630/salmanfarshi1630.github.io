@@ -39,7 +39,10 @@
         .preview-box div { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; min-width: 260px; max-width: 100%; }
         .preview-box img { max-width: 100%; height: auto; max-height: 250px; border-radius: 4px; object-fit: contain; }
         .status-txt { font-weight: bold; color: #1e3a8a; margin-top: 10px; font-size: 14px; }
-        .range-slider { margin: 20px 0; }
+        .range-slider { margin: 15px 0; }
+        
+        .position-controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin: 15px 0; display: none; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .position-controls label { font-weight: bold; font-size: 14px; color: #1e293b; display: block; margin-bottom: 5px; }
 
         .preset-container { display: flex; justify-content: center; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
         .btn-preset { background: #e2e8f0; color: #1e293b; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; }
@@ -55,19 +58,19 @@
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
     <div id="main-menu">
-        <h2>🖼️ 이미지 টুলস ও সেবাসমূহ</h2>
+        <h2>🖼️ ইমেজ টুলস ও সেবাসমূহ</h2>
         <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ (৩০০×৩০০) ও কনভার্ট করার ১০টি প্রিমিয়াম টুল নিচে দেওয়া হলো।</p>
         <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
         
         <div class="grid">
             <div class="card" onclick="openTool('compressor')">
                 <span class="icon">📉</span>
-                <h3>১. 이미지 কম্প্রেশার</h3>
+                <h3>১. ইমেজ কম্প্রেশার</h3>
                 <p>ছবির সাইজ বা কেবি (KB) অনেক কমিয়ে ফেলুন</p>
             </div>
             <div class="card" onclick="openTool('resizer')">
                 <span class="icon">📐</span>
-                <h3>২. 이미지 রিসাইজার</h3>
+                <h3>২. ইমেজ রিসাইজার</h3>
                 <p>ছবির দৈর্ঘ্য ও প্রস্থ পরিবর্তন করুন (300×300 ও 300×80)</p>
             </div>
             <div class="card" onclick="openTool('jpg-to-pdf')">
@@ -77,7 +80,7 @@
             </div>
             <div class="card" onclick="openTool('cropper')">
                 <span class="icon">✂️</span>
-                <h3>৪. 이미지 ক্রপার</h3>
+                <h3>৪. ইমেজ ক্রপার</h3>
                 <p>ছবির যেকোনো নির্দিষ্ট অংশ কেটে আলাদা করুন</p>
             </div>
             <div class="card" onclick="openTool('bg-remover')">
@@ -87,7 +90,7 @@
             </div>
             <div class="card" onclick="openTool('ocr')">
                 <span class="icon">📝</span>
-                <h3>৬. 이미지 টু টেক্সট (OCR)</h3>
+                <h3>৬. ইমেজ টু টেক্সট (OCR)</h3>
                 <p>ছবি থেকে বাংলা বা ইংরেজি লেখা আলাদা করুন</p>
             </div>
             <div class="card" onclick="openTool('watermark')">
@@ -102,7 +105,7 @@
             </div>
             <div class="card" onclick="openTool('converter')">
                 <span class="icon">🔄</span>
-                <h3>৯. 이미지 কনভার্টার</h3>
+                <h3>৯. ইমেজ কনভার্টার</h3>
                 <p>PNG, WEBP, JPG এক ফরম্যাট থেকে অন্য ফরম্যাটে নিন</p>
             </div>
             <div class="card" onclick="openTool('passport-photo')">
@@ -115,7 +118,7 @@
 
     <!-- 📉 ১. ইমেজ কম্প্রেশার ইন্টারফেস -->
     <div id="tool-compressor" class="tool-section">
-        <h2>📉 이미지 কম্প্রেশার</h2>
+        <h2>📉 ইমেজ কম্প্রেশার</h2>
         <p>আপনার ছবি আপলোড করুন এবং মান ঠিক রেখে ফাইলের সাইজ ছোট করুন।</p>
         <div class="upload-box" onclick="document.getElementById('file-input-comp').click()">
             <span style="font-size: 40px;">📁</span>
@@ -138,9 +141,9 @@
 
     <!-- 📐 ২. ইমেজ রিসাইজার ইন্টারফেস -->
     <div id="tool-resizer" class="tool-section">
-        <h2>📐 ইমেজ রিসাইজার (স্মার্ট ক্রপ ফিচার যুক্ত)</h2>
-        <p>চাকরি, এডমিশন বা পাসপোর্ট সাইজের জন্য ছবির সাইজ নিখুঁতভাবে পরিবর্তন করুন।</p>
-        <div class="upload-box" onclick="document.getElementById('file-input-resize').click()">
+        <h2>📐 ইমেজ রিসাইজার (ফটোশপ স্টাইল ম্যানুয়াল ক্রপ)</h2>
+        <p>ছবি চ্যাপ্টা না করে স্লাইডার দিয়ে পজিশন সেট করে নিখুঁতভাবে ছবি কেটে নিন।</p>
+        <div class="upload-box" id="upload-box-resize" onclick="document.getElementById('file-input-resize').click()">
             <span style="font-size: 40px;">📸</span>
             <p>রিসাইজ করার জন্য ছবি বা স্বাক্ষর সিলেক্ট করুন</p>
             <input type="file" id="file-input-resize" accept="image/*" style="display:none" onchange="handleImageUploadResize(event)">
@@ -162,6 +165,19 @@
                 <label>প্রস্থ (Width): <input type="number" id="resize-w" value="300" step="0.1" oninput="applyCustomResize()"></label>
                 <label>উচ্চতা (Height): <input type="number" id="resize-h" value="300" step="0.1" oninput="applyCustomResize()"></label>
             </div>
+
+            <!-- 🎛️ ম্যানুয়াল পজিশন কন্ট্রোলার স্লাইডারসমূহ -->
+            <div class="position-controls" id="crop-position-sliders">
+                <h4 style="margin: 0 0 10px 0; color: #1e3a8a; text-align: center;">🎛️ ছবি এডজাস্টমেন্ট (ফটোশপ ক্রপ টুল)</h4>
+                <div id="slider-x-container">
+                    <label>↔️ ডানে / বামে সরান:</label>
+                    <input type="range" id="crop-offset-x" min="0" max="100" value="50" style="width: 100%; margin-bottom: 10px;" oninput="processResize()">
+                </div>
+                <div id="slider-y-container">
+                    <label>↕️ ওপরে / নিচে সরান:</label>
+                    <input type="range" id="crop-offset-y" min="0" max="100" value="50" style="width: 100%;" oninput="processResize()">
+                </div>
+            </div>
             
             <div class="preview-box">
                 <div><h4>আসল ছবি:</h4><img id="resize-orig-preview" src=""></div>
@@ -179,6 +195,7 @@ let originalFileComp = null;
 let originalFileResize = null;
 let targetWidth = 300;
 let targetHeight = 300;
+let loadedImageObject = null; // রিয়েল-টাইম স্লাইডারের পারফরম্যান্স ভালো রাখার জন্য
 
 function openTool(toolName) {
     closeAllTools();
@@ -194,11 +211,34 @@ function openTool(toolName) {
 }
 
 function closeAllTools() {
+    // স্ক্রিন ও ডেটা রিসেট এবং মেমোরি ক্লিয়ার লজিক
     document.getElementById('tool-compressor').style.display = 'none';
     document.getElementById('tool-resizer').style.display = 'none';
     document.getElementById('main-menu').style.display = 'block';
+    
+    // ইনপুট ক্লিয়ার
     document.getElementById('file-input-comp').value = '';
     document.getElementById('file-input-resize').value = '';
+    
+    // প্রিভিউ এবং ভেরিয়েবল রিসেট
+    if(document.getElementById('comp-preview').src) URL.revokeObjectURL(document.getElementById('comp-preview').src);
+    if(document.getElementById('resize-out-preview').src) document.getElementById('resize-out-preview').src = '';
+    
+    document.getElementById('orig-preview').src = '';
+    document.getElementById('comp-preview').src = '';
+    document.getElementById('resize-orig-preview').src = '';
+    
+    document.getElementById('compress-controls').style.display = 'none';
+    document.getElementById('resize-controls').style.display = 'none';
+    document.getElementById('crop-position-sliders').style.display = 'none';
+    
+    originalFileComp = null;
+    originalFileResize = null;
+    loadedImageObject = null;
+    
+    // স্লাইডার ডিফল্ট পজিশন
+    document.getElementById('crop-offset-x').value = 50;
+    document.getElementById('crop-offset-y').value = 50;
 }
 
 // --- ১. ইমেজ কম্প্রেশার লজিক ---
@@ -242,10 +282,6 @@ function compressImage(file, quality) {
             canvas.toBlob(function(blob) {
                 if(!blob) return;
                 document.getElementById('comp-size').innerText = "নতুন সাইজ: " + (blob.size / 1024).toFixed(2) + " KB";
-                
-                if(document.getElementById('comp-preview').src) {
-                    URL.revokeObjectURL(document.getElementById('comp-preview').src);
-                }
                 document.getElementById('comp-preview').src = URL.createObjectURL(blob);
             }, type, quality);
         };
@@ -265,7 +301,7 @@ function downloadImageComp() {
     document.body.removeChild(link);
 }
 
-// --- ২. ইমেজ রিসাইজার লজিক ---
+// --- ২. ইমেজ রিসাইজার লজিক (ম্যানুয়াল পজিশনিং ও ক্রপ ফিচার) ---
 function handleImageUploadResize(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -273,8 +309,14 @@ function handleImageUploadResize(event) {
     const reader = new FileReader();
     reader.onload = function(e) {
         document.getElementById('resize-orig-preview').src = e.target.result;
-        document.getElementById('resize-controls').style.display = 'block';
-        processResize();
+        
+        // ইমেজ অবজেক্ট প্রিলোড করে রাখা দ্রুত স্লাইড করার সুবিধার্থে
+        loadedImageObject = new Image();
+        loadedImageObject.onload = function() {
+            document.getElementById('resize-controls').style.display = 'block';
+            processResize();
+        };
+        loadedImageObject.src = e.target.result;
     };
     reader.readAsDataURL(file);
 }
@@ -310,39 +352,51 @@ function applyCustomResize() {
 }
 
 function processResize() {
-    if (!originalFileResize) return;
+    if (!loadedImageObject) return;
     document.getElementById('current-dim').innerText = targetWidth + "x" + targetHeight;
     
-    const img = new Image();
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
 
-            // 🌟 স্মার্ট ক্রপ লজিক (Smart Centered Cropping) 🌟
-            let srcX = 0, srcY = 0, srcWidth = img.width, srcHeight = img.height;
-            const imgRatio = img.width / img.height;
-            const targetRatio = targetWidth / targetHeight;
+    const imgWidth = loadedImageObject.width;
+    const imgHeight = loadedImageObject.height;
+    
+    const imgRatio = imgWidth / imgHeight;
+    const targetRatio = targetWidth / targetHeight;
 
-            if (imgRatio > targetRatio) {
-                // ছবি বেশি চওড়া হলে দুপাশ থেকে সমান করে কাটা হবে
-                srcWidth = img.height * targetRatio;
-                srcX = (img.width - srcWidth) / 2;
-            } else if (imgRatio < targetRatio) {
-                // ছবি বেশি লম্বা হলে ওপর-নিচ থেকে সমান করে কাটা হবে
-                srcHeight = img.width / targetRatio;
-                srcY = (img.height - srcHeight) / 2;
-            }
+    let srcX = 0, srcY = 0, srcWidth = imgWidth, srcHeight = imgHeight;
+    const slidersContainer = document.getElementById('crop-position-sliders');
 
-            ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, 0, 0, targetWidth, targetHeight);
-            document.getElementById('resize-out-preview').src = canvas.toDataURL('image/jpeg', 0.9);
-        };
-        img.src = e.target.result;
-    };
-    reader.readAsDataURL(originalFileResize);
+    // অনুপাত চেক করে প্রয়োজনীয় স্লাইডার শো/হাইড করা
+    if (imgRatio > targetRatio) {
+        // ছবি বেশি চওড়া হলে ডানে-বামে সরানোর স্লাইডার দেখাবে
+        slidersContainer.style.display = 'block';
+        document.getElementById('slider-x-container').style.display = 'block';
+        document.getElementById('slider-y-container').style.display = 'none';
+        
+        srcWidth = imgHeight * targetRatio;
+        const maxOffsetX = imgWidth - srcWidth;
+        const sliderValX = document.getElementById('crop-offset-x').value; // 0 to 100
+        srcX = maxOffsetX * (sliderValX / 100);
+    } else if (imgRatio < targetRatio) {
+        // ছবি বেশি লম্বা হলে ওপর-নিচে সরানোর স্লাইডার দেখাবে
+        slidersContainer.style.display = 'block';
+        document.getElementById('slider-x-container').style.display = 'none';
+        document.getElementById('slider-y-container').style.display = 'block';
+        
+        srcHeight = imgWidth / targetRatio;
+        const maxOffsetY = imgHeight - srcHeight;
+        const sliderValY = document.getElementById('crop-offset-y').value; // 0 to 100
+        srcY = maxOffsetY * (sliderValY / 100);
+    } else {
+        // ছবি এবং টার্গেট সাইজ একদম সমান রেশিও হলে স্লাইডার লাগবে না
+        slidersContainer.style.display = 'none';
+    }
+
+    ctx.drawImage(loadedImageObject, srcX, srcY, srcWidth, srcHeight, 0, 0, targetWidth, targetHeight);
+    document.getElementById('resize-out-preview').src = canvas.toDataURL('image/jpeg', 0.95);
 }
 
 function downloadImageResize() {
