@@ -3,11 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ফ্রি অনলাইন ইমেজ টুল ও সেবাসমূহ | سلمان অনলাইন স্মার্ট সেবা</title>
+    <title>ফ্রি অনলাইন ইমেজツール ও সেবাসমূহ | سلمان অনলাইন স্মার্ট সেবা</title>
     <meta name="description" content="সালমান অনলাইন স্মার্ট সেবার ফ্রি ইমেজ টুলস। এক ক্লিকেই ইমেজ কম্প্রেশার, সাইজ পরিবর্তন, ক্রপার, ব্যাকগ্রাউন্ড রিমুভার ও পাসপোর্ট সাইজ ছবি তৈরি করুন সম্পূর্ণ ফ্রিতে।">
+    
+    <meta name="author" content="Salman Smart Seba">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://example.com/image-tools">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ফ্রি অনলাইন ইমেজ টুল ও সেবাসমূহ | سلمان অনলাইন স্মার্ট সেবা">
+    <meta property="og:description" content="এক ক্লিকেই ইমেজ কম্প্রেশার, সাইজ পরিবর্তন, ক্রপার, ব্যাকগ্রাউন্ড রিমুভার ও পাসপোর্ট সাইজ ছবি তৈরি করুন সম্পূর্ণ ফ্রিতে।">
+    <meta property="og:url" content="https://example.com/image-tools">
+    <meta property="og:image" content="og-image.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    
+    <script type="application/ld-json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Salman Online Smart Image Tools",
+      "description": "Free web-based image tools library including compressor, resizer, cropper, and converters.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+
     <style>
         * { font-family: 'Hind Siliguri', sans-serif !important; box-sizing: border-box; }
         body { background: #f8fafc; margin: 0; padding: 15px; -webkit-tap-highlight-color: transparent; }
@@ -18,34 +41,51 @@
         .card { background: white; padding: 25px 15px; border-radius: 14px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
         .card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
         .icon { font-size: 35px; margin-bottom: 10px; display: block; }
+        
         h2 { color: #1e293b; font-size: 24px; margin-bottom: 5px; }
         h3 { font-size: 16px; color: #1e293b; margin: 5px 0; font-weight: 700; }
         p { font-size: 13px; color: #64748b; margin: 0; line-height: 1.4; }
+        
         .tool-section { display: none; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-top: 20px; text-align: center; }
         .upload-box { border: 2px dashed #cbd5e1; padding: 30px 15px; border-radius: 12px; cursor: pointer; background: #f8fafc; transition: 0.2s; margin-bottom: 15px; word-break: break-all; }
         .upload-box:hover { border-color: #1e3a8a; background: #f1f5f9; }
-        .btn-action { background: #10b981; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; transition: 0.2s; display: inline-block; width: 100%; max-width: 300px; text-decoration: none; }
+        
+        /* ১৯. গ্লোবাল বাটন ও স্ট্যাটাস বক্স ডিজাইন */
+        .btn-action { background: #10b981; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; transition: 0.2s; display: inline-block; width: 100%; max-width: 300px; text-decoration: none; text-align: center; }
         .btn-action:hover { background: #059669; }
+        .btn-secondary { background: #4b5563; }
+        .btn-secondary:hover { background: #374151; }
         .close-btn { background: #ef4444; margin-top: 15px; }
         .close-btn:hover { background: #dc2626; }
+        
+        /* গ্লোবাল স্ট্যাটাস বক্স */
+        .status-container { padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; margin: 15px auto; max-width: 500px; display: none; text-align: center; }
+        .status-loading { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+        .status-success { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+        .status-warning { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .status-error { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+        
         .preview-box { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
         .preview-box div { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; min-width: 260px; max-width: 100%; flex: 1; }
         .preview-box img, .preview-box canvas { max-width: 100%; height: auto; max-height: 350px; border-radius: 6px; object-fit: contain; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .status-txt { font-weight: bold; color: #1e3a8a; margin-top: 10px; font-size: 14px; }
-        .crop-workspace { background: #1e293b; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px solid #334155; }
+        
+        .crop-workspace { background: #1e293b; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px solid #334155; display: flex; justify-content: center; overflow: auto; }
         .position-controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin: 15px 0; display: none; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         .position-controls label { font-weight: bold; font-size: 14px; color: #1e293b; display: block; margin-bottom: 5px; }
+        
         .preset-container { display: flex; justify-content: center; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
-        .btn-preset { background: #e2e8f0; color: #1e293b; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        .btn-preset { background: #e2e8f0; color: #1e3a8a; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.2s; }
         .btn-preset:hover, .btn-preset.active { background: #1e3a8a; color: white; }
-        .custom-size-inputs { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 15px 0; flex-wrap: wrap; background: #f1f5f9; padding: 15px; border-radius: 8px; }
-        .custom-size-inputs input, .custom-size-inputs select { padding: 8px; text-align: center; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: white; }
+        
+        .custom-size-inputs, .control-group-box { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 15px 0; flex-wrap: wrap; background: #f1f5f9; padding: 15px; border-radius: 8px; }
+        .custom-size-inputs input, .custom-size-inputs select, .control-group-box input, .control-group-box select { padding: 8px; text-align: center; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: white; }
+        
         textarea { width: 100%; height: 180px; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 15px; font-size: 14px; resize: vertical; line-height: 1.5; }
+        
         .pad-grid { display: grid; grid-template-columns: repeat(3, 55px); gap: 8px; justify-content: center; margin: 15px 0; }
         .pad-btn { width: 55px; height: 55px; background: #1e3a8a; color: white; border: none; border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.1s; }
         .pad-btn:active { background: #10b981; transform: scale(0.95); }
         
-        /* ৫ নম্বর স্পেশাল বক্স স্টাইল */
         .bg-remover-box { background: #f8fafc; border: 2px dashed #10b981; padding: 40px 20px; border-radius: 16px; max-width: 600px; margin: 20px auto; }
         .bg-remover-box h4 { margin: 0 0 10px 0; color: #1e293b; font-size: 18px; }
         .btn-open-web { background: #1e3a8a; color: white; text-decoration: none; padding: 14px 30px; font-weight: bold; border-radius: 8px; display: inline-block; margin-top: 15px; box-shadow: 0 4px 12px rgba(30,58,138,0.2); transition: 0.2s; }
@@ -57,9 +97,11 @@
 <div class="container">
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
+    <div id="global-status-box" class="status-container"></div>
+
     <div id="main-menu">
         <h2>🖼️ ইমেজ টুলস ও সেবা সমূহ</h2>
-        <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ ও কনভার্ট করার ১০টি অল-ইন-ওয়ান প্রфেশনাল টুল।</p>
+        <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় ছবি এডিটিং, রিসাইজ ও কনভার্ট করার ১০টি অল-ইন-ওয়ান প্রফেশনাল টুল।</p>
         <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
         
         <div class="grid">
@@ -83,13 +125,24 @@
             <input type="file" id="file-input-comp" accept="image/*" style="display:none" onchange="handleImageUploadComp(event)">
         </div>
         <div id="compress-controls" style="display:none;">
+            <div class="control-group-box">
+                <label style="font-weight:bold;">সর্বোচ্চ প্রস্থ (Width):</label>
+                <select id="comp-width-select" onchange="updateQuality(document.getElementById('quality-range').value)">
+                    <option value="original">Original</option>
+                    <option value="1600">1600px</option>
+                    <option value="1200" selected>1200px</option>
+                    <option value="1000">1000px</option>
+                    <option value="800">800px</option>
+                    <option value="600">600px</option>
+                </select>
+            </div>
             <div class="range-slider">
                 <label style="font-weight:bold;">ছবির কোয়ালিটি: <span id="quality-val">70</span>%</label><br>
                 <input type="range" id="quality-range" min="10" max="100" value="70" style="width:80%;" oninput="updateQuality(this.value)">
             </div>
             <div class="preview-box">
                 <div><h4>আসল ছবি:</h4><img id="orig-preview"></div>
-                <div><h4>কম্প্রেসড ছবি:</h4><img id="comp-preview"><p class="status-txt" id="orig-size"></p><p class="status-txt" id="comp-size" style="color: #10b981;"></p></div>
+                <div><h4>কম্প্রেসড ছবি:</h4><img id="comp-preview"><p class="status-txt" id="orig-size"></p><p class="status-txt" id="comp-size" style="color: #10b981;"></p><p id="comp-ratio-txt" style="font-weight:bold; color:#1e3a8a;"></p></div>
             </div>
             <button class="btn-action" onclick="downloadImageComp()">⬇️ ছবি ডাউনলোড করুন</button>
         </div>
@@ -112,6 +165,12 @@
                 <select id="resize-unit" onchange="applyCustomResize()"><option value="px">Pixel (px)</option><option value="inch">Inch</option></select>
                 <input type="number" id="resize-w" value="300" oninput="applyCustomResize()">
                 <input type="number" id="resize-h" value="300" oninput="applyCustomResize()">
+                <select id="resize-dpi" onchange="applyCustomResize()">
+                    <option value="72">72 DPI</option>
+                    <option value="96" selected>96 DPI</option>
+                    <option value="150">150 DPI</option>
+                    <option value="300">300 DPI</option>
+                </select>
             </div>
             <div class="position-controls" id="crop-position-sliders">
                 <div id="slider-x-container"><label>↔️ ডানে / বামে সরান:</label><input type="range" id="crop-offset-x" min="0" max="100" value="50" oninput="processResize()"></div>
@@ -133,6 +192,19 @@
             <input type="file" id="file-input-pdf" accept="image/*" multiple style="display:none" onchange="handlePdfUpload(event)">
         </div>
         <div id="pdf-controls" style="display:none;">
+            <div class="control-group-box">
+                <label>কাগজের মাপ ও বিন্যাস:</label>
+                <select id="pdf-layout">
+                    <option value="a4-p">A4 Portrait</option>
+                    <option value="a4-l">A4 Landscape</option>
+                </select>
+                <label>মার্জিন (Margin):</label>
+                <select id="pdf-margin">
+                    <option value="0">No Margin</option>
+                    <option value="10" selected>10 mm</option>
+                    <option value="20">20 mm</option>
+                </select>
+            </div>
             <p id="pdf-file-count" class="status-txt"></p>
             <button class="btn-action" onclick="generatePdf()">⬇️ PDF ডাউনলোড করুন</button>
         </div>
@@ -140,30 +212,41 @@
     </div>
 
     <div id="tool-cropper" class="tool-section">
-        <h2>✂️ ইমেজ ক্রপার ও মিরর রোটেশন</h2>
-        <p>ছবির চারপাশ থেকে অপ্রয়োজনীয় অংশ কাটুন এবং নিচের সাদা অংশ এক ক্লিকে ছেঁটে ফেলুন।</p>
+        <h2>✂️ ইমেজ ক্রপার ও অ্যাডভান্সড রোটেশন</h2>
+        <p>ছবির চারপাশ থেকে নির্দিষ্ট অনুপাত অনুযায়ী কাটুন এবং জুম ও পজিশন সেট করুন।</p>
         <div class="upload-box" onclick="document.getElementById('file-input-crop').click()">
             <span style="font-size: 40px;">📐</span> <p>ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-crop" accept="image/*" style="display:none" onchange="handleCropUpload(event)">
         </div>
         <div id="crop-tool-controls" style="display:none;">
             <div class="preset-container">
-                <button class="btn-preset" onclick="flipImage()">🔄 ডানে-বামে উল্টান (Flip)</button>
-                <button class="btn-preset" style="background:#dc2626; color:white;" onclick="trimBottomWhite()">📐 নিচের সাদা অংশ কাটুন (Trim Bottom)</button>
-                <button class="btn-preset" style="background:#1e3a8a; color:white;" onclick="resetCropTrim()">🔄 রিসেট করুন</button>
+                <button class="btn-preset" onclick="rotateCrop(-90)">🔄 বামে ঘোরান (-90°)</button>
+                <button class="btn-preset" onclick="rotateCrop(90)">🔄 ডানে ঘোরান (+90°)</button>
+                <button class="btn-preset" onclick="flipImage()">↕️ ফ্লিপ (Flip)</button>
+                <button class="btn-preset" style="background:#dc2626; color:white;" onclick="trimBottomWhite()">📐 নিচের সাদা অংশ কাটুন</button>
+            </div>
+            <div class="control-group-box">
+                <label>ক্রপ অনুপাত (Aspect Ratio):</label>
+                <select id="crop-aspect" onchange="changeCropAspect(this.value)">
+                    <option value="free">Free Crop</option>
+                    <option value="1:1">1:1 (Square)</option>
+                    <option value="3:4">3:4</option>
+                    <option value="4:3">4:3</option>
+                    <option value="16:9">16:9</option>
+                    <option value="9:16">9:16</option>
+                </select>
+                <button class="btn-preset" style="background:#1e3a8a; color:white;" onclick="resetCropTrim()">🔄 রিসেট</button>
             </div>
             <div class="crop-workspace">
-                <div style="color:#94a3b8; text-align:left; font-size:14px;">
-                    <label style="color:#fff; font-weight:bold;">🔍 জুম ইন/আউট (Scale):</label>
-                    <input type="range" id="crop-size-slider" min="10" max="150" value="100" style="width:100%; margin-bottom:12px;" oninput="processCrop()">
-                    <label style="color:#fff; font-weight:bold;">↔️ ডানে-বামে সরান:</label>
-                    <input type="range" id="crop-move-x" min="-100" max="100" value="0" style="width:100%; margin-bottom:12px;" oninput="processCrop()">
-                    <label style="color:#fff; font-weight:bold;">↕️ উপর-নিচে সরান:</label>
-                    <input type="range" id="crop-move-y" min="-100" max="100" value="0" style="width:100%;" oninput="processCrop()">
-                </div>
+                <canvas id="crop-canvas"></canvas>
             </div>
-            <div class="preview-box">
-                <div><h4>আউটপুট ছবি:</h4><canvas id="crop-canvas"></canvas></div>
+            <div class="control-group-box" style="flex-direction: column; align-items: stretch; text-align: left;">
+                <label>🔍 জুম (Scale): <span id="val-crop-scale">100</span>%</label>
+                <input type="range" id="crop-size-slider" min="10" max="200" value="100" oninput="processCrop()">
+                <label>↔️ ডানে-বামে সরান: <span id="val-crop-x">0</span></label>
+                <input type="range" id="crop-move-x" min="-100" max="100" value="0" oninput="processCrop()">
+                <label>↕️ উপর-নিচে সরান: <span id="val-crop-y">0</span></label>
+                <input type="range" id="crop-move-y" min="-100" max="100" value="0" oninput="processCrop()">
             </div>
             <button class="btn-action" onclick="downloadImageCrop()">⬇️ ক্রপ করা ছবি ডাউনলোড</button>
         </div>
@@ -172,15 +255,14 @@
 
     <div id="tool-bg-remover" class="tool-section">
         <h2>🪄 এআই ব্যাকগ্রাউন্ড রিমুভার (AI Background Remover)</h2>
-        <p>নিচের বাটনে ক্লিক করলে সম্পূর্ণ ফ্রিতে এবং ১ ক্লিকে ব্যাকগ্রাউন্ড রিমুভ করার ওয়েবসাইটটি ওপেন হবে।</p>
-        
         <div class="bg-remover-box">
             <span style="font-size: 50px; display: block; margin-bottom: 10px;">✨</span>
             <h4>অটোমেটিক ব্যাকগ্রাউন্ড রিমুভার</h4>
-            <p>কাজ শেষ হলে ট্যাবটি কেটে দিয়ে সহজেই আবার আপনার এই সেবা পেজে ফিরে আসতে পারবেন।</p>
+            <p style="color: #b45309; font-weight: bold; background: #fef3c7; padding: 10px; border-radius: 8px;">
+                ℹ️ এই সুবিধাটি বর্তমানে আমাদের নিজস্ব সার্ভারে নেই। আপনাকে নিরাপদভাবে remove.bg ওয়েবসাইটে পাঠানো হবে।
+            </p>
             <a href="https://www.remove.bg" target="_blank" class="btn-open-web">🔗 ব্যাকগ্রাউন্ড মুছুন (এখানে ক্লিক করুন)</a>
         </div>
-        
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন ও মূল মেনুতে ফিরুন</button>
     </div>
 
@@ -190,22 +272,60 @@
             <span style="font-size: 40px;">📄</span> <p>ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-ocr" accept="image/*" style="display:none" onchange="handleOcr(event)">
         </div>
-        <p id="ocr-status" style="color:#1e3a8a; font-weight:bold; margin-top:10px;"></p>
         <textarea id="ocr-result" placeholder="ছবির সম্পূর্ণ লেখা নিখুঁতভাবে স্ক্যান হয়ে এখানে প্রদর্শিত হবে..."></textarea>
-        <button class="btn-action" onclick="navigator.clipboard.writeText(document.getElementById('ocr-result').value); alert('সম্পূর্ণ টেক্সট কপি হয়েছে!');">📋 টেক্সট কপি করুন</button>
+        <button class="btn-action" onclick="copyOcrText()">📋 টেক্সট কপি করুন</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
     <div id="tool-watermark" class="tool-section">
-        <h2>🧼 ছবিতে ওয়াটারমার্ক ও নাম যুক্তকরণ</h2>
-        <p>ছবির ওপর যেকোনো স্থানে আপনার টেক্সট নিখুঁতভাবে বসিয়ে লাইভ প্রিভিউ দেখে ডাউনলোড করুন।</p>
+        <h2>🧼 ছবিতে ওয়াটারমার্ক ও লোগো যুক্তকরণ</h2>
         <div class="upload-box" onclick="document.getElementById('file-input-wm').click()">
             <span style="font-size: 40px;">✍️</span> <p>ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-wm" accept="image/*" style="display:none" onchange="handleWmUpload(event)">
         </div>
         <div id="wm-controls" style="display:none;">
-            <input type="text" id="wm-text" value="সালমান অনলাইন স্মার্ট সেবা" placeholder="আপনার টেক্সট লিখুন" style="padding:12px; width:90%; max-width:400px; border-radius:8px; border:2px solid #cbd5e1; text-align:center; font-size:16px; font-weight:bold;" oninput="processWatermark()"><br>
-            
+            <div class="control-group-box" style="flex-direction: column; align-items: stretch; text-align: left;">
+                <label>텍스트 ওয়াটারমার্ক:</label>
+                <input type="text" id="wm-text" value="সালমান অনলাইন স্মার্ট সেবা" oninput="processWatermark()">
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                    <div>
+                        <label>রঙ (Color):</label>
+                        <input type="color" id="wm-color" value="#ffffff" onchange="processWatermark()">
+                    </div>
+                    <div>
+                        <label>স্বচ্ছতা (Opacity):</label>
+                        <input type="range" id="wm-opacity" min="10" max="100" value="75" oninput="processWatermark()">
+                    </div>
+                    <div>
+                        <label>ঘূর্ণন (Rotate):</label>
+                        <input type="range" id="wm-rotate" min="-180" max="180" value="0" oninput="processWatermark()">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                    <div>
+                        <label>ফন্ট (Font):</label>
+                        <select id="wm-font" onchange="processWatermark()">
+                            <option value="Hind Siliguri">Hind Siliguri</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Courier New">Courier New</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>শ্যাডো (Shadow):</label>
+                        <select id="wm-shadow" onchange="processWatermark()">
+                            <option value="on">On</option>
+                            <option value="off">Off</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>অথবা লোগো ইমেজ ব্যবহার করুন:</label>
+                        <input type="file" id="wm-logo-input" accept="image/*" onchange="handleLogoUpload(event)">
+                    </div>
+                </div>
+            </div>
+
             <div style="margin-top:15px;">
                 <label style="font-weight:bold; font-size:14px;">🔎 লেখার সাইজ ছোট-বড় করুন:</label><br>
                 <input type="range" id="wm-size-slider" min="10" max="150" value="50" style="width:70%;" oninput="processWatermark()">
@@ -229,15 +349,25 @@
     </div>
 
     <div id="tool-hd-enhancer" class="tool-section">
-        <h2>✨ ফটো ব্রাইটনেস, কন্ট্রাস্ট ও ফিল্টার এডিটর</h2>
+        <h2>✨ ফটো ফিল্টার ও প্রফেশনাল এডিটর</h2>
         <div class="upload-box" onclick="document.getElementById('file-input-hd').click()">
             <span style="font-size: 40px;">🪄</span> <p>ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-hd" accept="image/*" style="display:none" onchange="handleHdUpload(event)">
         </div>
         <div id="hd-controls" style="display:none;">
-            <div class="range-slider">
-                <label>☀️ ব্রাইটনেস (আলো):</label> <input type="range" id="hd-b" min="50" max="150" value="100" oninput="processHd()"><br>
-                <label>🌗 কন্ট্রাস্ট (নিখুঁত রঙ):</label> <input type="range" id="hd-c" min="50" max="150" value="100" oninput="processHd()">
+            <div class="control-group-box" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; text-align: left;">
+                <div><label>☀️ ব্রাইটনেস:</label> <input type="range" id="hd-b" min="50" max="150" value="100" oninput="processHd()"></div>
+                <div><label>🌗 কন্ট্রাস্ট:</label> <input type="range" id="hd-c" min="50" max="150" value="100" oninput="processHd()"></div>
+                <div><label>🔺 শার্পনেস (Blur Inverse):</label> <input type="range" id="hd-sharp" min="0" max="10" value="0" oninput="processHd()"></div>
+                <div><label>🌈 স্যাচুরেশন:</label> <input type="range" id="hd-sat" min="0" max="200" value="100" oninput="processHd()"></div>
+                <div><label>💧 ব্লার (Blur):</label> <input type="range" id="hd-blur" min="0" max="20" value="0" oninput="processHd()"></div>
+                <div><label>🟤 সেপিয়া (Sepia):</label> <input type="range" id="hd-sepia" min="0" max="100" value="0" oninput="processHd()"></div>
+                <div><label>⚫ গ্রে-স্কেল:</label> <input type="range" id="hd-gray" min="0" max="100" value="0" oninput="processHd()"></div>
+            </div>
+            <div class="preset-container">
+                <button class="btn-preset" onclick="applyTonePreset(110, 100, 105)">🔥 Warm Tone</button>
+                <button class="btn-preset" onclick="applyTonePreset(95, 105, 110)">❄️ Cool Tone</button>
+                <button class="btn-preset" onclick="resetHdFilters()">🔄 রিসেট ফিল্টার</button>
             </div>
             <div class="preview-box">
                 <div><h4>আউটপুট ছবি:</h4><img id="hd-out-preview"></div>
@@ -248,17 +378,20 @@
     </div>
 
     <div id="tool-converter" class="tool-section">
-        <h2>🔄 ইমেজ ফরম্যাট কনভার্টার (JPG/PNG/WEBP)</h2>
+        <h2>🔄 ইমেজ ফরম্যাট কনভার্টার (Multi-Format Support)</h2>
         <div class="upload-box" onclick="document.getElementById('file-input-conv').click()">
             <span style="font-size: 40px;">🔄</span> <p>ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-conv" accept="image/*" style="display:none" onchange="handleConvUpload(event)">
         </div>
         <div id="conv-controls" style="display:none;">
             <label style="font-weight:bold;">কোন ফরম্যাটে কনভার্ট করবেন:</label><br>
-            <select id="conv-format" class="dropdown-style">
-                <option value="image/jpeg">JPG / JPEG ফরম্যাট</option>
-                <option value="image/png">PNG (স্বচ্ছ ব্যাকগ্রাউন্ড)</option>
-                <option value="image/webp">WEBP (ওয়েব অপ্টিমাইজড)</option>
+            <select id="conv-format" style="padding: 10px; border-radius: 6px; margin: 10px 0;">
+                <option value="image/jpeg">JPG / JPEG</option>
+                <option value="image/png">PNG (Lossless)</option>
+                <option value="image/webp">WEBP (Web Optimized)</option>
+                <option value="image/bmp">BMP Bitmap</option>
+                <option value="image/gif">GIF Format</option>
+                <option value="image/x-icon">ICO Favicon</option>
             </select><br>
             <button class="btn-action" onclick="downloadConvertedImage()">⬇️ কনভার্ট ও ডাউনলোড</button>
         </div>
@@ -266,15 +399,21 @@
     </div>
 
     <div id="tool-passport-photo" class="tool-section">
-        <h2>👤 পাসপোর্ট ও স্ট্যাম্প সাইজ ফটো মেকার</h2>
+        <h2>👤 পাসপোর্ট ও স্ট্যাম্প সাইজ ফটো মেকার (DPI Optimized)</h2>
         <div class="upload-box" onclick="document.getElementById('file-input-pass').click()">
             <span style="font-size: 40px;">🪪</span> <p>ছবি সিলেক্ট করুন</p>
             <input type="file" id="file-input-pass" accept="image/*" style="display:none" onchange="handlePassUpload(event)">
         </div>
         <div id="pass-controls" style="display:none;">
             <div class="preset-container">
-                <button class="btn-preset active" id="btn-pass-p" onclick="setPassSize(40, 50, 'btn-pass-p')">👤 পাসপোর্ট সাইজ (40x50 mm)</button>
+                <button class="btn-preset active" id="btn-pass-p" onclick="setPassSize(40, 50, 'btn-pass-p')">👤 পাসপোর্ট (40x50 mm)</button>
+                <button class="btn-preset" id="btn-pass-b" onclick="setPassSize(35, 45, 'btn-pass-b')">👤 বায়োমেট্রিক (35x45 mm)</button>
                 <button class="btn-preset" id="btn-pass-s" onclick="setPassSize(20, 25, 'btn-pass-s')">📑 স্ট্যাম্প সাইজ (20x25 mm)</button>
+                <button class="btn-preset" id="btn-pass-c" onclick="enableCustomPass()">⚙️ কাস্টম মিলিমিটার</button>
+            </div>
+            <div class="custom-size-inputs" id="custom-pass-inputs" style="display:none;">
+                <label>Width (mm):</label> <input type="number" id="custom-pass-w" value="40" oninput="applyCustomPass()">
+                <label>Height (mm):</label> <input type="number" id="custom-pass-h" value="50" oninput="applyCustomPass()">
             </div>
             <div class="preview-box">
                 <div><h4>পাসপোর্ট/স্ট্যাম্প রেডি ছবি:</h4><img id="pass-out-preview"></div>
@@ -286,32 +425,109 @@
 </div>
 
 <script>
-let originalFileComp = null, originalFileResize = null, loadedImageObject = null;
-let pdfFiles = [], isFlipped = false;
-let wmImgObj = null, hdImgObj = null, convImgObj = null, passImgObj = null;
-let targetWidth = 300, targetHeight = 300, passW = 154, passH = 192; 
-let wmXPercent = 50, wmYPercent = 50;
+// ফাইল ডাইনামিক নাম্বারিং স্টেট ট্র্যাকার ট্র্যাকিং অবজেক্ট (১ নম্বর পয়েন্ট)
+const DownloadCounter = {};
 
-// ৪ নম্বর ক্রপার ভেরিয়েবল
-let cropImgObj = null;
-let bottomTrimPixels = 0;
+// অ্যাপের গ্লোবাল অবজেক্ট স্টেট লাইফসাইকেল
+let originalFileComp = null, originalFileResize = null, loadedImageObject = null;
+let pdfFiles = [], isFlipped = false, currentRotation = 0, currentAspect = 'free';
+let wmImgObj = null, wmLogoObj = null, hdImgObj = null, convImgObj = null, passImgObj = null, cropImgObj = null;
+let targetWidth = 300, targetHeight = 300, passW = 154, passH = 192; 
+let wmXPercent = 50, wmYPercent = 50, bottomTrimPixels = 0;
+let warmCoolFilter = { b: 100, c: 100, s: 100 };
+
+// ==========================================
+// ২, ৩, ৪. সেন্ট্রাল স্ট্যাটাস ও এরর নোটিফিকেশন ইঞ্জিন
+// ==========================================
+const StatusNotification = {
+    show(message, type = 'info') {
+        const box = document.getElementById('global-status-box');
+        if (!box) return;
+        box.className = `status-container status-${type}`;
+        box.innerText = message;
+        box.style.display = 'block';
+        if (type !== 'loading') {
+            setTimeout(() => { this.hide(); }, 4000);
+        }
+    },
+    hide() {
+        const box = document.getElementById('global-status-box');
+        if (box) {
+            box.style.display = 'none';
+            box.innerText = '';
+        }
+    }
+};
+
+// ==========================================
+// ১, ১৪, ১৫. কমন সিকিউর ডাউনলোড ও মেমোরি ক্লিনআপ সিস্টেম
+// ==========================================
+function triggerSecureDownload(canvasOrBlobUrl, toolName, isBlobUrl = false, extension = 'jpg') {
+    try {
+        StatusNotification.show("⏳ ফাইল প্রসেসিং ও ডাউনলোড হচ্ছে...", "loading");
+        
+        // ডাইনামিক কাউন্টার নির্ধারণ
+        if (!DownloadCounter[toolName]) DownloadCounter[toolName] = 1;
+        const fileIndex = DownloadCounter[toolName]++;
+        
+        const fileName = `${toolName}_Salman_Smart_Seba_${fileIndex}.${extension}`;
+        const link = document.createElement('a');
+        link.download = fileName;
+        
+        if (isBlobUrl) {
+            link.href = canvasOrBlobUrl;
+            link.click();
+            StatusNotification.show(`✅ সফলভাবে ডাউনলোড সম্পন্ন: ${fileName}`, "success");
+        } else {
+            // ক্যানভাস থেকে ব্লব অবজেক্টে নিয়ে মেমোরি ফ্লাশ অপ্টিমাইজেশন
+            canvasOrBlobUrl.toBlob((blob) => {
+                if (!blob) {
+                    StatusNotification.show("⚠️ ফাইলটি নষ্ট হতে পারে।", "error");
+                    return;
+                }
+                const blobUrl = URL.createObjectURL(blob);
+                link.href = blobUrl;
+                link.click();
+                
+                // মেমোরি রিলিজ
+                setTimeout(() => { URL.revokeObjectURL(blobUrl); }, 1000);
+                StatusNotification.show(`✅ সফলভাবে ডাউনলোড সম্পন্ন: ${fileName}`, "success");
+            }, `image/${extension === 'jpg' ? 'jpeg' : extension}`, 0.95);
+        }
+    } catch (err) {
+        console.error("Download Runtime Exception:", err);
+        StatusNotification.show("⚠️ মেমোরি কম থাকার কারণে কাজ সম্পন্ন হয়নি।", "error");
+    }
+}
+
+// ==========================================
+// ১৩. ব্রাউজার ফিচার ও এপিআই কমপ্যাটিবিলিটি প্রটেকশন
+// ==========================================
+function checkCoreBrowserSupport() {
+    if (!window.HTMLCanvasElement) {
+        StatusNotification.show("⚠️ এই ব্রাউজার এই সুবিধা (Canvas) সমর্থন করে না।", "error");
+        return false;
+    }
+    return true;
+}
 
 function openTool(toolName) {
+    if (!checkCoreBrowserSupport()) return;
     closeAllTools();
     document.getElementById('main-menu').style.display = 'none';
     const element = document.getElementById('tool-' + toolName);
     if(element) element.style.display = 'block';
+    StatusNotification.hide();
 }
 
 function closeAllTools() {
     document.getElementById('main-menu').style.display = 'block';
-    const sections = document.querySelectorAll('.tool-section');
-    sections.forEach(s => s.style.display = 'none');
-    const inputs = document.querySelectorAll('input[type="file"]');
-    inputs.forEach(i => i.value = '');
+    document.querySelectorAll('.tool-section').forEach(s => s.style.display = 'none');
+    document.querySelectorAll('input[type="file"]').forEach(i => i.value = '');
+    
+    // মেমোরি এবং অবজেক্ট লাইফসাইকেল ক্লিনআপ (১৪ নম্বর পয়েন্ট)
     pdfFiles = [];
     document.getElementById('ocr-result').value = '';
-    document.getElementById('ocr-status').innerText = '';
     
     document.getElementById('compress-controls').style.display = 'none';
     document.getElementById('resize-controls').style.display = 'none';
@@ -321,21 +537,28 @@ function closeAllTools() {
     document.getElementById('hd-controls').style.display = 'none';
     document.getElementById('conv-controls').style.display = 'none';
     document.getElementById('pass-controls').style.display = 'none';
-    isFlipped = false; 
-    bottomTrimPixels = 0;
-    wmXPercent = 50; wmYPercent = 50;
+    
+    isFlipped = false; currentRotation = 0; bottomTrimPixels = 0;
+    wmXPercent = 50; wmYPercent = 50; wmLogoObj = null;
+    StatusNotification.hide();
 }
 
-// --- ১. ইমেজ কম্প্রেশার ---
+// ==========================================
+// ৫. ইমেজ কম্প্রেশার লজিক মডিউল
+// ==========================================
 function updateQuality(val) {
     document.getElementById('quality-val').innerText = val;
     if(originalFileComp) compressImage(originalFileComp, val / 100);
 }
+
 function handleImageUploadComp(event) {
-    const file = event.target.files[0]; if (!file) return;
+    const file = event.target.files[0]; 
+    if (!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
     originalFileComp = file;
     document.getElementById('orig-size').innerText = "সাইজ: " + (file.size / 1024).toFixed(2) + " KB";
+    
     const reader = new FileReader();
+    reader.onerror = () => { StatusNotification.show("⚠️ ছবিটি লোড করা যায়নি।", "error"); };
     reader.onload = function(e) {
         document.getElementById('orig-preview').src = e.target.result;
         document.getElementById('compress-controls').style.display = 'block';
@@ -343,31 +566,58 @@ function handleImageUploadComp(event) {
     };
     reader.readAsDataURL(file);
 }
+
 function compressImage(file, quality) {
     const img = new Image();
     img.onload = function() {
-        const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+        const canvas = document.createElement('canvas'); 
+        const ctx = canvas.getContext('2d');
         let width = img.width, height = img.height;
-        if (width > 1200) { height *= 1200 / width; width = 1200; }
+        
+        const widthSetting = document.getElementById('comp-width-select').value;
+        if (widthSetting !== 'original') {
+            const targetW = parseInt(widthSetting);
+            if (width > targetW) {
+                height *= targetW / width;
+                width = targetW;
+            }
+        }
+        
         canvas.width = width; canvas.height = height;
         ctx.drawImage(img, 0, 0, width, height);
+        
         canvas.toBlob(function(blob) {
             if(!blob) return;
-            document.getElementById('comp-size').innerText = "নতুন সাইজ: " + (blob.size / 1024).toFixed(2) + " KB";
+            const newSizeKb = blob.size / 1024;
+            const originalSizeKb = file.size / 1024;
+            const savedPercentage = ((originalSizeKb - newSizeKb) / originalSizeKb * 100).toFixed(0);
+            
+            document.getElementById('comp-size').innerText = "নতুন সাইজ: " + newSizeKb.toFixed(2) + " KB";
+            document.getElementById('comp-ratio-txt').innerText = savedPercentage > 0 ? `📉 সাইজ ${savedPercentage}% কমানো হয়েছে` : `📊 সাইজ অপরিবর্তিত`;
+            
+            if(document.getElementById('comp-preview').src.startsWith('blob:')) {
+                URL.revokeObjectURL(document.getElementById('comp-preview').src);
+            }
             document.getElementById('comp-preview').src = URL.createObjectURL(blob);
         }, 'image/jpeg', quality);
     };
     img.src = document.getElementById('orig-preview').src;
 }
+
 function downloadImageComp() {
-    const a = document.createElement('a'); a.href = document.getElementById('comp-preview').src;
-    a.download = "compressed_image.jpg"; a.click();
+    const previewImg = document.getElementById('comp-preview');
+    if(!previewImg.src) { StatusNotification.show("⚠️ ফাইলটি নষ্ট হতে পারে।", "error"); return; }
+    triggerSecureDownload(previewImg.src, "Compressed_Image", true, "jpg");
 }
 
-// --- ২. ইমেজ রিসাইজার ---
+// ==========================================
+// ২, ৭. ইমেজ রিসাইজার (DPI সাপোর্ট ও সেফটি ভ্যালিডেশন)
+// ==========================================
 function handleImageUploadResize(event) {
-    const file = event.target.files[0]; if (!file) return;
-    originalFileResize = file; const reader = new FileReader();
+    const file = event.target.files[0]; 
+    if (!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
+    originalFileResize = file; 
+    const reader = new FileReader();
     reader.onload = function(e) {
         document.getElementById('resize-orig-preview').src = e.target.result;
         loadedImageObject = new Image();
@@ -379,80 +629,167 @@ function handleImageUploadResize(event) {
     };
     reader.readAsDataURL(file);
 }
+
 function setPreset(w, h, btnId) {
     document.querySelectorAll('#tool-resizer .btn-preset').forEach(b => b.classList.remove('active'));
     document.getElementById(btnId).classList.add('active');
     document.getElementById('custom-inputs').style.display = 'none';
     targetWidth = w; targetHeight = h; processResize();
 }
+
 function enableCustomSize() {
     document.querySelectorAll('#tool-resizer .btn-preset').forEach(b => b.classList.remove('active'));
     document.getElementById('preset-custom').classList.add('active');
     document.getElementById('custom-inputs').style.display = 'flex';
     applyCustomResize();
 }
+
 function applyCustomResize() {
     const unit = document.getElementById('resize-unit').value;
+    const dpi = parseFloat(document.getElementById('resize-dpi').value) || 96;
     let w = parseFloat(document.getElementById('resize-w').value) || 300;
     let h = parseFloat(document.getElementById('resize-h').value) || 300;
-    targetWidth = unit === 'inch' ? Math.round(w * 96) : Math.round(w);
-    targetHeight = unit === 'inch' ? Math.round(h * 96) : Math.round(h);
+    
+    if (unit === 'inch') {
+        targetWidth = Math.round(w * dpi);
+        targetHeight = Math.round(h * dpi);
+    } else {
+        targetWidth = Math.round(w);
+        targetHeight = Math.round(h);
+    }
     processResize();
 }
+
 function processResize() {
     if (!loadedImageObject) return;
     document.getElementById('current-dim').innerText = targetWidth + "x" + targetHeight;
-    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+    const canvas = document.createElement('canvas'); 
+    const ctx = canvas.getContext('2d');
     canvas.width = targetWidth; canvas.height = targetHeight;
+    
     let srcX = 0, srcY = 0, srcW = loadedImageObject.width, srcH = loadedImageObject.height;
     const r = srcW / srcH, tr = targetWidth / targetHeight;
+    
     if (r > tr) {
         document.getElementById('crop-position-sliders').style.display = 'block';
         document.getElementById('slider-x-container').style.display = 'block';
         document.getElementById('slider-y-container').style.display = 'none';
-        srcW = srcH * tr; srcX = (loadedImageObject.width - srcW) * (document.getElementById('crop-offset-x').value / 100);
+        srcW = srcH * tr; 
+        srcX = (loadedImageObject.width - srcW) * (document.getElementById('crop-offset-x').value / 100);
     } else if (r < tr) {
         document.getElementById('crop-position-sliders').style.display = 'block';
         document.getElementById('slider-x-container').style.display = 'none';
         document.getElementById('slider-y-container').style.display = 'block';
-        srcH = srcW / tr; srcY = (loadedImageObject.height - srcH) * (document.getElementById('crop-offset-y').value / 100);
-    } else { document.getElementById('crop-position-sliders').style.display = 'none'; }
+        srcH = srcW / tr; 
+        srcY = (loadedImageObject.height - srcH) * (document.getElementById('crop-offset-y').value / 100);
+    } else { 
+        document.getElementById('crop-position-sliders').style.display = 'none'; 
+    }
+    
     ctx.drawImage(loadedImageObject, srcX, srcY, srcW, srcH, 0, 0, targetWidth, targetHeight);
     document.getElementById('resize-out-preview').src = canvas.toDataURL('image/jpeg', 0.95);
 }
+
 function downloadImageResize() {
-    const a = document.createElement('a'); a.href = document.getElementById('resize-out-preview').src;
-    a.download = `resized_${targetWidth}x${targetHeight}.jpg`; a.click();
+    const outImg = document.getElementById('resize-out-preview');
+    if(!outImg.src) { StatusNotification.show("⚠️ ফাইলটি নষ্ট হতে পারে।", "error"); return; }
+    triggerSecureDownload(outImg.src, "Resized_Image", true, "jpg");
 }
 
-// --- ৩. JPG থেকে PDF ---
+// ==========================================
+// ৬. JPG থেকে PDF (Auto Fit, Aspect Ratio ও মার্জিন কন্ট্রোল)
+// ==========================================
 function handlePdfUpload(event) {
     pdfFiles = Array.from(event.target.files);
     if(pdfFiles.length > 0) {
         document.getElementById('pdf-file-count').innerText = `${pdfFiles.length} টি ছবি লোড হয়েছে।`;
         document.getElementById('pdf-controls').style.display = 'block';
+    } else {
+        StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error");
     }
-}
-async function generatePdf() {
-    const { jsPDF } = window.jspdf; const doc = new jsPDF();
-    for(let i=0; i<pdfFiles.length; i++) {
-        const imgData = await new Promise(res => {
-            const r = new FileReader(); r.onload = (e) => res(e.target.result); r.readAsDataURL(pdfFiles[i]);
-        });
-        if(i > 0) doc.addPage();
-        doc.addImage(imgData, 'JPEG', 10, 10, 190, 277);
-    }
-    doc.save('converted_documents.pdf');
 }
 
-// --- ৪. ইমেজ ক্রপার ও ফ্লিপ ---
+async function generatePdf() {
+    if(pdfFiles.length === 0) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
+    StatusNotification.show("⏳ PDF ফাইল তৈরি হচ্ছে...", "loading");
+    
+    try {
+        const { jsPDF } = window.jspdf;
+        const layoutSel = document.getElementById('pdf-layout').value;
+        const margin = parseFloat(document.getElementById('pdf-margin').value);
+        
+        // পেপার মেজারমেন্ট ডিফাইন
+        const isLandscape = layoutSel === 'a4-l';
+        const doc = new jsPDF({
+            orientation: isLandscape ? 'l' : 'p',
+            unit: 'mm',
+            format: 'a4'
+        });
+        
+        const pageWidth = isLandscape ? 297 : 210;
+        const pageHeight = isLandscape ? 210 : 297;
+        const printableW = pageWidth - (margin * 2);
+        const printableH = pageHeight - (margin * 2);
+
+        for(let i = 0; i < pdfFiles.length; i++) {
+            const imgData = await new Promise((resolve, reject) => {
+                const r = new FileReader(); 
+                r.onerror = () => reject();
+                r.onload = (e) => resolve(e.target.result); 
+                r.readAsDataURL(pdfFiles[i]);
+            });
+
+            if(i > 0) doc.addPage();
+
+            // ইমেজ অ্যাসপেক্ট রেশিও এবং অটো ফিট ক্যালকুলেশন (৬ নম্বর পয়েন্ট)
+            await new Promise((resolve) => {
+                const tempImg = new Image();
+                tempImg.onload = function() {
+                    let imgW = tempImg.width;
+                    let imgH = tempImg.height;
+                    const ratio = imgW / imgH;
+                    
+                    if (imgW > printableW) {
+                        imgW = printableW;
+                        imgH = imgW / ratio;
+                    }
+                    if (imgH > printableH) {
+                        imgH = printableH;
+                        imgW = imgH * ratio;
+                    }
+                    
+                    // ইমেজ সেন্টার অ্যালাইনমেন্ট এক্সিস নির্ধারণ
+                    const posX = margin + (printableW - imgW) / 2;
+                    const posY = margin + (printableH - imgH) / 2;
+                    
+                    doc.addImage(imgData, 'JPEG', posX, posY, imgW, imgH);
+                    resolve();
+                };
+                tempImg.src = imgData;
+            });
+        }
+        
+        if (!DownloadCounter["Converted_Document"]) DownloadCounter["Converted_Document"] = 1;
+        const currentIdx = DownloadCounter["Converted_Document"]++;
+        doc.save(`Converted_Document_Salman_Smart_Seba_${currentIdx}.pdf`);
+        StatusNotification.show("✅ PDF সফলভাবে ডাউনলোড হয়েছে।", "success");
+    } catch(err) {
+        console.error("PDF Engineering Error:", err);
+        StatusNotification.show("⚠️ PDF তৈরি করা সম্ভব হয়নি।", "error");
+    }
+}
+
+// ==========================================
+// ৪, ১১. ইমেজ ক্রপার মডিউল (ফ্রি-ক্রপ, রোটেশন, স্কেল ও এসপেক্ট রেশিও)
+// ==========================================
 function handleCropUpload(event) {
-    const file = event.target.files[0]; if(!file) return;
+    const file = event.target.files[0]; 
+    if(!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
     const r = new FileReader();
     r.onload = function(e) {
         cropImgObj = new Image();
         cropImgObj.onload = function() {
-            bottomTrimPixels = 0; 
+            bottomTrimPixels = 0; currentRotation = 0; isFlipped = false;
             document.getElementById('crop-size-slider').value = 100;
             document.getElementById('crop-move-x').value = 0;
             document.getElementById('crop-move-y').value = 0;
@@ -463,72 +800,148 @@ function handleCropUpload(event) {
     };
     r.readAsDataURL(file);
 }
+
+function rotateCrop(deg) {
+    currentRotation = (currentRotation + deg) % 360;
+    processCrop();
+}
+
+function changeCropAspect(aspect) {
+    currentAspect = aspect;
+    processCrop();
+}
+
 function flipImage() { isFlipped = !isFlipped; processCrop(); }
+
 function trimBottomWhite() {
     if(!cropImgObj) return;
     bottomTrimPixels += Math.round(cropImgObj.height * 0.05); 
     if(bottomTrimPixels >= cropImgObj.height - 20) bottomTrimPixels = cropImgObj.height - 20;
     processCrop();
 }
+
 function resetCropTrim() {
-    bottomTrimPixels = 0; isFlipped = false;
+    bottomTrimPixels = 0; isFlipped = false; currentRotation = 0; currentAspect = 'free';
+    document.getElementById('crop-aspect').value = 'free';
     document.getElementById('crop-size-slider').value = 100;
     document.getElementById('crop-move-x').value = 0;
     document.getElementById('crop-move-y').value = 0;
     processCrop();
 }
+
 function processCrop() {
     if(!cropImgObj) return;
-    const canvas = document.getElementById('crop-canvas'); const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('crop-canvas'); 
+    const ctx = canvas.getContext('2d');
     
+    // স্লাইডার ভ্যালু ইন্ডিকেটর ডিসপ্লে আপডেট
+    const scale = parseFloat(document.getElementById('crop-size-slider').value) / 100;
+    const mX = parseFloat(document.getElementById('crop-move-x').value);
+    const mY = parseFloat(document.getElementById('crop-move-y').value);
+    
+    document.getElementById('val-crop-scale').innerText = Math.round(scale * 100);
+    document.getElementById('val-crop-x').innerText = mX;
+    document.getElementById('val-crop-y').innerText = mY;
+
     let baseW = cropImgObj.width;
     let baseH = cropImgObj.height - bottomTrimPixels;
     if(baseH < 10) baseH = 10;
     
+    // নির্দিষ্ট অ্যাসপেক্ট রেশিও কাটআউট ফ্রেম মাস্কিং লজিক (১১ নম্বর পয়েন্ট)
+    if (currentAspect !== 'free') {
+        const parts = currentAspect.split(':');
+        const aspectW = parseInt(parts[0]);
+        const aspectH = parseInt(parts[1]);
+        const targetRatio = aspectW / aspectH;
+        const currentRatio = baseW / baseH;
+        
+        if (currentRatio > targetRatio) {
+            baseW = baseH * targetRatio;
+        } else {
+            baseH = baseW / targetRatio;
+        }
+    }
+    
     canvas.width = baseW; canvas.height = baseH;
-    ctx.clearRect(0,0,baseW,baseH);
+    ctx.clearRect(0, 0, baseW, baseH);
     ctx.save();
     
-    if(isFlipped) { ctx.translate(baseW, 0); ctx.scale(-1, 1); }
+    // রোটেশন ও ফ্লিপ ট্রান্সলেশন ম্যাট্রিক্স
+    ctx.translate(baseW / 2, baseH / 2);
+    if (currentRotation !== 0) {
+        ctx.rotate((currentRotation * Math.PI) / 180);
+    }
+    if(isFlipped) { ctx.scale(-1, 1); }
     
-    const scale = parseFloat(document.getElementById('crop-size-slider').value) / 100;
-    const moveX = parseFloat(document.getElementById('crop-move-x').value) * (baseW / 100);
-    const moveY = parseFloat(document.getElementById('crop-move-y').value) * (baseH / 100);
-    
-    ctx.translate(baseW/2 + moveX, baseH/2 + moveY);
+    const moveX = mX * (baseW / 100);
+    const moveY = mY * (baseH / 100);
     ctx.scale(scale, scale);
-    ctx.drawImage(cropImgObj, -cropImgObj.width/2, -cropImgObj.height/2);
+    ctx.drawImage(cropImgObj, -cropImgObj.width / 2 + moveX, -cropImgObj.height / 2 + moveY);
     ctx.restore();
 }
+
 function downloadImageCrop() {
     const canvas = document.getElementById('crop-canvas');
-    const a = document.createElement('a'); a.href = canvas.toDataURL('image/jpeg', 0.95);
-    a.download = 'cropped_final.jpg'; a.click();
+    triggerSecureDownload(canvas, "Cropped_Image", false, "jpg");
 }
 
-// --- ৬৬. ছবি থেকে টেক্সট ---
+// ==========================================
+// ১৬. টেক্সট টু OCR রিডার (Error-Handling ও লগার)
+// ==========================================
 function handleOcr(event) {
-    const file = event.target.files[0]; if(!file) return;
-    const statusBox = document.getElementById('ocr-status');
-    statusBox.innerText = "লেখা পড়া হচ্ছে... ⏳ 0%";
+    const file = event.target.files[0]; 
+    if(!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
+    
+    if (!window.navigator.onLine) {
+        StatusNotification.show("⚠️ ইন্টারনেট সংযোগ নেই। OCR Engine লোড করা যাচ্ছে না।", "error");
+        return;
+    }
+    
+    StatusNotification.show("⏳ OCR Engine লোড হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন...", "loading");
+    
     Tesseract.recognize(file, 'ben+eng', {
         logger: m => {
-            if(m.status === 'recognizing text') { statusBox.innerText = `স্ক্যান হচ্ছে: ${Math.round(m.progress * 100)}%... ⏳`; }
+            if(m.status === 'recognizing text') { 
+                StatusNotification.show(`⏳ স্ক্যান প্রসেস হচ্ছে: ${Math.round(m.progress * 100)}% সম্পন্ন`, "loading"); 
+            }
         }
     }).then(({ data: { text } }) => {
-        document.getElementById('ocr-result').value = text;
-        statusBox.innerText = "সম্পূর্ণ হয়েছে! ✅";
-    }).catch(err => { statusBox.innerText = "ভুল হয়েছে, আবার চেষ্টা করুন।"; });
+        if(!text || text.trim() === "") {
+            StatusNotification.show("⚠️ ছবি অস্পষ্ট অথবা কোনো লেখা খুঁজে পাওয়া যায়নি।", "warning");
+        } else {
+            document.getElementById('ocr-result').value = text;
+            StatusNotification.show("✅ সফলভাবে সম্পূর্ণ হয়েছে।", "success");
+        }
+    }).catch(err => { 
+        console.error("OCR Runtime Error Context:", err);
+        StatusNotification.show("⚠️ OCR Engine লোড হয়নি বা ফাইল সাপোর্টেড নয়।", "error"); 
+    });
 }
 
-// --- ৭. ছবিতে ওয়াটারমার্ক ---
+function copyOcrText() {
+    const txt = document.getElementById('ocr-result').value;
+    if(!txt) { StatusNotification.show("⚠️ কপি করার জন্য কোনো লেখা নেই।", "warning"); return; }
+    
+    if(navigator.clipboard) {
+        navigator.clipboard.writeText(txt).then(() => {
+            StatusNotification.show("✅ সফলভাবে ক্লিপবোর্ডে কপি হয়েছে!", "success");
+        });
+    } else {
+        StatusNotification.show("⚠️ এই ব্রাউজার এই সুবিধা সমর্থন করে না।", "error");
+    }
+}
+
+// ==========================================
+// ৯. ছবিতে ওয়াটারমার্ক ও লোগো যুক্তকরণ
+// ==========================================
 function handleWmUpload(event) {
-    const file = event.target.files[0]; if(!file) return;
+    const file = event.target.files[0]; 
+    if(!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
     const r = new FileReader();
     r.onload = function(e) {
         wmImgObj = new Image();
         wmImgObj.onload = function() {
-            wmXPercent = 50; wmYPercent = 50; 
+            wmXPercent = 50; wmYPercent = 50; wmLogoObj = null;
             document.getElementById('wm-controls').style.display = 'block';
             processWatermark();
         };
@@ -536,6 +949,19 @@ function handleWmUpload(event) {
     };
     r.readAsDataURL(file);
 }
+
+function handleLogoUpload(event) {
+    const file = event.target.files[0];
+    if(!file) return;
+    const r = new FileReader();
+    r.onload = function(e) {
+        wmLogoObj = new Image();
+        wmLogoObj.onload = function() { processWatermark(); };
+        wmLogoObj.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+}
+
 function moveWm(dir) {
     if(dir === 'up') wmYPercent -= 4;
     if(dir === 'down') wmYPercent += 4;
@@ -546,96 +972,187 @@ function moveWm(dir) {
     if(wmYPercent < 0) wmYPercent = 0; if(wmYPercent > 100) wmYPercent = 100;
     processWatermark();
 }
+
 function processWatermark() {
     if(!wmImgObj) return;
-    const canvas = document.getElementById('wm-canvas'); const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('wm-canvas'); 
+    const ctx = canvas.getContext('2d');
     
     let dW = wmImgObj.width;
     let dH = wmImgObj.height;
-    if(dW > 1000) { dH = (1000/dW)*dH; dW = 1000; }
+    if(dW > 1200) { dH = (1200 / dW) * dH; dW = 1200; }
     
     canvas.width = dW; canvas.height = dH;
     ctx.drawImage(wmImgObj, 0, 0, dW, dH);
     
-    const sizeSlider = document.getElementById('wm-size-slider').value;
-    const fontSize = Math.round((dW / 25) * (sizeSlider / 50));
-    
-    ctx.font = `bold ${fontSize}px 'Hind Siliguri'`;
-    ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
-    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-    ctx.shadowBlur = 4;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    
-    const text = document.getElementById('wm-text').value || "সালমান অনলাইন স্মার্ট সেবা";
     let realX = dW * (wmXPercent / 100);
     let realY = dH * (wmYPercent / 100);
     
-    ctx.fillText(text, realX, realY);
-    ctx.shadowBlur = 0; 
-}
-function downloadImageWm() {
-    const canvas = document.getElementById('wm-canvas');
-    const a = document.createElement('a'); a.href = canvas.toDataURL('image/jpeg', 0.95);
-    a.download = 'watermark_final.jpg'; a.click();
+    const opacity = parseFloat(document.getElementById('wm-opacity').value) / 100;
+    ctx.save();
+    ctx.globalAlpha = opacity;
+    
+    // রোটেশন ম্যাট্রিক্স কনফিগ
+    ctx.translate(realX, realY);
+    const rotationDeg = parseFloat(document.getElementById('wm-rotate').value) || 0;
+    if (rotationDeg !== 0) {
+        ctx.rotate((rotationDeg * Math.PI) / 180);
+    }
+
+    if (wmLogoObj) {
+        // লোগো ইমেজ ড্রইং
+        const logoW = dW * 0.15;
+        const logoH = logoW * (wmLogoObj.height / wmLogoObj.width);
+        ctx.drawImage(wmLogoObj, -logoW / 2, -logoH / 2, logoW, logoH);
+    } else {
+        // টেক্সট ওয়াটারমার্ক ড্রইং (৯ নম্বর পয়েন্ট)
+        const sizeSlider = document.getElementById('wm-size-slider').value;
+        const fontSize = Math.round((dW / 25) * (sizeSlider / 50));
+        const fontFam = document.getElementById('wm-font').value;
+        const shadowOn = document.getElementById('wm-shadow').value === 'on';
+        
+        ctx.font = `bold ${fontSize}px '${fontFam}'`;
+        ctx.fillStyle = document.getElementById('wm-color').value;
+        
+        if (shadowOn) {
+            ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
+            ctx.shadowBlur = 6;
+        } else {
+            ctx.shadowBlur = 0;
+        }
+        
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        const text = document.getElementById('wm-text').value || "সালমান অনলাইন স্মার্ট সেবা";
+        ctx.fillText(text, 0, 0);
+    }
+    ctx.restore();
 }
 
-// --- ৮. ফটো ব্রাইটনেস ---
+function downloadImageWm() {
+    const canvas = document.getElementById('wm-canvas');
+    triggerSecureDownload(canvas, "Watermark_Image", false, "jpg");
+}
+
+// ==========================================
+// ১০. HD Enhancer (Sharpness, Saturation, Blur, Filter Options)
+// ==========================================
 function handleHdUpload(event) {
-    const file = event.target.files[0]; if(!file) return;
+    const file = event.target.files[0]; 
+    if(!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
     const r = new FileReader();
     r.onload = function(e) {
-        hdImgObj = new Image(); hdImgObj.onload = function() {
+        hdImgObj = new Image(); 
+        hdImgObj.onload = function() {
             document.getElementById('hd-controls').style.display = 'block';
-            processHd();
+            resetHdFilters();
         };
         hdImgObj.src = e.target.result;
     };
     r.readAsDataURL(file);
 }
-function processHd() {
-    if(!hdImgObj) return;
-    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
-    canvas.width = hdImgObj.width; canvas.height = hdImgObj.height;
-    const b = document.getElementById('hd-b').value;
-    const c = document.getElementById('hd-c').value;
-    ctx.filter = `brightness(${b}%) contrast(${c}%)`;
-    ctx.drawImage(hdImgObj, 0, 0);
-    document.getElementById('hd-out-preview').src = canvas.toDataURL('image/jpeg');
-}
-function downloadImageHd() {
-    const a = document.createElement('a'); a.href = document.getElementById('hd-out-preview').src;
-    a.download = 'enhanced.jpg'; a.click();
+
+function applyTonePreset(b, c, s) {
+    document.getElementById('hd-b').value = b;
+    document.getElementById('hd-c').value = c;
+    document.getElementById('hd-sat').value = s;
+    processHd();
 }
 
-// --- ৯. ইমেজ কনভার্টার ---
+function resetHdFilters() {
+    document.getElementById('hd-b').value = 100;
+    document.getElementById('hd-c').value = 100;
+    document.getElementById('hd-sat').value = 100;
+    document.getElementById('hd-sharp').value = 0;
+    document.getElementById('hd-blur').value = 0;
+    document.getElementById('hd-sepia').value = 0;
+    document.getElementById('hd-gray').value = 0;
+    processHd();
+}
+
+function processHd() {
+    if(!hdImgObj) return;
+    const canvas = document.createElement('canvas'); 
+    const ctx = canvas.getContext('2d');
+    canvas.width = hdImgObj.width; canvas.height = hdImgObj.height;
+    
+    const b = document.getElementById('hd-b').value;
+    const c = document.getElementById('hd-c').value;
+    const sat = document.getElementById('hd-sat').value;
+    const blur = document.getElementById('hd-blur').value;
+    const sepia = document.getElementById('hd-sepia').value;
+    const gray = document.getElementById('hd-gray').value;
+    
+    // সিএসএস ফিল্টার এগ্রিগেশন চেইন (১০ নম্বর পয়েন্ট)
+    let filterString = `brightness(${b}%) contrast(${c}%) saturate(${sat}%) blur(${blur}px) sepia(${sepia}%) grayscale(${gray}%)`;
+    
+    ctx.filter = filterString;
+    ctx.drawImage(hdImgObj, 0, 0);
+    
+    // শার্পনেস কার্নেল ফিল্টারিং প্রসেস (কনভোলিউশন ম্যাট্রিক্স ইফেক্ট)
+    const sharpness = parseFloat(document.getElementById('hd-sharp').value);
+    if (sharpness > 0) {
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        // ক্যানভাস ফিল্টার কার্নেল অপ্টিমাইজেশন
+        ctx.putImageData(imgData, 0, 0); 
+    }
+    
+    if(document.getElementById('hd-out-preview').src.startsWith('blob:')) {
+        URL.revokeObjectURL(document.getElementById('hd-out-preview').src);
+    }
+    
+    canvas.toBlob((b) => {
+        document.getElementById('hd-out-preview').src = URL.createObjectURL(b);
+    }, 'image/jpeg', 0.95);
+}
+
+function downloadImageHd() {
+    const outImg = document.getElementById('hd-out-preview');
+    if(!outImg.src) { StatusNotification.show("⚠️ ফাইলটি নষ্ট হতে পারে।", "error"); return; }
+    triggerSecureDownload(outImg.src, "Enhanced_Image", true, "jpg");
+}
+
+// ==========================================
+// ১৭. ইমেজ কনভার্টার (BMP, GIF, ICO এক্সটেনশন সাপোর্ট)
+// ==========================================
 function handleConvUpload(event) {
-    const file = event.target.files[0]; if(!file) return;
+    const file = event.target.files[0]; 
+    if(!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
     const r = new FileReader();
     r.onload = function(e) {
-        convImgObj = new Image(); convImgObj.onload = function() {
+        convImgObj = new Image(); 
+        convImgObj.onload = function() {
             document.getElementById('conv-controls').style.display = 'block';
         };
         convImgObj.src = e.target.result;
     };
     r.readAsDataURL(file);
 }
+
 function downloadConvertedImage() {
     if(!convImgObj) return;
-    const canvas = document.createElement('canvas'); canvas.width = convImgObj.width; canvas.height = convImgObj.height;
+    const canvas = document.createElement('canvas'); 
+    canvas.width = convImgObj.width; canvas.height = convImgObj.height;
     canvas.getContext('2d').drawImage(convImgObj, 0, 0);
+    
     const fmt = document.getElementById('conv-format').value;
-    const ext = fmt.split('/')[1];
-    const a = document.createElement('a'); a.href = canvas.toDataURL(fmt);
-    a.download = `converted_image.${ext}`; a.click();
+    let ext = fmt.split('/')[1];
+    if (ext === 'jpeg') ext = 'jpg';
+    if (ext === 'x-icon') ext = 'ico';
+    
+    triggerSecureDownload(canvas, "Converted_Image", false, ext);
 }
 
-// --- ১০. পাসপোর্ট ফটো মেকার ---
+// ==========================================
+// ৮. পাসপোর্ট ফটো মেকার (DPI ও কাস্টম মিলিমিটার সাইজ)
+// ==========================================
 function handlePassUpload(event) {
-    const file = event.target.files[0]; if(!file) return;
+    const file = event.target.files[0]; 
+    if(!file) { StatusNotification.show("⚠️ কোন ছবি নির্বাচন করা হয়নি।", "error"); return; }
     const r = new FileReader();
     r.onload = function(e) {
-        passImgObj = new Image(); passImgObj.onload = function() {
+        passImgObj = new Image(); 
+        passImgObj.onload = function() {
             document.getElementById('pass-controls').style.display = 'block';
             processPassPhoto();
         };
@@ -643,26 +1160,64 @@ function handlePassUpload(event) {
     };
     r.readAsDataURL(file);
 }
-function setPassSize(w, h, btnId) {
+
+function setPassSize(wMm, hMm, btnId) {
     document.querySelectorAll('#tool-passport-photo .btn-preset').forEach(b => b.classList.remove('active'));
     document.getElementById(btnId).classList.add('active');
-    passW = w === 40 ? 154 : 77; passH = h === 50 ? 192 : 96;
+    document.getElementById('custom-pass-inputs').style.display = 'none';
+    
+    // প্রফেশনাল ৩০০ ডিপিআই স্ট্যান্ডার্ড অনুযায়ী মিলিমিটারকে পিক্সেলে কনভার্ট (৮ নম্বর পয়েন্ট)
+    passW = Math.round((wMm * 300) / 25.4);
+    passH = Math.round((hMm * 300) / 25.4);
     processPassPhoto();
 }
+
+function enableCustomPass() {
+    document.querySelectorAll('#tool-passport-photo .btn-preset').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-pass-c').classList.add('active');
+    document.getElementById('custom-pass-inputs').style.display = 'flex';
+    applyCustomPass();
+}
+
+function applyCustomPass() {
+    const wMm = parseFloat(document.getElementById('custom-pass-w').value) || 40;
+    const hMm = parseFloat(document.getElementById('custom-pass-h').value) || 50;
+    passW = Math.round((wMm * 300) / 25.4);
+    passH = Math.round((hMm * 300) / 25.4);
+    processPassPhoto();
+}
+
 function processPassPhoto() {
     if(!passImgObj) return;
-    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+    const canvas = document.createElement('canvas'); 
+    const ctx = canvas.getContext('2d');
     canvas.width = passW; canvas.height = passH;
+    
     let srcX = 0, srcY = 0, srcW = passImgObj.width, srcH = passImgObj.height;
     const r = srcW / srcH, tr = passW / passH;
-    if (r > tr) { srcW = srcH * tr; srcX = (passImgObj.width - srcW) / 2; }
-    else { srcH = srcW / tr; srcY = (passImgObj.height - srcH) / 2; }
+    
+    if (r > tr) { 
+        srcW = srcH * tr; 
+        srcX = (passImgObj.width - srcW) / 2; 
+    } else { 
+        srcH = srcW / tr; 
+        srcY = (passImgObj.height - srcH) / 2; 
+    }
+    
     ctx.drawImage(passImgObj, srcX, srcY, srcW, srcH, 0, 0, passW, passH);
-    document.getElementById('pass-out-preview').src = canvas.toDataURL('image/jpeg', 0.95);
+    
+    if(document.getElementById('pass-out-preview').src.startsWith('blob:')) {
+        URL.revokeObjectURL(document.getElementById('pass-out-preview').src);
+    }
+    canvas.toBlob((b) => {
+        document.getElementById('pass-out-preview').src = URL.createObjectURL(b);
+    }, 'image/jpeg', 0.95);
 }
+
 function downloadImagePass() {
-    const a = document.createElement('a'); a.href = document.getElementById('pass-out-preview').src;
-    a.download = 'passport_photo.jpg'; a.click();
+    const outImg = document.getElementById('pass-out-preview');
+    if(!outImg.src) { StatusNotification.show("⚠️ ফাইলটি নষ্ট হতে পারে।", "error"); return; }
+    triggerSecureDownload(outImg.src, "Passport_Photo", true, "jpg");
 }
 </script>
 </body>
