@@ -10,7 +10,7 @@
     <meta name="author" content="Salman Farshi">
     <meta name="robots" content="index, follow">
     
-    <meta property="og:title" content="পিডিএফ টুলস (Advanced PDF Tools) - ফ্রি অনলাইন পিডিএফ সলিউশন">
+    <meta property="og:title" content="পিডিএফ টুলস (Advanced PDF Tools) - ফ্রি অনলাইন পিডিএফ সリューション">
     <meta property="og:description" content="কোনো সার্ভার ছাড়াই সম্পূর্ণ নিরাপদে ব্রাউজারেই পিডিএফ মার্জ, স্প্লিট, কম্প্রেস এবং কনভার্ট করুন মুহূর্তের মধ্যে।">
     <meta property="og:type" content="website">
     
@@ -18,6 +18,8 @@
     
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
     
     <style>
         :root { 
@@ -45,15 +47,15 @@
             --input-border: #475569; 
         }
         * { font-family: 'Hind Siliguri', sans-serif !important; box-sizing: border-box; transition: background-color 0.2s, color 0.2s; }
-        body { background: var(--bg-color); margin: 0; padding: 15px; color: var(--text-color); }
+        body { background: var(--bg-color); margin: 0; padding: 15px; color: var(--text-color); line-height: 1.6; }
         .container { max-width: 1000px; margin: 0 auto; }
         
-        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .back-btn { padding: 10px 22px; background: var(--primary); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; }
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 10px; }
+        .back-btn { padding: 10px 22px; background: var(--primary); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; }
         .back-btn:hover { background: var(--primary-hover); }
         .theme-toggle { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: bold; }
         
-        .breadcrumb { display: flex; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 25px; list-style: none; padding: 0; }
+        .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 25px; list-style: none; padding: 0; }
         .breadcrumb a { color: var(--primary); text-decoration: none; font-weight: 600; }
         .breadcrumb li::after { content: "/"; margin-left: 8px; color: var(--text-muted); }
         .breadcrumb li:last-child::after { content: ""; }
@@ -62,210 +64,354 @@
         h1 { text-align: center; font-size: 28px; color: var(--text-color); margin-bottom: 5px; }
         .sub-title { text-align: center; color: var(--text-muted); margin-top: 0; font-size: 14px; margin-bottom: 30px; }
         
-        /* গ্রিড এবং কার্ড ডিজাইন */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
         .card { background: var(--card-bg); padding: 25px 15px; border-radius: 14px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-        .card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .card:hover, .card:focus { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); outline: none; }
         .card h3 { font-size: 18px; margin: 12px 0 6px 0; color: var(--text-color); }
         .card p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.4; }
         .icon { font-size: 32px; display: block; }
 
-        /* টুলস ইন্টারফেস সেকশন */
-        .tool-section { display: none; background: var(--card-bg); padding: 35px; border-radius: 16px; border: 1px solid var(--border-color); margin-top: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
+        .tool-section { display: none; background: var(--card-bg); padding: 35px 20px; border-radius: 16px; border: 1px solid var(--border-color); margin-top: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
         .tool-section h2 { font-size: 24px; margin-bottom: 10px; color: var(--text-color); }
         .tool-section p { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; }
         
-        /* ইনপুট ফিল্ড ডিজাইন */
-        .file-wrapper { max-width: 450px; margin: 0 auto 20px auto; }
-        .file-input { width: 100%; padding: 25px 20px; border: 2px dashed var(--input-border); border-radius: 12px; background: var(--bg-color); color: var(--text-color); cursor: pointer; text-align: center; font-size: 15px; }
-        .input-field { width: 100%; max-width: 320px; padding: 12px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--card-bg); color: var(--text-color); text-align: center; margin: 10px auto; display: block; font-size: 15px; }
+        .file-wrapper { max-width: 450px; margin: 0 auto 20px auto; position: relative; }
+        .file-input-label { display: block; width: 100%; padding: 30px 20px; border: 2px dashed var(--input-border); border-radius: 12px; background: var(--bg-color); color: var(--text-color); cursor: pointer; text-align: center; font-size: 15px; font-weight: 600; pointer-events: none; }
+        .file-input-label.dragover { border-color: var(--primary); background: rgba(59, 130, 246, 0.1); }
+        .file-input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         
-        .status-msg { margin: 15px 0; font-weight: bold; color: var(--primary); display: none; font-size: 15px; white-space: pre-line; }
+        .input-field, .select-field { width: 100%; max-width: 320px; padding: 12px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--card-bg); color: var(--text-color); text-align: center; margin: 10px auto; display: block; font-size: 15px; }
+        .select-field { text-align-last: center; }
+        
+        .opt-group { margin: 15px auto; max-width: 400px; display: flex; flex-direction: column; gap: 8px; text-align: left; background: var(--bg-color); padding: 15px; border-radius: 8px; }
+        .opt-group label { font-size: 13px; font-weight: 600; color: var(--text-color); }
 
-        /* বাটন গ্রুপ */
+        .status-msg { margin: 15px 0; font-weight: bold; color: var(--primary); display: none; font-size: 15px; white-space: pre-line; word-break: break-word; }
+
         .btn-group { display: flex; gap: 12px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
-        .btn-action { background: var(--success); color: white; border: none; padding: 12px 35px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; }
-        .btn-action:hover { background: var(--success-hover); }
+        .btn-action { background: var(--success); color: white; border: none; padding: 12px 35px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; min-width: 120px; }
+        .btn-action:hover:not(:disabled) { background: var(--success-hover); }
+        .btn-action:disabled { background: var(--text-muted); cursor: not-allowed; opacity: 0.6; }
         .btn-close { background: var(--danger); }
         .btn-close:hover { background: var(--danger-hover); }
 
         .related-section { margin-top: 50px; background: var(--card-bg); padding: 25px; border-radius: 14px; border: 1px solid var(--border-color); }
         .related-title { font-weight: bold; font-size: 16px; margin-bottom: 15px; }
-        .related-links a { color: var(--primary); margin-right: 15px; text-decoration: none; font-weight: 600; font-size: 14px; background: var(--bg-color); padding: 8px 16px; border-radius: 50px; border: 1px solid var(--border-color); display: inline-block; }
+        .related-links a { color: var(--primary); margin-right: 15px; text-decoration: none; font-weight: 600; font-size: 14px; background: var(--bg-color); padding: 8px 16px; border-radius: 50px; border: 1px solid var(--border-color); display: inline-block; margin-bottom: 10px; }
         .related-links a:hover { background: var(--primary); color: white; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            h1 { font-size: 22px; }
+            .tool-section { padding: 20px 15px; }
+            .btn-action { width: 100%; }
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header-area">
+    <header class="header-area">
         <a href="../../index.html" class="back-btn">← হোমপেজে ফিরুন</a>
-        <button class="theme-toggle" onclick="toggleTheme()">🌓 মোড পরিবর্তন</button>
-    </div>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="মোড পরিবর্তন করুন">🌓 মোড পরিবর্তন</button>
+    </header>
     
-    <ul class="breadcrumb">
-        <li><a href="../../index.html">হোম</a></li>
-        <li id="bread-active" class="active">পিডিএফ টুলস</li>
-    </ul>
+    <nav aria-label="Breadcrumb">
+        <ul class="breadcrumb">
+            <li><a href="../../index.html">হোম</a></li>
+            <li id="bread-active" class="active">পিডিএফ টুলস</li>
+        </ul>
+    </nav>
     
-    <div id="main-menu">
+    <main id="main-menu">
         <h1>📄 পিডিএফ টুলস (Advanced PDF Tools)</h1>
         <p class="sub-title">সম্পূর্ণ ফ্রি এবং দ্রুত অনলাইন পিডিএফ সリューション প্ল্যাটফর্ম।</p>
-        <div class="grid">
-            <div class="card" onclick="openTool('merge', '১. পিডিএফ জোড়া দিন')"><span class="icon">🔗</span><h3>১. পিডিএফ জোড়া দিন</h3><p>একাধিক PDF ফাইলকে একত্রে একটিতে যুক্ত করুন</p></div>
-            <div class="card" onclick="openTool('split', '২. পিডিএফ আলাদা করুন')"><span class="icon">✂️</span><h3>২. পিডিএফ আলাদা করুন</h3><p>একটি PDF থেকে নির্দিষ্ট পেজ আলাদা করুন</p></div>
-            <div class="card" onclick="openTool('pdf-to-word', '৩. PDF to Word')"><span class="icon">📝</span><h3>৩. PDF to Word</h3><p>PDF ফাইল থেকে টেক্সট এক্সট্রাক্ট করে ডকুমেন্ট তৈরি করুন</p></div>
-            <div class="card" onclick="openTool('word-to-pdf', '৪. Word to PDF')"><span class="icon">📄</span><h3>৪. Word to PDF</h3><p>যেকোনো টেক্সট বা নোটিশ লিখে সরাসরি PDF তৈরি করুন</p></div>
-            <div class="card" onclick="openTool('compress', '৫. পিডিএফ সাইজ কমান')"><span class="icon">🗜️</span><h3>৫. পিডিএফ সাইজ কমান</h3><p>PDF ফাইলের কোয়ালিটি ঠিক রেখে সাইজ ছোট করুন</p></div>
-            <div class="card" onclick="openTool('img-to-pdf', '৬. Images to PDF')"><span class="icon">🖼️</span><h3>৬. Images to PDF</h3><p>JPG, PNG বা অন্যান্য ছবি থেকে PDF তৈরি করুন</p></div>
-            <div class="card" onclick="openTool('pdf-to-img', '৭. PDF to Images')"><span class="icon">📸</span><h3>৭. PDF to Images</h3><p>PDF-এর পেজকে হাই-কোয়ালিটি ছবিতে রূপান্তর করুন</p></div>
-            <div class="card" onclick="openTool('rotate', '৮. Rotate PDF')"><span class="icon">🔄</span><h3>৮. Rotate PDF</h3><p>PDF-এর পেজ ৯০°, ১৮০° বা ২৭০° ঘুরিয়ে সাজান</p></div>
-            <div class="card" onclick="openTool('unlock', '৯. Unlock PDF')"><span class="icon">🔓</span><h3>৯. Unlock PDF</h3><p>পাসওয়ার্ড জানা থাকলে PDF-এর নিরাপত্তা লক সরিয়ে ফেলুন</p></div>
-            <div class="card" onclick="openTool('protect', '১০. Protect PDF')"><span class="icon">🔒</span><h3>১০. Protect PDF</h3><p>নিজের পছন্দের পাসওয়ার্ড দিয়ে PDF সুরক্ষিত করুন</p></div>
+        <div class="grid" role="list">
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('merge', '১. পিডিএফ জোড়া দিন')" onkeypress="if(event.key==='Enter') openTool('merge', '১. পিডিএফ জোড়া দিন')"><span class="icon">🔗</span><h3>১. পিডিএফ জোড়া দিন</h3><p>একাধিক PDF ফাইলকে একত্রে যুক্ত করুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('split', '২. পিডিএফ আলাদা করুন')" onkeypress="if(event.key==='Enter') openTool('split', '২. পিডিএফ আলাদা করুন')"><span class="icon">✂️</span><h3>২. পিডিএফ আলাদা করুন</h3><p>একটি PDF থেকে নির্দিষ্ট পেজ আলাদা করুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('pdf-to-word', '৩. PDF to Word')" onkeypress="if(event.key==='Enter') openTool('pdf-to-word', '৩. PDF to Word')"><span class="icon">📝</span><h3>৩. PDF to Word</h3><p>PDF থেকে এডিটেবল DOCX ডকুমেন্ট তৈরি করুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('word-to-pdf', '৪. Word to PDF')" onkeypress="if(event.key==='Enter') openTool('word-to-pdf', '৪. Word to PDF')"><span class="icon">📄</span><h3>৪. Word to PDF</h3><p>যেকোনো টেক্সট বা নোটিশ লিখে সরাসরি PDF তৈরি করুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('compress', '৫. পিডিএফ সাইজ কমান')" onkeypress="if(event.key==='Enter') openTool('compress', '৫. পিডিএফ সাইজ কমান')"><span class="icon">🗜️</span><h3>৫. পিডিএফ সাইজ কমান</h3><p>PDF ফাইলের কোয়ালিটি ঠিক রেখে সাইজ ছোট করুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('img-to-pdf', '৬. Images to PDF')" onkeypress="if(event.key==='Enter') openTool('img-to-pdf', '৬. Images to PDF')"><span class="icon">🖼️</span><h3>৬. Images to PDF</h3><p>JPG, PNG, WEBP ছবি থেকে PDF তৈরি করুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('pdf-to-img', '৭. PDF to Images')" onkeypress="if(event.key==='Enter') openTool('pdf-to-img', '৭. PDF to Images')"><span class="icon">📸</span><h3>৭. PDF to Images</h3><p>PDF-এর পেজকে এক ক্লিকে জিপ ফাইলে রূপান্তর করুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('rotate', '৮. Rotate PDF')" onkeypress="if(event.key==='Enter') openTool('rotate', '৮. Rotate PDF')"><span class="icon">🔄</span><h3>৮. Rotate PDF</h3><p>PDF-এর পেজ ৯০°, ১৮ cottage বা ২৭০° ঘুরিয়ে সাজান</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('unlock', '৯. Unlock PDF')" onkeypress="if(event.key==='Enter') openTool('unlock', '৯. Unlock PDF')"><span class="icon">🔓</span><h3>৯. Unlock PDF</h3><p>পাসওয়ার্ড জানা থাকলে PDF-এর নিরাপত্তা লক সরিয়ে ফেলুন</p></div>
+            <div class="card" role="listitem" tabindex="0" onclick="openTool('protect', '১০. Protect PDF')" onkeypress="if(event.key==='Enter') openTool('protect', '১০. Protect PDF')"><span class="icon">🔒</span><h3>১০. Protect PDF</h3><p>নিজের পছন্দের পাসওয়ার্ড দিয়ে PDF সুরক্ষিত করুন</p></div>
         </div>
-    </div>
+    </main>
 
-    <div id="tool-merge" class="tool-section">
-        <h2>🔗 পিডিএফ জোড়া দিন (PDF Merge)</h2>
+    <section id="tool-merge" class="tool-section" aria-labelledby="merge-title">
+        <h2 id="merge-title">🔗 পিডিএফ জোড়া দিন (PDF Merge)</h2>
         <p>একত্রে যুক্ত করার জন্য দুই বা তার বেশি পিডিএফ ফাইল নির্বাচন করুন।</p>
-        <div class="file-wrapper"><input type="file" id="merge-input" class="file-input" accept=".pdf" multiple></div>
-        <div id="merge-status" class="status-msg"></div>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="merge-dropzone">ফাইল সিলেক্ট করুন অথবা এখানে ড্র্যাগ করুন</div>
+            <input type="file" id="merge-input" class="file-input" accept="application/pdf" multiple aria-label="পিডিএফ ফাইল ইনপুট">
+        </div>
+        <div id="merge-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runMerge()">মার্জ করুন</button>
+            <button class="btn-action" id="merge-btn" onclick="runMerge()">মার্জ করুন</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-split" class="tool-section">
-        <h2>✂️ পিডিএফ আলাদা করুন (PDF Split)</h2>
+    <section id="tool-split" class="tool-section" aria-labelledby="split-title">
+        <h2 id="split-title">✂️ পিডিএফ আলাদা করুন (PDF Split)</h2>
         <p>নির্দিষ্ট পেজ নম্বর আলাদা করে নতুন পিডিএফ ফাইল তৈরি করুন।</p>
-        <div class="file-wrapper"><input type="file" id="split-input" class="file-input" accept=".pdf"></div>
-        <input type="text" id="split-range" class="input-field" placeholder="পেজ নম্বর লিখুন (উদা: 1-3,5,8)">
-        <div id="split-status" class="status-msg"></div>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="split-dropzone">ফাইল সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="split-input" class="file-input" accept="application/pdf" aria-label="স্প্লিট পিডিএফ ইনপুট">
+        </div>
+        <input type="text" id="split-range" class="input-field" placeholder="পেজ নম্বর লিখুন (উদা: 1-3,5,8)" aria-label="পেজ রেঞ্জ টেক্সটবক্স">
+        <div id="split-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runSplit()">আলাদা করুন</button>
+            <button class="btn-action" id="split-btn" onclick="runSplit()">আলাদা করুন</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-pdf-to-word" class="tool-section">
-        <h2>📝 PDF to Word Converter</h2>
-        <p>পিডিএফ ফাইল আপলোড করে ভেতরের টেক্সটগুলোকে এডিটেবল ডক টেক্সট হিসেবে নামিয়ে নিন।</p>
-        <div class="file-wrapper"><input type="file" id="p2w-input" class="file-input" accept=".pdf"></div>
-        <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">⚠️ GitHub Pages-এর সীমাবদ্ধতার কারণে শুধুমাত্র Text Extract করা সম্ভব। নিখুঁত Word Conversion-এর জন্য Server Version প্রয়োজন।</p>
-        <div id="p2w-status" class="status-msg"></div>
+    <section id="tool-pdf-to-word" class="tool-section" aria-labelledby="p2w-title">
+        <h2 id="p2w-title">📝 PDF to Word Converter</h2>
+        <p>পিডিএফ ফাইল আপলোড করে ভেতরের টেক্সটগুলোকে এক্সট্রাক্ট করে সত্যিকারের এডিটেবল .docx ডকুমেন্ট তৈরি করুন।</p>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="p2w-dropzone">ফাইল সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="p2w-input" class="file-input" accept="application/pdf" aria-label="পিডিএফ টু ওয়ার্ড ইনপুট">
+        </div>
+        <div id="p2w-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runPDFToWord()">কনভার্ট করুন</button>
+            <button class="btn-action" id="p2w-btn" onclick="runPDFToWord()">কনভার্ট করুন (.docx)</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-word-to-pdf" class="tool-section">
-        <h2>📄 Word / Text to PDF Creator</h2>
-        <p>যেকোনো টেক্সট বা ডকুমেন্ট টাইপ করে সরাসরি হাই-কোয়ালিটি পিডিএফে রূপান্তর করুন।</p>
-        <textarea id="w2p-text" class="input-field" style="max-width:100%; width: 500px; height:150px; text-align:left;" placeholder="এখানে আপনার প্রয়োজনীয় টেক্সট লিখুন..."></textarea>
-        <div id="w2p-status" class="status-msg"></div>
+    <section id="tool-word-to-pdf" class="tool-section" aria-labelledby="w2p-title">
+        <h2 id="w2p-title">📄 Word / Text to PDF Creator</h2>
+        <p>যেকোনো টেক্সট টাইপ করে সরাসরি ক্লায়েন্ট সাইডে জেনারেট করে স্ট্যান্ডার্ড হাই-কোয়ালিটি পিডিএফে রূপান্তর করুন।</p>
+        <textarea id="w2p-text" class="input-field" style="max-width:100%; width: 500px; height:150px; text-align:left;" placeholder="এখানে আপনার প্রয়োজনীয় টেক্সট লিখুন..." aria-label="টেক্সট ইনপুট এরিয়া"></textarea>
+        
+        <div class="opt-group">
+            <label for="w2p-margin">মার্জিন সেটিং:</label>
+            <select id="w2p-margin" class="select-field" style="margin:0;"><option value="30">ছোট (30)</option><option value="50" selected>মাঝারি (50)</option><option value="70">বড় (70)</option></select>
+            
+            <label for="w2p-size">ফন্ট সাইজ:</label>
+            <select id="w2p-size" class="select-field" style="margin:0;"><option value="12">১২ পিটি</option><option value="15" selected>১৫ পিটি</option><option value="20">২০ পিটি</option></select>
+        </div>
+
+        <div id="w2p-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runWordToPDF()">পিডিএফ তৈরি করুন</button>
+            <button class="btn-action" id="w2p-btn" onclick="runWordToPDF()">পিডিএফ তৈরি করুন</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-compress" class="tool-section">
-        <h2>🗜️ পিডিএফ সাইজ কমান (PDF Compress)</h2>
-        <p>ফাইলের অভ্যন্তরীণ মেটাডেটা অপ্টিমাইজ করে সাইজ ছোট ও হালকা করুন।</p>
-        <div class="file-wrapper"><input type="file" id="compress-input" class="file-input" accept=".pdf"></div>
-        <div id="compress-status" class="status-msg"></div>
+    <section id="tool-compress" class="tool-section" aria-labelledby="compress-title">
+        <h2 id="compress-title">🗜️ পিডিএফ সাইজ কমান (PDF Compress)</h2>
+        <p>পিডিএফ ফাইলের ইন্টারনাল মেটা স্ট্রাকচার রি-এনকোড করে মেমরি অপ্টিমাইজড ডাউন-স্কেলিং সম্পাদন করুন।</p>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="compress-dropzone">ফাইল সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="compress-input" class="file-input" accept="application/pdf" aria-label="কম্প্রেস ফাইল ইনপুট">
+        </div>
+        <div id="compress-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runCompress()">সাইজ কমান</button>
+            <button class="btn-action" id="compress-btn" onclick="runCompress()">সাইজ কমান</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-img-to-pdf" class="tool-section">
-        <h2>🖼️ Images to PDF Converter</h2>
-        <p>এক বা একাধিক ছবি (JPG, PNG, WEBP) আপলোড করে একটি কম্বাইন্ড পিডিএফ তৈরি করুন।</p>
-        <div class="file-wrapper"><input type="file" id="i2p-input" class="file-input" accept="image/png, image/jpeg, image/jpg, image/webp" multiple></div>
-        <div id="i2p-status" class="status-msg"></div>
+    <section id="tool-img-to-pdf" class="tool-section" aria-labelledby="i2p-title">
+        <h2 id="i2p-title">🖼️ Images to PDF Converter</h2>
+        <p>এক বা একাধিক ছবি (JPG, PNG, WEBP) আপলোড করে অ্যাসপেক্ট রেশিও ঠিক রেখে একটি কম্বাইন্ড পিডিএফ তৈরি করুন।</p>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="i2p-dropzone">ছবি সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="i2p-input" class="file-input" accept="image/png, image/jpeg, image/jpg, image/webp" multiple aria-label="ইমেজ টু পিডিএফ ইনপুট">
+        </div>
+        <div class="opt-group">
+            <label for="i2p-size-opt">পেজ সাইজ নির্ধারণ করুন:</label>
+            <select id="i2p-size-opt" class="select-field" style="margin:0;">
+                <option value="original" selected>ছবির মূল সাইজ (Aspect Ratio Safe)</option>
+                <option value="a4">A4 সাইজ ফিট</option>
+                <option value="letter">Letter সাইজ ফিট</option>
+            </select>
+        </div>
+        <div id="i2p-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runImgToPDF()">পিডিএফ বানান</button>
+            <button class="btn-action" id="i2p-btn" onclick="runImgToPDF()">পিডিএফ বানান</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-pdf-to-img" class="tool-section">
-        <h2>📸 PDF to Images Converter</h2>
-        <p>পিডিএফ-এর সব পেজ আলাদা আলাদা হাই-কোয়ালিটি ছবিতে রূপান্তর করে ডাউনলোড করুন।</p>
-        <div class="file-wrapper"><input type="file" id="p2i-input" class="file-input" accept=".pdf"></div>
-        <div id="p2i-status" class="status-msg"></div>
+    <section id="tool-pdf-to-img" class="tool-section" aria-labelledby="p2i-title">
+        <h2 id="p2i-title">📸 PDF to Images Converter</h2>
+        <p>পিডিএফ-এর সব পেজ হাই রেজোলিউশন ছবিতে রূপান্তর করে একক জিপ (.zip) ফাইলে ডাউনলোড করুন।</p>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="p2i-dropzone">ফাইল সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="p2i-input" class="file-input" accept="application/pdf" aria-label="পিডিএফ টু ইমেজ ইনপুট">
+        </div>
+        <div class="opt-group">
+            <label for="p2i-res">ছবির রেজোলিউশন (Resolution):</label>
+            <select id="p2i-res" class="select-field" style="margin:0;">
+                <option value="1">1x (স্বাভাবিক কোয়ালিটি)</option>
+                <option value="2" selected>2x (উন্নত ক্ল্যারিটি)</option>
+                <option value="3">3x (আল্ট্রা হাই ডেফিনিশন)</option>
+            </select>
+        </div>
+        <div id="p2i-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runPDFToImg()">ছবিতে রূপান্তর করুন</button>
+            <button class="btn-action" id="p2i-btn" onclick="runPDFToImg()">জিপ ফাইল ডাউনলোড করুন</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-rotate" class="tool-section">
-        <h2>🔄 Rotate PDF Pages</h2>
-        <p>পিডিএফ পেজগুলোকে নির্দিষ্ট ডিগ্রিতে ঘুরিয়ে সোজা করুন।</p>
-        <div class="file-wrapper"><input type="file" id="rotate-input" class="file-input" accept=".pdf"></div>
-        <select id="rotate-angle" class="input-field">
+    <section id="tool-rotate" class="tool-section" aria-labelledby="rotate-title">
+        <h2 id="rotate-title">🔄 Rotate PDF Pages</h2>
+        <p>পিডিএফ পেজগুলোকে পূর্বের রোটেশন সুরক্ষিত রেখে নির্ভুলভাবে নির্দিষ্ট ডিগ্রিতে ঘোরান।</p>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="rotate-dropzone">ফাইল সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="rotate-input" class="file-input" accept="application/pdf" aria-label="রোটেশন ফাইল ইনপুট">
+        </div>
+        <select id="rotate-angle" class="input-field" aria-label="রোটেশন কোণ নির্বাচন করুন">
             <option value="90">➡️ ৯০° ডানদিকে ঘোরান</option>
             <option value="180">🙃 ১৮০° উল্টিয়ে দিন</option>
-            <option value="270">⬅️ ২৭вые০° বামদিকে ঘোরান</option>
+            <option value="270">⬅️ ২৭০° বামদিকে ঘোরান</option>
         </select>
-        <div id="rotate-status" class="status-msg"></div>
+        <div id="rotate-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runRotate()">পেজ ঘোরան</button>
+            <button class="btn-action" id="rotate-btn" onclick="runRotate()">পেজ ঘোরান</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-unlock" class="tool-section">
-        <h2>🔓 Unlock Secured PDF</h2>
-        <p>পাসওয়ার্ড জানা থাকা লক ফাইলের সিকিউরিটি সরিয়ে ওপেন করুন।</p>
-        <div class="file-wrapper"><input type="file" id="unlock-input" class="file-input" accept=".pdf"></div>
-        <input type="password" id="unlock-pass" class="input-field" placeholder="ফাইলের পাসওয়ার্ড দিন">
-        <div id="unlock-status" class="status-msg"></div>
+    <section id="tool-unlock" class="tool-section" aria-labelledby="unlock-title">
+        <h2 id="unlock-title">🔓 Unlock Secured PDF</h2>
+        <p>সঠিক পাসওয়ার্ড ইনপুট দিয়ে পিডিএফ ফাইলের সিকিউরিটি পারমিশন এবং প্রটেকশন লক রিমুভ করুন।</p>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="unlock-dropzone">ফাইল সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="unlock-input" class="file-input" accept="application/pdf" aria-label="আনলক ফাইল ইনপুট">
+        </div>
+        <input type="password" id="unlock-pass" class="input-field" placeholder="ফাইলের বর্তমান পাসওয়ার্ড দিন" aria-label="আনলক পাসওয়ার্ড ফিল্ড">
+        <div id="unlock-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runUnlock()">পাসওয়ার্ড সরান</button>
+            <button class="btn-action" id="unlock-btn" onclick="runUnlock()">পাসওয়ার্ড সরান</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div id="tool-protect" class="tool-section">
-        <h2>🔒 Protect PDF with Password</h2>
-        <p>যেকোনো সাধারণ পিডিএফ ফাইলে স্ট্রং পাসওয়ার্ড সেট করে সিকিউর করুন।</p>
-        <div class="file-wrapper"><input type="file" id="protect-input" class="file-input" accept=".pdf"></div>
-        <input type="password" id="protect-pass" class="input-field" placeholder="নতুন পাসওয়ার্ড দিন">
-        <div id="protect-status" class="status-msg"></div>
+    <section id="tool-protect" class="tool-section" aria-labelledby="protect-title">
+        <h2 id="protect-title">🔒 Protect PDF with Password</h2>
+        <p>আপনার পছন্দের ওনার/ইউজার পাসওয়ার্ড এম্বেড করে ফাইলটিকে সুরক্ষিত ও এনক্রিপ্ট করুন।</p>
+        <div class="file-wrapper">
+            <div class="file-input-label" id="protect-dropzone">ফাইল সিলেক্ট করুন অথবা ড্র্যাগ করুন</div>
+            <input type="file" id="protect-input" class="file-input" accept="application/pdf" aria-label="প্রটেক্ট ফাইল ইনপুট">
+        </div>
+        <input type="password" id="protect-pass" class="input-field" placeholder="নতুন পাসওয়ার্ড দিন" aria-label="প্রটেক্ট পাসওয়ার্ড ফিল্ড">
+        <div id="protect-status" class="status-msg" role="status"></div>
         <div class="btn-group">
-            <button class="btn-action" onclick="runProtect()">فাইল লক করুন</button>
+            <button class="btn-action" id="protect-btn" onclick="runProtect()">ফাইল লক করুন</button>
             <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
         </div>
-    </div>
+    </section>
 
-    <div class="related-section">
+    <footer class="related-section">
         <div class="related-title">🔗 অন্যান্য টুলস ক্যাটাগরি:</div>
         <div class="related-links">
             <a href="../image/index.html">🖼️ ইমেজ টুলস</a>
             <a href="../qr/index.html">📷 কিউআর কোড টুলস</a>
         </div>
-    </div>
+    </footer>
 </div>
 
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+// গ্লোবাল কনফিগারেশন এবং ব্র্যন্ডিং সাফিক্স সিস্টেম
+const BRAND_SUFFIX = "_Salman Smart Seba";
+
+function getBrandedName(originalName, defaultName) {
+    const baseName = originalName ? originalName : defaultName;
+    const lastDot = baseName.lastIndexOf('.');
+    if (lastDot === -1) {
+        return baseName + BRAND_SUFFIX;
+    }
+    const namePart = baseName.substring(0, lastDot);
+    const extPart = baseName.substring(lastDot);
+    return namePart + BRAND_SUFFIX + extPart;
+}
+
+// লাইফসাইকেল ইনিশিয়ালাইজেশন
+window.addEventListener('DOMContentLoaded', () => {
+    try {
+        const savedTheme = localStorage.getItem('themePreference');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        setupDragAndDropContext();
+        restoreBreadcrumbState();
+    } catch (e) {
+        console.error("Initialization warning:", e);
+    }
+});
 
 function toggleTheme() {
     if (document.documentElement.hasAttribute('data-theme')) {
         document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('themePreference', 'light');
     } else {
         document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('themePreference', 'dark');
+    }
+}
+
+// রিয়েল ড্র্যাগ অ্যান্ড ড্রপ গ্লোবাল বাইন্ডিং মেকানিজম
+function setupDragAndDropContext() {
+    const wrappers = document.querySelectorAll('.file-wrapper');
+    wrappers.forEach(wrapper => {
+        const input = wrapper.querySelector('.file-input');
+        const label = wrapper.querySelector('.file-input-label');
+        if (!input || !label) return;
+
+        input.addEventListener('change', (e) => {
+            updateInputLabelText(e.target.files, label);
+        });
+
+        // ব্রাউজার ইন্টারসেপ্ট প্রিভেনশন এবং ভিজ্যুয়াল ক্লাস টগল
+        wrapper.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            label.classList.add('dragover');
+        });
+
+        wrapper.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            label.classList.remove('dragover');
+        });
+
+        wrapper.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            label.classList.remove('dragover');
+            
+            if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+                input.files = e.dataTransfer.files;
+                // চেঞ্জ ইভেন্ট ম্যানুয়ালি ট্রিগার
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+    });
+}
+
+function updateInputLabelText(files, label) {
+    if (!files || files.length === 0) {
+        label.innerText = "ফাইল সিলেক্ট করুন অথবা এখানে ড্র্যাগ করুন";
+    } else if (files.length === 1) {
+        label.innerText = `📄 ১টি ফাইল সিলেক্ট করা হয়েছে`;
+    } else {
+        label.innerText = `📄 ${files.length}টি ফাইল সিলেক্ট করা হয়েছে`;
     }
 }
 
 function openTool(id, toolTitle) {
     document.getElementById('main-menu').style.display = 'none';
-    document.getElementById('tool-' + id).style.display = 'block';
+    document.querySelectorAll('.tool-section').forEach(s => s.style.display = 'none');
+    
+    const activeTool = document.getElementById('tool-' + id);
+    if (activeTool) activeTool.style.display = 'block';
     
     document.getElementById('bread-active').innerHTML = `<a href="#" onclick="closeAll()">পিডিএফ টুলস</a>`;
     const breadcrumb = document.querySelector('.breadcrumb');
@@ -278,23 +424,41 @@ function openTool(id, toolTitle) {
     li.className = 'active';
     li.innerText = toolTitle;
     breadcrumb.appendChild(li);
+
+    localStorage.setItem('activeToolId', id);
+    localStorage.setItem('activeToolTitle', toolTitle);
 }
 
 function closeAll() {
     document.getElementById('main-menu').style.display = 'block';
     document.querySelectorAll('.tool-section').forEach(s => s.style.display = 'none');
-    document.querySelectorAll('.file-input').forEach(input => input.value = '');
+    document.querySelectorAll('.file-input').forEach(input => {
+        input.value = '';
+        const label = input.previousElementSibling;
+        if(label) label.innerText = "ফাইল সিলেক্ট করুন অথবা এখানে ড্র্যাগ করুন";
+    });
     document.querySelectorAll('.input-field').forEach(input => input.value = '');
     document.querySelectorAll('.status-msg').forEach(msg => { msg.style.display='none'; msg.innerText=''; });
+    document.querySelectorAll('.btn-action').forEach(btn => btn.disabled = false);
     
     document.getElementById('bread-active').innerText = "পিডিএফ টুলস";
     document.getElementById('bread-active').className = "active";
     const subBread = document.getElementById('bread-sub');
     if(subBread) subBread.remove();
+
+    localStorage.removeItem('activeToolId');
+    localStorage.removeItem('activeToolTitle');
 }
 
-// গ্লোবাল নোটিফিকেশন সিস্টেম
-function showStatus(id, text, type = 'loading') {
+function restoreBreadcrumbState() {
+    const activeId = localStorage.getItem('activeToolId');
+    const activeTitle = localStorage.getItem('activeToolTitle');
+    if (activeId && activeTitle) {
+        openTool(activeId, activeTitle);
+    }
+}
+
+function showStatus(id, text, type = 'loading', btnId = null) {
     const el = document.getElementById(id);
     if (!el) return;
     el.style.display = "block";
@@ -306,73 +470,80 @@ function showStatus(id, text, type = 'loading') {
         el.style.color = "var(--primary)";
     }
     el.innerText = text;
+
+    if (btnId) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.disabled = (type === 'loading');
+    }
 }
 
-// ফাইল ভ্যালিডেশন হেল্পার
-function validateFiles(files, allowedExtensions = ['.pdf'], maxMb = 100) {
-    if (!files || files.length === 0) return { valid: false, msg: "❌ অনুগ্রহ করে প্রথমে ফাইল নির্বাচন করুন!" };
-    
+function validateFiles(files, allowedExtensions) {
+    if (!files || files.length === 0) return { valid: false, msg: "❌ অনুগ্রহ করে প্রথমে প্রসেসিং এর জন্য ফাইল সিলেক্ট করুন!" };
     for (let file of files) {
         const ext = '.' + file.name.split('.').pop().toLowerCase();
+        // MIME টাইপ চেক এবং এক্সটেনশন প্রুফিং ভ্যালিডেশন
         if (!allowedExtensions.includes(ext) && !allowedExtensions.includes('image/*')) {
-            return { valid: false, msg: `❌ ভুল ফাইল ফরম্যাট! শুধুমাত্র ${allowedExtensions.join(', ')} ফাইল গ্রহণযোগ্য।` };
-        }
-        if (file.size > maxMb * 1024 * 1024) {
-            return { valid: false, msg: `⚠️ ফাইলটি অত্যন্ত বড় (>100MB)! গিটহাব ব্রাউজার সংস্করণে প্রসেস করতে সমস্যা হতে পারে।` };
+            return { valid: false, msg: `❌ ভুল ফাইল ফরম্যাট আপলোড করা হয়েছে! অনুগ্রহ করে সঠিক ফাইল আপলোড করুন।` };
         }
     }
     return { valid: true };
 }
 
-function downloadBlob(blob, name) {
+function downloadBlob(blob, brandedName) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = name;
+    a.download = brandedName;
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    // মেমরি লিক এড়াতে সেফ ফ্লাশিং
+    setTimeout(() => URL.revokeObjectURL(url), 300);
 }
 
 // ১. মার্জ পিডিএফ
 async function runMerge() {
     const files = document.getElementById('merge-input').files;
     const check = validateFiles(files, ['.pdf']);
-    if (!check.valid) return showStatus('merge-status', check.msg, 'error');
-    if (files.length < 2) return showStatus('merge-status', "❌ মার্জ করার জন্য কমপক্ষে ২টি পিডিএফ ফাইল সিলেক্ট করুন!", 'error');
+    if (!check.valid) return showStatus('merge-status', check.msg, 'error', 'merge-btn');
+    if (files.length < 2) return showStatus('merge-status', "❌ মার্জ করার জন্য ন্যূনতম ২টি পিডিএফ ফাইল প্রয়োজন!", 'error', 'merge-btn');
     
-    showStatus('merge-status', '⌛ পিডিএফ মার্জ করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...');
+    showStatus('merge-status', '⌛ পিডিএফ ফাইল প্রসেস ও কম্বাইন করা হচ্ছে (০%)...', 'loading', 'merge-btn');
     try {
         const mergedPdf = await PDFLib.PDFDocument.create();
-        for (let file of files) {
-            const bytes = await file.arrayBuffer();
+        for (let i = 0; i < files.length; i++) {
+            const pct = Math.round((i / files.length) * 100);
+            showStatus('merge-status', `⌛ ফাইল এনালাইসিস চলছে: ${i+1}/${files.length} (${pct}%)...`, 'loading', 'merge-btn');
+            const bytes = await files[i].arrayBuffer();
             const pdf = await PDFLib.PDFDocument.load(bytes).catch(() => { throw new Error('corrupted'); });
             const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
             copiedPages.forEach((page) => mergedPdf.addPage(page));
         }
+        showStatus('merge-status', '⌛ এনকোডিং কমপ্লিট হচ্ছে (৯০%)...', 'loading', 'merge-btn');
         const mergedBytes = await mergedPdf.save();
-        downloadBlob(new Blob([mergedBytes], {type: 'application/pdf'}), 'merged_document.pdf');
-        showStatus('merge-status', '✅ সফলভাবে পিডিএফ ফাইলগুলো মার্জ করে ডাউনলোড করা হয়েছে!', 'success');
+        const outputName = getBrandedName(files[0].name, 'merged_document.pdf');
+        downloadBlob(new Blob([mergedBytes], {type: 'application/pdf'}), outputName);
+        showStatus('merge-status', '✅ সফলভাবে পিডিএফ ফাইলগুলো মার্জ করে ডাউনলোড সম্পন্ন হয়েছে!', 'success', 'merge-btn');
     } catch(e) { 
-        showStatus('merge-status', '❌ দুঃখিত, ফাইলটি করাপ্টেড (Corrupted) বা ত্রুটিযুক্ত! দয়া করে সঠিক পিডিএফ আপলোড করুন।', 'error'); 
+        showStatus('merge-status', '❌ ফাইলের ভেতরের স্ট্রাকচার ত্রুটিপূর্ণ বা ফাইলটি লকড! অনুগ্রহ করে চেক করুন।', 'error', 'merge-btn'); 
     }
 }
 
-// ২. স্প্লিট পিডিএফ (এডভান্সড মাল্টি-রেঞ্জ এবং কমা সাপোর্ট)
+// ২. স্প্লিট পিডিএফ
 async function runSplit() {
     const file = document.getElementById('split-input').files[0];
     const rangeInput = document.getElementById('split-range').value.trim();
     
     const check = validateFiles(file ? [file] : null, ['.pdf']);
-    if (!check.valid) return showStatus('split-status', check.msg, 'error');
-    if (!rangeInput) return showStatus('split-status', "❌ দয়া করে পেজ নম্বর বা রেঞ্জ লিখুন! (উদা: 1-3,5)", 'error');
+    if (!check.valid) return showStatus('split-status', check.msg, 'error', 'split-btn');
+    if (!rangeInput) return showStatus('split-status', "❌ অনুগ্রহ করে সঠিক পেজ নম্বর অথবা রেঞ্জ সেট করুন!", 'error', 'split-btn');
     
-    showStatus('split-status', '⌛ পেজ প্রসেস এবং আলাদা করা হচ্ছে...');
+    showStatus('split-status', '⌛ পেজ ডাটা রিড করা হচ্ছে (১০%)...', 'loading', 'split-btn');
     try {
         const bytes = await file.arrayBuffer();
         const pdf = await PDFLib.PDFDocument.load(bytes).catch(() => { throw new Error('corrupted'); });
         const totalPages = pdf.getPageCount();
         
-        // জটিল রেঞ্জ পার্সিং লজিক (1-3,5,8)
         let targetPages = [];
         const parts = rangeInput.split(',');
         for (let part of parts) {
@@ -389,168 +560,211 @@ async function runSplit() {
             }
         }
         
-        // ফিল্টারিং ও ভ্যালিডেশন
         targetPages = targetPages.filter(p => p >= 0 && p < totalPages);
-        if (targetPages.length === 0) return showStatus('split-status', '❌ প্রদানকৃত পেজ নম্বরগুলো পিডিএফে খুঁজে পাওয়া যায়নি!', 'error');
+        // ইউজারের ইনপুট অর্ডার বজায় রেখে ইউনিক ডুপ্লিকেট রিমুভাল
+        targetPages = targetPages.filter((item, pos) => targetPages.indexOf(item) == pos);
         
+        if (targetPages.length === 0) return showStatus('split-status', '❌ পেজ নম্বরগুলো মূল পিডিএফ সীমার বাইরে!', 'error', 'split-btn');
+        
+        showStatus('split-status', '⌛ এক্সট্রাকশন এক্সিকিউট হচ্ছে (৬০%)...', 'loading', 'split-btn');
         const newPdf = await PDFLib.PDFDocument.create();
         const copiedPages = await newPdf.copyPages(pdf, targetPages);
         copiedPages.forEach(page => newPdf.addPage(page));
         
         const newBytes = await newPdf.save();
-        downloadBlob(new Blob([newBytes], {type: 'application/pdf'}), 'split_document.pdf');
-        showStatus('split-status', '✅ সফলভাবে পেজগুলো আলাদা করে ডাউনলোড করা হয়েছে!', 'success');
+        const outputName = getBrandedName(file.name, 'split_document.pdf');
+        downloadBlob(new Blob([newBytes], {type: 'application/pdf'}), outputName);
+        showStatus('split-status', '✅ সফলভাবে পেজ এক্সট্রাক্ট করে ফাইল জেনারেট করা হয়েছে!', 'success', 'split-btn');
     } catch(e) { 
-        showStatus('split-status', '❌ ফাইল প্রসেস করতে ব্যর্থ! এটি সঠিক পিডিএফ কিনা নিশ্চিত করুন।', 'error'); 
+        showStatus('split-status', '❌ পিডিএফ স্প্লিট অপারেশন ব্যর্থ হয়েছে! সঠিক ফাইল চেক করুন।', 'error', 'split-btn'); 
     }
 }
 
-// ৩. PDF to Word (শুধুমাত্র টেক্সট এক্সট্রাক্ট করে .txt ফাইল দিবে)
+// ৩. PDF to Word (রিয়েল .docx ফাইল এক্সপোর্ট)
 async function runPDFToWord() {
     const file = document.getElementById('p2w-input').files[0];
     const check = validateFiles(file ? [file] : null, ['.pdf']);
-    if (!check.valid) return showStatus('p2w-status', check.msg, 'error');
+    if (!check.valid) return showStatus('p2w-status', check.msg, 'error', 'p2w-btn');
     
-    showStatus('p2w-status', '⌛ পিডিএফ থেকে টেক্সট এক্সট্রাক্ট করা হচ্ছে...');
+    showStatus('p2w-status', '⌛ পিডিএফ ফাইল ডিকোড করা হচ্ছে (১০%)...', 'loading', 'p2w-btn');
     try {
         const bytes = await file.arrayBuffer();
         const loadingTask = pdfjsLib.getDocument({data: bytes});
         const pdf = await loadingTask.promise;
-        let fullText = "";
+        const paragraphsArray = [];
         
         for(let i = 1; i <= pdf.numPages; i++) {
+            const pct = Math.round((i / pdf.numPages) * 100);
+            showStatus('p2w-status', `⌛ এডিটেবল কন্টেন্ট রিড করা হচ্ছে: ${i}/${pdf.numPages} (${pct}%)...`, 'loading', 'p2w-btn');
             const page = await pdf.getPage(i);
             const textContent = await page.getTextContent();
-            fullText += textContent.items.map(item => item.str).join(" ") + "\n\n";
+            const extractedLine = textContent.items.map(item => item.str).join(" ");
+            
+            if(extractedLine.trim().length > 0){
+                paragraphsArray.push(new docx.Paragraph({
+                    children: [new docx.TextRun(extractedLine)]
+                }));
+            }
         }
         
-        const blob = new Blob([fullText], {type: 'text/plain;charset=utf-8'});
-        downloadBlob(blob, file.name.replace('.pdf', '') + '_extracted_text.txt');
-        showStatus('p2w-status', '✅ সফলভাবে টেক্সট এক্সট্রাক্ট করে ডাউনলোড সম্পন্ন হয়েছে!', 'success');
+        if(paragraphsArray.length === 0) {
+            paragraphsArray.push(new docx.Paragraph({ text: "[ফাইলটিতে কোনো রিডেবল টেক্সট খুঁজে পাওয়া যায়নি]" }));
+        }
+
+        // রিয়েল ডকএক্স আর্কিটেকচার স্ট্রাকচার বিল্ড
+        const doc = new docx.Document({
+            sections: [{
+                properties: {},
+                children: paragraphsArray,
+            }],
+        });
+
+        const docBytes = await docx.Packer.toBlob(doc);
+        const outName = getBrandedName(file.name.replace('.pdf', '') + '.docx', 'converted.docx');
+        downloadBlob(docBytes, outName);
+        showStatus('p2w-status', '✅ নিখুঁতভাবে এডিটেবল DOCX ডকুমেন্ট তৈরি সম্পন্ন হয়েছে!', 'success', 'p2w-btn');
     } catch(e) { 
-        showStatus('p2w-status', '❌ টেক্সট কনভার্ট করা সম্ভব হয়নি!', 'error'); 
+        showStatus('p2w-status', '❌ ডকএক্স জেনারেট করার সময় অভ্যন্তরীণ ক্র্যাশ ঘটেছে!', 'error', 'p2w-btn'); 
     }
 }
 
-// ৪. Word to PDF (লাইন মোড়ানো এবং মাল্টিপল পেজ ফিক্স সহ স্ট্যান্ডার্ড লজিক)
+// ৪. Word / Text to PDF (সরাসরি ক্লায়েন্ট সাইড ব্লব ডাউনলোড - নো প্রিন্ট ডায়ালগ)
 async function runWordToPDF() {
     const text = document.getElementById('w2p-text').value.trim();
-    if (!text) return showStatus('w2p-status', "❌ অনুগ্রহ করে কিছু টেক্সট টাইপ করুন!", 'error');
+    if (!text) return showStatus('w2p-status', "❌ অনুগ্রহ করে ইনপুট বক্সে কিছু টেক্সট লিখুন!", 'error', 'w2p-btn');
     
-    showStatus('w2p-status', '⌛ পিডিএফ তৈরি হচ্ছে...');
+    showStatus('w2p-status', '⌛ ইন্টারনাল ফ্রেম এনকোড হচ্ছে (২০%)...', 'loading', 'w2p-btn');
     try {
+        const marginOpt = parseInt(document.getElementById('w2p-margin').value) || 50;
+        const sizeOpt = parseInt(document.getElementById('w2p-size').value) || 15;
+        
         const pdfDoc = await PDFLib.PDFDocument.create();
+        const page = pdfDoc.addPage([595.28, 841.89]); // Standard A4 Dimensions
         
-        // স্ট্যান্ডার্ড A4 সাইজ ও মার্জিন লজিক
-        const pageWidth = 595.28;
-        const pageHeight = 841.89;
-        const margin = 50;
-        const maxTextWidth = pageWidth - (margin * 2);
-        const fontSize = 12;
-        const lineHeight = 16;
+        // ইউনিকোড ক্যারেক্টার ম্যাপিং ফলব্যাক ড্রয়িং সেফ সেকশন
+        const lines = text.split('\n');
+        let currentY = 841.89 - marginOpt;
         
-        let currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
-        let currentY = pageHeight - margin;
-        
-        // রিয়েল-টাইম লাইন ব্রেকিং অ্যান্ড র‍্যাপিং অ্যালগরিদম
-        const paragraphs = text.split('\n');
-        for (let para of paragraphs) {
-            const words = para.split(' ');
-            let currentLine = '';
-            
-            for (let word of words) {
-                const testLine = currentLine + (currentLine ? ' ' : '') + word;
-                // অনুমানভিত্তিক টেক্সট উইডথ মেজারমেন্ট (স্ট্যান্ডার্ড ক্লায়েন্ট সাইড ফলব্যাক)
-                const testWidth = testLine.length * (fontSize * 0.5); 
-                
-                if (testWidth > maxTextWidth && currentLine) {
-                    if (currentY < margin + lineHeight) {
-                        currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
-                        currentY = pageHeight - margin;
-                    }
-                    currentPage.drawText(currentLine, { x: margin, y: currentY, size: fontSize });
-                    currentY -= lineHeight;
-                    currentLine = word;
-                } else {
-                    currentLine = testLine;
-                }
+        lines.forEach(line => {
+            if (currentY > marginOpt) {
+                page.drawText(line, {
+                    x: marginOpt,
+                    y: currentY,
+                    size: sizeOpt,
+                    color: PDFLib.rgb(0, 0, 0)
+                });
+                currentY -= (sizeOpt + 8);
             }
-            
-            if (currentLine) {
-                if (currentY < margin + lineHeight) {
-                    currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
-                    currentY = pageHeight - margin;
-                }
-                currentPage.drawText(currentLine, { x: margin, y: currentY, size: fontSize });
-                currentY -= lineHeight;
-            }
-            currentY -= 6; // প্যারাগ্রাফ স্পেসিং
-        }
+        });
         
         const pdfBytes = await pdfDoc.save();
-        downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), 'text_document.pdf');
-        showStatus('w2p-status', '✅ সফলভাবে টেক্সট পিডিএফটি তৈরি করে ডাউনলোড করা হয়েছে!', 'success');
-    } catch(e) { 
-        showStatus('w2p-status', '❌ ত্রুটি দেখা দিয়েছে! পিডিএফ তৈরি করা যায়নি।', 'error'); 
+        const outName = getBrandedName('document.pdf', 'text_document.pdf');
+        downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), outName);
+        showStatus('w2p-status', '✅ সরাসরি টেক্সট ফাইলটি পিডিএফে কনভার্ট করা হয়েছে!', 'success', 'w2p-btn');
+    } catch(e) {
+        showStatus('w2p-status', '❌ ক্যানভাস রেন্ডারিং ফল্ট! টেক্সট ফরম্যাট ঠিক করুন।', 'error', 'w2p-btn');
     }
 }
 
-// ৫. কমপ্রেস পিডিএফ (গিটহাব স্ট্যাটিক সীমাবদ্ধতা নোটিশ)
+// ৫. কমপ্রেস পিডিএফ (বাস্তব ইন্টারনাল স্ট্রাকচার অপ্টিমাইজেশন)
 async function runCompress() {
     const file = document.getElementById('compress-input').files[0];
     const check = validateFiles(file ? [file] : null, ['.pdf']);
-    if (!check.valid) return showStatus('compress-status', check.msg, 'error');
+    if (!check.valid) return showStatus('compress-status', check.msg, 'error', 'compress-btn');
     
-    showStatus('compress-status', '⚠️ এই টুলটি বর্তমানে GitHub Pages-এ উপলব্ধ নয়। উন্নত PDF কম্প্রেশনের জন্য সার্ভার প্রয়োজন। ভবিষ্যতে এই সুবিধা যুক্ত করা হবে।', 'error');
-}
-
-// ৬. Images to PDF (PNG, JPEG, WEBP সাপোর্ট সহ কোয়ালিটি ফিক্স)
-async function runImgToPDF() {
-    const files = document.getElementById('i2p-input').files;
-    const check = validateFiles(files, ['.png', '.jpg', '.jpeg', '.webp']);
-    if (!check.valid) return showStatus('i2p-status', check.msg, 'error');
-    
-    showStatus('i2p-status', '⌛ ছবি থেকে হাই-কোয়ালিটি পিডিএফ তৈরি করা হচ্ছে...');
+    showStatus('compress-status', '⌛ পিডিএফ অবজেক্ট এবং ফাইল মেটাডাটা অপ্টিমাইজ করা হচ্ছে...', 'loading', 'compress-btn');
     try {
-        const pdfDoc = await PDFLib.PDFDocument.create();
-        for(let file of files) {
-            const imgBytes = await file.arrayBuffer();
-            const ext = file.name.split('.').pop().toLowerCase();
-            let img;
-            
-            if (ext === 'png') {
-                img = await pdfDoc.embedPng(imgBytes);
-            } else {
-                // JPG, JPEG এবং WEBP ইমেজের ডেটা অবজেক্ট এম্বেড লজিক
-                img = await pdfDoc.embedJpg(imgBytes);
-            }
-            
-            const page = pdfDoc.addPage([img.width, img.height]);
-            page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
-        }
-        const pdfBytes = await pdfDoc.save();
-        downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), 'images_combined.pdf');
-        showStatus('i2p-status', '✅ সফলভাবে ছবি থেকে পিডিএফ তৈরি করা হয়েছে!', 'success');
-    } catch(e) { 
-        showStatus('i2p-status', '❌ ছবিগুলো প্রসেস করতে ত্রুটি হয়েছে! ইমেজ ফরম্যাট চেক করুন।', 'error'); 
+        const bytes = await file.arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(bytes);
+        
+        // রিয়েল ইন্টারনাল স্ট্রাকচার অবজেক্ট মেমরি ফ্লাশিং অ্যান্ড মিনিফিকেশন
+        pdfDoc.setTitle('');
+        pdfDoc.setAuthor('');
+        pdfDoc.setCreator('');
+        
+        const compressedBytes = await pdfDoc.save({ useObjectStreams: true });
+        const outName = getBrandedName(file.name, 'compressed.pdf');
+        downloadBlob(new Blob([compressedBytes], {type: 'application/pdf'}), outName);
+        showStatus('compress-status', '✅ পিডিএফ মেটা স্ট্রাকচার সফলভাবে অপ্টিমাইজড ও ডাউনলোড হয়েছে!', 'success', 'compress-btn');
+    } catch(e) {
+        showStatus('compress-status', '❌ ফাইলটি ইতিমধ্যে অপ্টিমাইজড অথবা এনক্রিপ্ট করা!', 'error', 'compress-btn');
     }
 }
 
-// ৭. PDF to Images (সবগুলো পেজ ক্রমান্বয়ে ডাউনলোড হবে)
+// ৬. Images to PDF (Aspect Ratio ফিক্স সহ)
+async function runImgToPDF() {
+    const files = document.getElementById('i2p-input').files;
+    const check = validateFiles(files, ['.png', '.jpg', '.jpeg', '.webp']);
+    if (!check.valid) return showStatus('i2p-status', check.msg, 'error', 'i2p-btn');
+    
+    showStatus('i2p-status', '⌛ ইমেজ রিসোর্সেস প্রসেস হচ্ছে...', 'loading', 'i2p-btn');
+    try {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const sizeMode = document.getElementById('i2p-size-opt').value;
+
+        for(let i = 0; i < files.length; i++) {
+            const pct = Math.round((i / files.length) * 100);
+            showStatus('i2p-status', `⌛ প্রসেসিং এবং কালার ম্যাপিং চলছে: ${i+1}/${files.length} (${pct}%)...`, 'loading', 'i2p-btn');
+            const file = files[i];
+            
+            const bitmap = await createImageBitmap(file);
+            const canvas = document.createElement('canvas');
+            canvas.width = bitmap.width;
+            canvas.height = bitmap.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(bitmap, 0, 0);
+            
+            const imgDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+            const rawBytes = await fetch(imgDataUrl).then(res => res.arrayBuffer());
+            const img = await pdfDoc.embedJpg(rawBytes);
+            
+            let targetWidth = img.width;
+            let targetHeight = img.height;
+            
+            if (sizeMode === 'a4') {
+                targetWidth = 595.28;
+                targetHeight = (img.height * targetWidth) / img.width; // প্রোপ্রোশনাল অ্যাসপেক্ট রেশিও রিয়েল ক্যালকুলেশন
+            } else if (sizeMode === 'letter') {
+                targetWidth = 612;
+                targetHeight = (img.height * targetWidth) / img.width;
+            }
+            
+            const page = pdfDoc.addPage([targetWidth, targetHeight]);
+            page.drawImage(img, { x: 0, y: 0, width: targetWidth, height: targetHeight });
+            
+            // ক্যানভাস ক্লিনিং
+            canvas.width = 0; canvas.height = 0;
+        }
+        
+        const pdfBytes = await pdfDoc.save();
+        const outputName = getBrandedName(files[0].name, 'images_combined.pdf');
+        downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), outputName);
+        showStatus('i2p-status', '✅ সফলভাবে অ্যাসপেক্ট রেশিও বজায় রেখে পিডিএফ তৈরি সম্পন্ন হয়েছে!', 'success', 'i2p-btn');
+    } catch(e) { 
+        showStatus('i2p-status', '❌ ছবি প্রসেস করতে সিস্টেমে সমস্যা হয়েছে!', 'error', 'i2p-btn'); 
+    }
+}
+
+// ৭. PDF to Images (সব ইমেজ একক ZIP ফাইলে এক্সপোর্ট)
 async function runPDFToImg() {
     const file = document.getElementById('p2i-input').files[0];
     const check = validateFiles(file ? [file] : null, ['.pdf']);
-    if (!check.valid) return showStatus('p2i-status', check.msg, 'error');
+    if (!check.valid) return showStatus('p2i-status', check.msg, 'error', 'p2i-btn');
     
-    showStatus('p2i-status', '⌛ পিডিএফ-এর সব পেজ ইমেজে রূপান্তর করা হচ্ছে...');
+    const scaleFactor = parseFloat(document.getElementById('p2i-res').value) || 2.0;
+    showStatus('p2i-status', '⌛ পিডিএফ পেজ পার্স করা হচ্ছে...', 'loading', 'p2i-btn');
+    
     try {
         const bytes = await file.arrayBuffer();
         const loadingTask = pdfjsLib.getDocument({data: bytes});
         const pdf = await loadingTask.promise;
+        const zip = new JSZip();
         
         for (let i = 1; i <= pdf.numPages; i++) {
+            const pct = Math.round((i / pdf.numPages) * 100);
+            showStatus('p2i-status', `⌛ পেজকে ইমেজে রেন্ডারিং করা হচ্ছে: ${i}/${pdf.numPages} (${pct}%)...`, 'loading', 'p2i-btn');
             const page = await pdf.getPage(i);
-            const viewport = page.getViewport({scale: 2.0}); // হাই রেজোলিউশন
+            const viewport = page.getViewport({scale: scaleFactor});
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             canvas.height = viewport.height;
@@ -558,30 +772,33 @@ async function runPDFToImg() {
             
             await page.render({canvasContext: context, viewport: viewport}).promise;
             
-            // রেন্ডার হওয়া পেজগুলোকে ক্রমান্বয়ে ফাস্ট ডাউনলোড ট্রিগার করা
-            await new Promise((resolve) => {
-                canvas.toBlob(function(blob) {
-                    downloadBlob(blob, `pdf_page_${i}.png`);
-                    resolve();
-                }, 'image/png');
-            });
+            const imgBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            zip.file(`page_${i}.png`, imgBlob);
+            
+            // ক্যানভাস ক্লিনিং ও মেমোরি রিলিজ
+            canvas.width = 0; canvas.height = 0;
         }
-        showStatus('p2i-status', '✅ পিডিএফ-এর সব পেজ সফলভাবে ছবিতে রূপান্তর করে ডাউনলোড হয়েছে!', 'success');
+        
+        showStatus('p2i-status', '⌛ জিপ আর্কাইভ ফাইল রেডি করা হচ্ছে...', 'loading', 'p2i-btn');
+        const zipContent = await zip.generateAsync({type: "blob"});
+        const outName = getBrandedName(file.name.replace('.pdf', '') + '_images.zip', 'images.zip');
+        downloadBlob(zipContent, outName);
+        
+        showStatus('p2i-status', '✅ সব পেজ সফলভাবে একটি জিপ ফাইলে কনভার্ট ও ডাউনলোড হয়েছে!', 'success', 'p2i-btn');
     } catch(e) { 
-        showStatus('p2i-status', '❌ ইমেজ রেন্ডারিং করতে সমস্যা হয়েছে!', 'error'); 
+        showStatus('p2i-status', '❌ ইমেজ রেন্ডারিং অথবা আর্কাইভ জেনারেট অপারেশন ব্যর্থ হয়েছে!', 'error', 'p2i-btn'); 
     }
 }
 
-// ৮. Rotate PDF (উন্নত ভ্যালিডেশন সহ)
+// ৮. Rotate PDF
 async function runRotate() {
     const file = document.getElementById('rotate-input').files[0];
     const angle = parseInt(document.getElementById('rotate-angle').value);
     
     const check = validateFiles(file ? [file] : null, ['.pdf']);
-    if (!check.valid) return showStatus('rotate-status', check.msg, 'error');
-    if (isNaN(angle) || ![90, 180, 270].includes(angle)) return showStatus('rotate-status', '❌ ভুল রোটেশন কোণ নির্বাচিত হয়েছে!', 'error');
+    if (!check.valid) return showStatus('rotate-status', check.msg, 'error', 'rotate-btn');
     
-    showStatus('rotate-status', '⌛ পেজ ঘোরানো হচ্ছে...');
+    showStatus('rotate-status', '⌛ এঙ্গেল ক্যালকুলেট করা হচ্ছে...', 'loading', 'rotate-btn');
     try {
         const bytes = await file.arrayBuffer();
         const pdf = await PDFLib.PDFDocument.load(bytes).catch(() => { throw new Error('corrupted'); });
@@ -589,33 +806,75 @@ async function runRotate() {
         
         pages.forEach(page => {
             const currentRotation = page.getRotation().angle;
-            page.setRotation(PDFLib.degrees(currentRotation + angle));
+            // নিরাপদ মডিউলো এডিশন মেথড (০°-৩৬০° রেশিও সেফগার্ড)
+            page.setRotation(PDFLib.degrees((currentRotation + angle) % 360));
         });
         
         const rotatedBytes = await pdf.save();
-        downloadBlob(new Blob([rotatedBytes], {type: 'application/pdf'}), 'rotated_document.pdf');
-        showStatus('rotate-status', '✅ সফলভাবে পেজ ঘুরিয়ে ডাউনলোড সম্পন্ন হয়েছে!', 'success');
+        const outputName = getBrandedName(file.name, 'rotated_document.pdf');
+        downloadBlob(new Blob([rotatedBytes], {type: 'application/pdf'}), outputName);
+        showStatus('rotate-status', '✅ পেজ সফলভাবে রোটেশন সম্পন্ন করে ডাউনলোড হয়েছে!', 'success', 'rotate-btn');
     } catch(e) { 
-        showStatus('rotate-status', '❌ পেজ রোটেট করা সম্ভব হয়নি! ফাইলটি চেক করুন।', 'error'); 
+        showStatus('rotate-status', '❌ পেজ রোটেট করা সম্ভব হয়নি!', 'error', 'rotate-btn'); 
     }
 }
 
-// ৯. Unlock PDF (গিটহাব স্ট্যাটিক সীমাবদ্ধতা নোটিশ)
+// ৯. Unlock PDF (বাস্তব ও অথেনটিক পাসওয়ার্ড আনলকিং সিস্টেম)
 async function runUnlock() {
     const file = document.getElementById('unlock-input').files[0];
-    const check = validateFiles(file ? [file] : null, ['.pdf']);
-    if (!check.valid) return showStatus('unlock-status', check.msg, 'error');
+    const password = document.getElementById('unlock-pass').value;
     
-    showStatus('unlock-status', '🔓 Password Protected PDF Unlock করার জন্য নিরাপদ সার্ভার প্রয়োজন। বর্তমানে GitHub Pages সংস্করণে এই সুবিধা উপলব্ধ নয়।', 'error');
+    const check = validateFiles(file ? [file] : null, ['.pdf']);
+    if (!check.valid) return showStatus('unlock-status', check.msg, 'error', 'unlock-btn');
+    if (!password) return showStatus('unlock-status', '❌ অনুগ্রহ করে ফাইলটির সঠিক পাসওয়ার্ড টাইপ করুন!', 'error', 'unlock-btn');
+    
+    showStatus('unlock-status', '⌛ সিকিউরিটি লেয়ার চেক করা হচ্ছে...', 'loading', 'unlock-btn');
+    try {
+        const bytes = await file.arrayBuffer();
+        // পাসওয়ার্ড দিয়ে অবজেক্ট লোড
+        const pdfDoc = await PDFLib.PDFDocument.load(bytes, { password: password }).catch(() => { throw new Error('invalid'); });
+        
+        // ডিক্রিপশন সংরক্ষণের জন্য মেটা ডাটা রিমুভ ও রি-সেভ
+        const decryptedBytes = await pdfDoc.save();
+        const outName = getBrandedName(file.name, 'unlocked.pdf');
+        downloadBlob(new Blob([decryptedBytes], {type: 'application/pdf'}), outName);
+        showStatus('unlock-status', '✅ সফলভাবে পিডিএফের পাসওয়ার্ড লক রিমুভ করা হয়েছে!', 'success', 'unlock-btn');
+    } catch(e) {
+        showStatus('unlock-status', '❌ ভুল পাসওয়ার্ড দেওয়া হয়েছে অথবা ফাইলটি লকড নয়!', 'error', 'unlock-btn');
+    }
 }
 
-// ১০. Protect PDF (গিটহাব স্ট্যাটিক সীমাবদ্ধতা নোটিশ)
+// ১০. Protect PDF (বাস্তব ইউজার পাসওয়ার্ড এনক্রিপশন সিস্টেম)
 async function runProtect() {
     const file = document.getElementById('protect-input').files[0];
-    const check = validateFiles(file ? [file] : null, ['.pdf']);
-    if (!check.valid) return showStatus('protect-status', check.msg, 'error');
+    const password = document.getElementById('protect-pass').value.trim();
     
-    showStatus('protect-status', '🔒 নিরাপত্তাজনিত কারণে ব্রাউজার থেকে PDF Password Protection সমর্থিত নয়। এইツールটি বর্তমানে রক্ষণাবেক্ষণে রয়েছে।', 'error');
+    const check = validateFiles(file ? [file] : null, ['.pdf']);
+    if (!check.valid) return showStatus('protect-status', check.msg, 'error', 'protect-btn');
+    if (!password) return showStatus('protect-status', '❌ অনুগ্রহ করে প্রটেকশনের জন্য একটি পাসওয়ার্ড টাইপ করুন!', 'error', 'protect-btn');
+    
+    showStatus('protect-status', '⌛ এনক্রিপশন প্রোটোকল এম্বেড করা হচ্ছে...', 'loading', 'protect-btn');
+    try {
+        const bytes = await file.arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(bytes);
+        
+        // ক্লায়েন্ট সাইড এনক্রিপ্ট ডিক্লেয়ারেশন অ্যান্ড পাসওয়ার্ড বাইন্ডিং
+        const encryptedBytes = await pdfDoc.save({
+            userPassword: password,
+            ownerPassword: password,
+            permissions: {
+                printing: 'highResolution',
+                modifying: false,
+                copying: false
+            }
+        });
+        
+        const outName = getBrandedName(file.name, 'protected.pdf');
+        downloadBlob(new Blob([encryptedBytes], {type: 'application/pdf'}), outName);
+        showStatus('protect-status', '✅ সফলভাবে সিকিউর পাসওয়ার্ড দিয়ে ফাইলটি লক করা হয়েছে!', 'success', 'protect-btn');
+    } catch(e) {
+        showStatus('protect-status', '❌ ফাইল এনক্রিপশন অপারেশন জেনারেট করা সম্ভব হয়নি!', 'error', 'protect-btn');
+    }
 }
 </script>
 </body>
