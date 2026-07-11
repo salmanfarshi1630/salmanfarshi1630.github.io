@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কিউআর ও বারকোড টুলস | সালমান অনলাইন স্মার্ট সেবা</title>
+    <title>কিউআর ও বারকোডツール | সালমান অনলাইন স্মার্ট সেবা</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- CDN Libraries for QR and Barcode -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -25,16 +25,19 @@
         p { font-size: 13px; color: #64748b; margin: 0; line-height: 1.4; }
         
         .tool-section { display: none; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-top: 20px; text-align: center; }
-        .input-field { width: 100%; max-width: 400px; padding: 12px; margin: 8px 0; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 15px; text-align: center; }
+        .input-field { width: 100%; max-width: 450px; padding: 12px; margin: 8px 0; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 15px; text-align: center; color: #000; }
+        textarea.input-field { height: 120px; text-align: left; resize: none; }
         .btn-action { background: #10b981; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; transition: 0.2s; display: inline-block; width: 100%; max-width: 300px; text-decoration: none; }
         .btn-action:hover { background: #059669; }
         .close-btn { background: #ef4444; margin-top: 20px; }
         .close-btn:hover { background: #dc2626; }
         
-        /* কিউআর কোডের বক্সটি বড় এবং সুন্দর করা হলো */
-        .output-box { margin: 20px auto; padding: 25px; background: #ffffff; border: 2px dashed #cbd5e1; display: inline-block; border-radius: 16px; min-width: 280px; min-height: 280px; display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-        .output-box img { width: 230px !important; height: 230px !important; }
-        #reader { width: 100%; max-width: 400px; margin: 0 auto; background: black; }
+        .output-box { margin: 20px auto; padding: 20px; background: #ffffff; border: 2px dashed #cbd5e1; display: inline-flex; border-radius: 16px; min-width: 260px; min-height: 260px; align-items: center; justify-content: center; flex-direction: column; }
+        .output-box canvas, .output-box img { max-width: 220px !important; max-height: 220px !important; display: block; }
+        
+        .barcode-box { width: 100%; max-width: 460px; margin: 20px auto; padding: 20px; background: white; border: 2px dashed #cbd5e1; display: inline-flex; align-items: center; justify-content: center; border-radius: 16px; min-height: 150px; }
+        #barcode-svg-render { max-width: 100%; height: auto; display: block; } /* এখানে ডিসপ্লে ঠিক করা হয়েছে */
+        #reader, #barcode-reader { width: 100%; max-width: 400px; margin: 0 auto; background: black; }
     </style>
 </head>
 <body>
@@ -43,41 +46,42 @@
     <a href="../../index.html" class="back-btn">← মূল পেজে ফিরুন</a>
     
     <div id="main-menu">
-        <h2>📱 কিউআর ও বারকোডツールস (QR & Barcode)</h2>
-        <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় কিউআর কোড জেনারেশন, কাস্টমাইজেশন ও স্ক্যানিংয়ের ১০টি অল-ইন-ওয়ান এডভান্সড টুল।</p>
+        <h2>📱 কিউআর ও বারকোড টুলস (QR & Barcode)</h2>
+        <p style="color: #64748b; margin-top: 0; font-size: 14px;">আপনার প্রয়োজনীয় অল-ইন-ওয়ান এডভান্সড টুল।</p>
         <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 25px;">
         
         <div class="grid">
-            <div class="card" onclick="openTool('qr-gen')"><span class="icon">🔗</span><h3>১. কিউআর কোড জেনারেটর</h3><p>যেকোনো টেক্সট বা লিঙ্কের জন্য QR তৈরি</p></div>
-            <div class="card" onclick="openTool('bar-gen')"><span class="icon">📊</span><h3>২. বারকোড জেনারেটর</h3><p>প্রোডাক্টের জন্য কাস্টম বারকোড তৈরি</p></div>
-            <div class="card" onclick="openTool('wifi-qr')"><span class="icon">📶</span><h3>৩. ওয়াইফাই কিউআর কোড</h3><p>পাসওয়ার্ড ছাড়া সরাসরি ওয়াইফাই কানেক্ট</p></div>
-            <div class="card" onclick="openTool('vcard-qr')"><span class="icon">🪪</span><h3>৪. এডভান্সড কন্টাক্ট কিউআর</h3><p>লিঙ্ক, জিমেইল ও ঠিকানাসহ ম্যাজিক কন্টাক্ট QR</p></div>
-            <div class="card" onclick="openTool('yt-qr')"><span class="icon">📺</span><h3>৫. ইউটিউব চ্যানেল কিউআর</h3><p>ইউটিউব চ্যানেল বা ভিডিওর স্পেশাল QR</p></div>
-            <div class="card" onclick="openTool('fb-qr')"><span class="icon">🌐</span><h3>৬. ফেসবুক প্রোফাইল কিউআর</h3><p>ফেসবুক আইডি বা পেজের স্মার্ট লিঙ্ক QR</p></div>
-            <div class="card" onclick="openTool('qr-scan')"><span class="icon">📷</span><h3>৭. কিউআর কোড স্ক্যানার</h3><p>ক্যামেরা বা ছবি দিয়ে QR স্ক্যান করুন</p></div>
-            <div class="card" onclick="openTool('bar-scan')"><span class="icon">🔍</span><h3>৮. বারকোড স্ক্যানার</h3><p>ক্যামেরা দিয়ে বারকোড রিড করার লাইভ টুল</p></div>
-            <div class="card" onclick="openTool('color-qr')"><span class="icon">🎨</span><h3>৯. কালারফুল কিউআর</h3><p>ব্যাকগ্রাউন্ড ও কিউআর-এর রঙ পরিবর্তন</p></div>
-            <div class="card" onclick="openTool('wa-qr')"><span class="icon">💬</span><h3>১০. হোয়াটসঅ্যাপ ডাইরেক্ট কিউআর</h3><p>নাম্বার সেভ না করেই ডাইরেক্ট চ্যাট QR</p></div>
+            <div class="card" onclick="openTool('qr-gen', 'Text QR')"><span class="icon">🔗</span><h3>১. কিউআর কোড জেনারেটর</h3><p>ইংরেজি যেকোনো টেক্সট বা ওয়েবসাইট লিঙ্ক</p></div>
+            <div class="card" onclick="openTool('bar-gen', 'Barcode')"><span class="icon">📊</span><h3>২. বারকোড জেনারেটর</h3><p>প্রোডাক্টের জন্য কাস্টম বারকোড তৈরি</p></div>
+            <div class="card" onclick="openTool('wifi-qr', 'WiFi QR')"><span class="icon">📶</span><h3>৩. ওয়াইফাই কিউআর কোড</h3><p>পাসওয়ার্ড ছাড়া সরাসরি ওয়াইফাই কানেক্ট</p></div>
+            <div class="card" onclick="openTool('vcard-qr', 'vCard Contact QR')"><span class="icon">🪪</span><h3>৪. এডভান্সড কন্টাক্ট কিউআর</h3><p>লিঙ্ক, জিমেইল ও ঠিকানাসহ কন্টাক্ট vCard QR</p></div>
+            <div class="card" onclick="openTool('yt-qr', 'Social Media QR')"><span class="icon">📺</span><h3>৫. সোশ্যাল মিডিয়া লিঙ্ক কিউআর</h3><p>সোশ্যাল মিডিয়া প্রোফাইল বা ভিডিওর QR</p></div>
+            <div class="card" onclick="openTool('fb-qr', 'Facebook QR')"><span class="icon">🌐</span><h3>৬. ফেসবুক প্রোফাইল কিউআর</h3><p>ফেসবুক আইডি বা পেজের স্মার্ট লিঙ্ক QR</p></div>
+            <div class="card" onclick="openTool('qr-scan', 'Scanner')"><span class="icon">📷</span><h3>৭. কিউআর কোড স্ক্যানার</h3><p>ক্যামেরা বা ছবি দিয়ে QR স্ক্যান করুন</p></div>
+            <div class="card" onclick="openTool('bar-scan', 'Scanner')"><span class="icon">🔍</span><h3>৮. বারকোড স্ক্যানার</h3><p>ক্যামেরা দিয়ে বারকোড রিড করার লাইভ টুল</p></div>
+            <div class="card" onclick="openTool('color-qr', 'Custom Color QR')"><span class="icon">🎨</span><h3>৯. কালারফুল কিউআর</h3><p>ব্যাকগ্রাউন্ড ও কিউআর-এর রঙ পরিবর্তন</p></div>
+            <div class="card" onclick="openTool('wa-qr', 'WhatsApp QR')"><span class="icon">💬</span><h3>১০. হোয়াটসঅ্যাপ ডাইরেক্ট কিউআর</h3><p>নাম্বার সেভ না করেই ডাইরেক্ট চ্যাট QR</p></div>
         </div>
     </div>
 
-    <!-- ১. কিউআর কোড জেনারেটর (লাইভ ও বড় বক্স) -->
+    <!-- ১. কিউআর কোড জেনারেটর -->
     <div id="tool-qr-gen" class="tool-section">
-        <h2>🔗 কিউআর কোড জেনারেটর</h2>
-        <input type="text" id="qr-text" class="input-field" placeholder="এখানে আপনার লিঙ্ক বা টেক্সট লিখুন" oninput="generateTextQR()"><br>
-        <div class="output-box" id="qr-output"></div><br>
-        <button class="btn-action" onclick="downloadQR('qr-output')">⬇️ ডাউনলোড কিউআর</button>
+        <h2>🔗 ইংরেজি কিউআর কোড জেনারেটর</h2>
+        <textarea id="qr-text" class="input-field" placeholder="এখানে ইংরেজি লেখা বা ওয়েবসাইট লিঙ্ক পেস্ট করুন..." oninput="generateTextQR()"></textarea><br>
+        <div class="output-box" id="qr-output-div"></div><br>
+        <button class="btn-action" onclick="downloadSmartQR('qr-output-div')">⬇️ ডাউনলোড কিউআর কোড</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
     <!-- ২. বারকোড জেনারেটর -->
     <div id="tool-bar-gen" class="tool-section">
         <h2>📊 বারকোড জেনারেটর</h2>
-        <input type="text" id="bar-text" class="input-field" value="12345678" oninput="generateBarcode()"><br>
-        <div class="output-box" style="min-width:auto; min-height:auto; padding:15px;">
-            <svg id="barcode-output"></svg>
+        <input type="text" id="bar-text" class="input-field" placeholder="বারকোড নাম্বার দিন..." oninput="generateBarcode()"><br>
+        <div class="barcode-box">
+            <svg id="barcode-svg-render"></svg>
+            <canvas id="barcode-canvas-hidden" style="display:none;"></canvas>
         </div><br>
-        <button class="btn-action" onclick="downloadBarcode()">⬇️ ডাউনলোড বারকোড</button>
+        <button class="btn-action" onclick="downloadBarcodePNG()">⬇️ ডাউনলোড বারকোড (PNG)</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
@@ -86,44 +90,44 @@
         <h2>📶 ওয়াইফাই কিউআর কোড</h2>
         <input type="text" id="wifi-name" class="input-field" placeholder="ওয়াইফাই এর নাম (SSID)" oninput="generateWifiQR()"><br>
         <input type="text" id="wifi-pass" class="input-field" placeholder="ওয়াইফাই পাসওয়ার্ড" oninput="generateWifiQR()"><br>
-        <div class="output-box" id="wifi-qr-output"></div><br>
-        <button class="btn-action" onclick="downloadQR('wifi-qr-output')">⬇️ ডাউনলোড করুন</button>
+        <div class="output-box" id="wifi-output-div"></div><br>
+        <button class="btn-action" onclick="downloadSmartQR('wifi-output-div')">⬇️ ডাউনলোড কিউআর কোড</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
-    <!-- ৪. এডভান্সড কন্টাক্ট (vCard) কিউআর (ম্যাজিক ফিল্ডস যুক্ত) -->
+    <!-- ৪. কন্টাক্ট কিউআর -->
     <div id="tool-vcard-qr" class="tool-section">
         <h2>🪪 এডভান্সড কন্টাক্ট (vCard) মেকার</h2>
         <input type="text" id="vc-name" class="input-field" placeholder="পূর্ণ নাম" oninput="generateVCardQR()"><br>
         <input type="text" id="vc-phone" class="input-field" placeholder="মোবাইল নাম্বার" oninput="generateVCardQR()"><br>
         <input type="text" id="vc-email" class="input-field" placeholder="জিমেইল আইডি" oninput="generateVCardQR()"><br>
         <input type="text" id="vc-web" class="input-field" placeholder="ওয়েবসাইট লিঙ্ক" oninput="generateVCardQR()"><br>
-        <input type="text" id="vc-social" class="input-field" placeholder="সোশ্যাল মিডিয়া লিঙ্ক (FB/LinkedIn)" oninput="generateVCardQR()"><br>
+        <input type="text" id="vc-social" class="input-field" placeholder="সোশ্যাল মিডিয়া লিঙ্ক" oninput="generateVCardQR()"><br>
         <input type="text" id="vc-addr" class="input-field" placeholder="ঠিকানা (Address)" oninput="generateVCardQR()"><br>
-        <div class="output-box" id="vcard-qr-output"></div><br>
-        <button class="btn-action" onclick="downloadQR('vcard-qr-output')">⬇️ ডাউনলোড করুন</button>
+        <div class="output-box" id="vcard-output-div"></div><br>
+        <button class="btn-action" onclick="downloadSmartQR('vcard-output-div')">⬇️ ডাউনলোড কিউআর কোড</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
-    <!-- ৫. ইউটিউব চ্যানেল কিউআর -->
+    <!-- ৫. সোশ্যাল মিডিয়া কিউআর -->
     <div id="tool-yt-qr" class="tool-section">
-        <h2>📺 ইউটিউব চ্যানেল / ভিডিও কিউআর</h2>
-        <input type="text" id="yt-link" class="input-field" placeholder="ইউটিউব ভিডিও বা চ্যানেলের লিঙ্ক দিন" oninput="generateYtQR()"><br>
-        <div class="output-box" id="yt-qr-output"></div><br>
-        <button class="btn-action" onclick="downloadQR('yt-qr-output')">⬇️ ডাউনলোড করুন</button>
+        <h2>📺 সোশ্যাল মিডিয়া লিঙ্ক কিউআর</h2>
+        <input type="text" id="yt-link" class="input-field" placeholder="সোশ্যাল মিডিয়া লিঙ্ক দিন" oninput="generateYtQR()"><br>
+        <div class="output-box" id="yt-output-div"></div><br>
+        <button class="btn-action" onclick="downloadSmartQR('yt-output-div')">⬇️ ডাউনলোড কিউআর কোড</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
-    <!-- ৬. ফেসবুক প্রোফাইল কিউআর -->
+    <!-- ৬. ফেসবুক কিউআর -->
     <div id="tool-fb-qr" class="tool-section">
         <h2>🌐 ফেসবুক প্রোফাইল ও পেজ কিউআর</h2>
-        <input type="text" id="fb-link" class="input-field" placeholder="ফেসবুক প্রোফাইল বা পেজের লিঙ্ক দিন" oninput="generateFbQR()"><br>
-        <div class="output-box" id="fb-qr-output"></div><br>
-        <button class="btn-action" onclick="downloadQR('fb-qr-output')">⬇️ ডাউনলোড করুন</button>
+        <input type="text" id="fb-link" class="input-field" placeholder="ফেসবুক লিঙ্ক দিন" oninput="generateFbQR()"><br>
+        <div class="output-box" id="fb-output-div"></div><br>
+        <button class="btn-action" onclick="downloadSmartQR('fb-output-div')">⬇️ ডাউনলোড কিউআর কোড</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
-    <!-- ৭. কিউআর কোড স্ক্যানার -->
+    <!-- ७. কিউআর স্ক্যানার -->
     <div id="tool-qr-scan" class="tool-section">
         <h2>📷 লাইভ কিউআর কোড স্ক্যানার</h2>
         <div id="reader"></div>
@@ -134,45 +138,42 @@
     <!-- ৮. বারকোড স্ক্যানার -->
     <div id="tool-bar-scan" class="tool-section">
         <h2>🔍 লাইভ বারকোড স্ক্যানার</h2>
-        <div id="barcode-reader" style="width:100%; max-width:400px; margin:0 auto; background:black;"></div>
+        <div id="barcode-reader"></div>
         <p id="bar-scan-result" style="font-weight: bold; color: #1e3a8a; margin-top: 15px;">ক্যামেরার সামনে বারকোডটি ধরুন...</p>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
     <!-- ৯. কালারফুল কিউআর -->
     <div id="tool-color-qr" class="tool-section">
-        <h2>🎨 কালারফুল কাস্টম কিউআর</h2>
-        <input type="text" id="color-qr-text" class="input-field" placeholder="লিঙ্ক বা টেক্সট লিখুন" value="Salman Smart Seba" oninput="generateColorQR()"><br>
+        <h2>🎨 কাস্টম কালারফুল কিউআর</h2>
+        <input type="text" id="color-qr-text" class="input-field" placeholder="লিঙ্ক বা টেক্সট লিখুন" oninput="generateColorQR()"><br>
         <label>কিউআর কালার: </label><input type="color" id="qr-dark" value="#1e3a8a" onchange="generateColorQR()"> 
         <label style="margin-left:15px;">ব্যাকগ্রাউন্ড: </label><input type="color" id="qr-light" value="#ffffff" onchange="generateColorQR()"><br>
-        <div class="output-box" id="color-qr-output"></div><br>
-        <button class="btn-action" onclick="downloadQR('color-qr-output')">⬇️ ডাউনলোড করুন</button>
+        <div class="output-box" id="color-output-div"></div><br>
+        <button class="btn-action" onclick="downloadSmartQR('color-output-div')">⬇️ ডাউনলোড কিউআর কোড</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 
-    <!-- ১০. হোয়াটসঅ্যাপ ডাইরেক্ট কিউআর -->
+    <!-- ১০. হোয়াটসঅ্যাপ কিউআর -->
     <div id="tool-wa-qr" class="tool-section">
         <h2>💬 হোয়াটসঅ্যাপ ডাইরেক্ট চ্যাট কিউআর</h2>
-        <input type="number" id="wa-phone" class="input-field" placeholder="কোডসহ নাম্বার (যেমন: 88017XXXXXXXX)" oninput="generateWaQR()"><br>
-        <div class="output-box" id="wa-qr-output"></div><br>
-        <button class="btn-action" onclick="downloadQR('wa-qr-output')">⬇️ ডাউনলোড করুন</button>
+        <input type="number" id="wa-phone" class="input-field" placeholder="কোডসহ নাম্বার (88017XXXXXXXX)" oninput="generateWaQR()"><br>
+        <div class="output-box" id="wa-output-div"></div><br>
+        <button class="btn-action" onclick="downloadSmartQR('wa-output-div')">⬇️ ডাউনলোড কিউআর কোড</button>
         <button class="btn-action close-btn" onclick="closeAllTools()">❌ বন্ধ করুন</button>
     </div>
 </div>
 
 <script>
 let html5QrcodeScanner = null;
+let currentToolLabel = "QR Code";
 
-function openTool(toolName) {
+function openTool(toolName, labelName) {
     closeAllTools();
+    currentToolLabel = labelName || "QR Code";
     document.getElementById('main-menu').style.display = 'none';
     const element = document.getElementById('tool-' + toolName);
     if(element) element.style.display = 'block';
-
-    // ডিফল্ট জেনারেশন কল যাতে বক্স খালি না থাকে
-    if(toolName === 'qr-gen') generateTextQR();
-    if(toolName === 'bar-gen') generateBarcode();
-    if(toolName === 'color-qr') generateColorQR();
 
     if(toolName === 'qr-scan') {
         html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
@@ -191,38 +192,50 @@ function openTool(toolName) {
 function closeAllTools() {
     document.getElementById('main-menu').style.display = 'block';
     document.querySelectorAll('.tool-section').forEach(s => s.style.display = 'none');
+    document.querySelectorAll('.input-field').forEach(input => input.value = '');
+    document.querySelectorAll('.output-box').forEach(box => box.innerHTML = '');
+    
+    const barSvg = document.getElementById('barcode-svg-render');
+    if(barSvg) { barSvg.innerHTML = ''; }
+
     if(html5QrcodeScanner) {
-        html5QrcodeScanner.clear().catch(error => console.error(error));
+        html5QrcodeScanner.clear().catch(err => console.error(err));
         html5QrcodeScanner = null;
     }
 }
 
-// ১. টেক্সট কিউআর (বাগ ফিক্সড ও ইনস্ট্যান্ট লাইভ রেসপন্স)
 function generateTextQR() {
     let txt = document.getElementById('qr-text').value;
-    let out = document.getElementById('qr-output');
-    out.innerHTML = '';
-    if(!txt.trim()) { out.innerText = "লিখলেই এখানে কিউআর কোড আসবে"; return; }
-    new QRCode(out, { text: txt, width: 230, height: 230 });
+    let outDiv = document.getElementById('qr-output-div');
+    outDiv.innerHTML = '';
+    if(!txt.trim()) return;
+    new QRCode(outDiv, { text: txt, width: 256, height: 256, correctLevel: QRCode.CorrectLevel.H });
 }
 
-// ২. বারকোড
 function generateBarcode() {
-    let val = document.getElementById('bar-text').value || "12345678";
-    JsBarcode("#barcode-output", val, { format: "CODE128", width: 2, height: 80, displayValue: true });
+    let val = document.getElementById('bar-text').value;
+    const barSvg = document.getElementById('barcode-svg-render');
+    if(!val.trim()) { barSvg.innerHTML = ''; return; }
+    
+    JsBarcode("#barcode-svg-render", val, {
+        format: "CODE128",
+        width: 1.5,
+        height: 70,
+        fontSize: 15,
+        displayValue: true
+    });
 }
 
-// ৩. ওয়াইফাই কিউআর
 function generateWifiQR() {
     let name = document.getElementById('wifi-name').value;
     let pass = document.getElementById('wifi-pass').value;
+    let outDiv = document.getElementById('wifi-output-div');
+    outDiv.innerHTML = '';
+    if(!name.trim()) return;
     let str = `WIFI:T:WPA;S:${name};P:${pass};;`;
-    let out = document.getElementById('wifi-qr-output');
-    out.innerHTML = '';
-    new QRCode(out, { text: str, width: 230, height: 230 });
+    new QRCode(outDiv, { text: str, width: 256, height: 256, correctLevel: QRCode.CorrectLevel.H });
 }
 
-// ৪. এডভান্সড ভিকার্ড কন্টাক্ট কিউআর (ম্যাজিক কোড)
 function generateVCardQR() {
     let name = document.getElementById('vc-name').value;
     let phone = document.getElementById('vc-phone').value;
@@ -230,63 +243,128 @@ function generateVCardQR() {
     let web = document.getElementById('vc-web').value;
     let social = document.getElementById('vc-social').value;
     let addr = document.getElementById('vc-addr').value;
+    let outDiv = document.getElementById('vcard-output-div');
+    outDiv.innerHTML = '';
     
-    let str = `BEGIN:VCARD\nVERSION:3.0\nN:${name}\nTEL:${phone}\nEMAIL:${email}\nURL:${web}\nNOTE:Social:${social}\nADR:;;${addr}\nEND:VCARD`;
-    let out = document.getElementById('vcard-qr-output');
-    out.innerHTML = '';
-    new QRCode(out, { text: str, width: 230, height: 230 });
+    if(!name.trim() && !phone.trim() && !email.trim()) return;
+    
+    let str = `BEGIN:VCARD\nVERSION:2.1\nFN:${name}\nTEL;CELL:${phone}\nEMAIL:${email}\nURL:${web}\nNOTE:${social}\nADR:;;${addr}\nEND:VCARD`;
+    new QRCode(outDiv, { text: str, width: 256, height: 256, correctLevel: QRCode.CorrectLevel.M });
 }
 
-// ৫. ইউটিউব কিউআর
+// সামাজিক যোগাযোগ মাধ্যম এবং অন্যান্য লিঙ্ক হ্যান্ডলার
 function generateYtQR() {
-    let val = document.getElementById('yt-link').value || "https://youtube.com";
-    let out = document.getElementById('yt-qr-output');
-    out.innerHTML = '';
-    new QRCode(out, { text: val, width: 230, height: 230 });
+    let val = document.getElementById('yt-link').value;
+    let outDiv = document.getElementById('yt-output-div');
+    outDiv.innerHTML = '';
+    if(!val.trim()) return;
+    new QRCode(outDiv, { text: val, width: 256, height: 256 });
 }
 
-// ৬. ফেসবুক কিউআর
 function generateFbQR() {
-    let val = document.getElementById('fb-link').value || "https://facebook.com";
-    let out = document.getElementById('fb-qr-output');
-    out.innerHTML = '';
-    new QRCode(out, { text: val, width: 230, height: 230 });
+    let val = document.getElementById('fb-link').value;
+    let outDiv = document.getElementById('fb-output-div');
+    outDiv.innerHTML = '';
+    if(!val.trim()) return;
+    new QRCode(outDiv, { text: val, width: 256, height: 256 });
 }
 
-// ৯. কালারফুল কিউআর
 function generateColorQR() {
-    let txt = document.getElementById('color-qr-text').value || "Color QR";
+    let txt = document.getElementById('color-qr-text').value;
     let dark = document.getElementById('qr-dark').value;
     let light = document.getElementById('qr-light').value;
-    let out = document.getElementById('color-qr-output');
-    out.innerHTML = '';
-    new QRCode(out, { text: txt, width: 230, height: 230, colorDark: dark, colorLight: light });
+    let outDiv = document.getElementById('color-output-div');
+    outDiv.innerHTML = '';
+    if(!txt.trim()) return;
+    new QRCode(outDiv, { text: txt, width: 256, height: 256, colorDark: dark, colorLight: light, correctLevel: QRCode.CorrectLevel.H });
 }
 
-// ১০. হোয়াটসঅ্যাপ কিউআর
 function generateWaQR() {
     let num = document.getElementById('wa-phone').value;
-    let url = `https://wa.me/${num}`;
-    let out = document.getElementById('wa-qr-output');
-    out.innerHTML = '';
-    new QRCode(out, { text: url, width: 230, height: 230 });
+    let outDiv = document.getElementById('wa-output-div');
+    outDiv.innerHTML = '';
+    if(!num.trim()) return;
+    new QRCode(outDiv, { text: `https://wa.me/${num}`, width: 256, height: 256 });
 }
 
-// কিউআর ইমেজ ডাউনলোড ফাংশন
-function downloadQR(divId) {
-    const img = document.getElementById(divId).querySelector('img');
-    if(!img) { alert('প্রথমে কিউআর কোড তৈরি করুন!'); return; }
-    const a = document.createElement('a'); a.href = img.src; a.download = 'qr_code.png'; a.click();
+function downloadSmartQR(divId) {
+    const container = document.getElementById(divId);
+    const img = container.querySelector('img');
+    const canvas = container.querySelector('canvas');
+    
+    if (!img && !canvas) {
+        alert('অনুগ্রহ করে আগে বক্সে কিছু লিখে কিউআর কোড তৈরি করুন!');
+        return;
+    }
+
+    const newCanvas = document.createElement('canvas');
+    const ctx = newCanvas.getContext('2d');
+    newCanvas.width = 400;
+    newCanvas.height = 480;
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+
+    const srcData = img ? img.src : canvas.toDataURL("image/png");
+    const qrImgObj = new Image();
+    
+    qrImgObj.onload = function() {
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(qrImgObj, 50, 40, 300, 300);
+        
+        ctx.fillStyle = "#1e3a8a";
+        ctx.fillRect(20, 375, 360, 80);
+        
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 24px Arial, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(currentToolLabel, 200, 412);
+        
+        ctx.fillStyle = "#10b981";
+        ctx.font = "14px Arial, sans-serif";
+        ctx.fillText("salmanfarsi1630.github.io", 200, 442);
+        
+        const finalUrl = newCanvas.toDataURL("image/png");
+        const downloadLink = document.createElement('a');
+        downloadLink.href = finalUrl;
+        downloadLink.download = `${currentToolLabel}_Smart_Seba.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
+    qrImgObj.src = srcData;
 }
 
-// বারকোড ডাউনলোড ফাংশন
-function downloadBarcode() {
-    const svg = document.getElementById('barcode-output');
-    const xml = new XMLSerializer().serializeToString(svg);
-    const svg64 = btoa(unescape(encodeURIComponent(xml)));
-    const b64Start = 'data:image/svg+xml;base64,';
-    const image64 = b64Start + svg64;
-    const a = document.createElement('a'); a.href = image64; a.download = 'barcode.svg'; a.click();
+function downloadBarcodePNG() {
+    const svg = document.getElementById('barcode-svg-render');
+    if(!svg || svg.innerHTML === '') { alert('কোনো বারকোড তৈরি হয়নি!'); return; }
+    
+    let val = document.getElementById('bar-text').value || "barcode";
+    const svgString = new XMLSerializer().serializeToString(svg);
+    const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+    const URL = window.URL || window.webkitURL || window;
+    const blobURL = URL.createObjectURL(svgBlob);
+    
+    const image = new Image();
+    image.onload = function() {
+        const canvas = document.getElementById('barcode-canvas-hidden');
+        const context = canvas.getContext('2d');
+        canvas.width = svg.getBoundingClientRect().width * 2; 
+        canvas.height = svg.getBoundingClientRect().height * 2;
+        
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        
+        const pngUrl = canvas.toDataURL("image/png");
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = `Barcode_${val}.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
+    image.src = blobURL;
 }
 </script>
 </body>
