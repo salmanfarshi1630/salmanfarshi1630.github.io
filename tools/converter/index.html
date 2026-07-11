@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কনভার্টারツールস (Advanced Converter Tools) - All in One</title>
+    
+    <meta name="description" content="নিখুঁত ও দ্রুত ইমেজ, পিডিএফ, কালার কোড এবং ফাইল ফরম্যাট রূপান্তরের সকল মেগা ক্লায়েন্ট-সাইড টুলস এক জায়গায়।">
+    <meta name="keywords" content="Converter, JPG to PNG, Image to PDF, Base64 Converter, Color Code Converter, SVG to PNG, TXT to PDF">
+    <link rel="canonical" href="https://salmanfarshi1630.github.io/tools/converter/index.html">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="কনভার্টার টুলস (Advanced Converter Tools) - All in One">
+    <meta property="og:description" content="ফ্রি ও নিরাপদ ইমেজ, পিডিএফ, কালার এবং ফাইল ফরম্যাট কনভার্টার টুলস।">
+    
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="কনভার্টার টুলস (Advanced Converter Tools)">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Advanced Converter Tools",
+      "operatingSystem": "All",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+
+    <style>
+        :root { 
+            --bg-color: #f8fafc; 
+            --card-bg: #ffffff; 
+            --text-color: #1e293b; 
+            --text-muted: #64748b; 
+            --primary: #1e3a8a; 
+            --primary-hover: #172554; 
+            --success: #10b981; 
+            --success-hover: #059669; 
+            --danger: #ef4444; 
+            --danger-hover: #dc2626;
+            --border-color: #e2e8f0; 
+            --input-border: #cbd5e1; 
+        }
+        [data-theme="dark"] { 
+            --bg-color: #0f172a; 
+            --card-bg: #1e293b; 
+            --text-color: #f1f5f9; 
+            --text-muted: #94a3b8; 
+            --primary: #3b82f6; 
+            --primary-hover: #2563eb; 
+            --border-color: #334155; 
+            --input-border: #475569; 
+        }
+        * { font-family: 'Hind Siliguri', sans-serif !important; box-sizing: border-box; transition: background-color 0.2s, color 0.2s; }
+        body { background: var(--bg-color); margin: 0; padding: 15px; color: var(--text-color); }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .back-btn { padding: 10px 22px; background: var(--primary); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; }
+        .back-btn:hover { background: var(--primary-hover); }
+        .theme-toggle { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        
+        .breadcrumb { display: flex; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 25px; list-style: none; padding: 0; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .breadcrumb li::after { content: "/"; margin-left: 8px; color: var(--text-muted); }
+        .breadcrumb li:last-child::after { content: ""; }
+        .breadcrumb .active { color: var(--text-color); font-weight: bold; }
+
+        h1 { text-align: center; font-size: 28px; color: var(--text-color); margin-bottom: 5px; }
+        .sub-title { text-align: center; color: var(--text-muted); margin-top: 0; font-size: 14px; margin-bottom: 30px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); padding: 25px 15px; border-radius: 14px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .card:focus, .card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); outline: none; }
+        .card h3 { font-size: 18px; margin: 12px 0 6px 0; color: var(--text-color); }
+        .card p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.4; }
+        .icon { font-size: 32px; display: block; }
+
+        .tool-section { display: none; background: var(--card-bg); padding: 35px; border-radius: 16px; border: 1px solid var(--border-color); margin-top: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
+        .tool-section h2 { font-size: 24px; margin-bottom: 10px; color: var(--text-color); }
+        .tool-section p { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; }
+        
+        .txt-area { width: 100%; height: 150px; padding: 12px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--bg-color); color: var(--text-color); font-size: 15px; resize: vertical; margin-bottom: 15px; text-align: left; word-break: break-all; }
+        .input-field { width: 100%; max-width: 320px; padding: 12px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--bg-color); color: var(--text-color); text-align: center; margin: 10px auto; display: block; font-size: 15px; }
+        
+        .file-upload-box { border: 2px dashed var(--input-border); padding: 30px; border-radius: 12px; background: var(--bg-color); cursor: pointer; margin-bottom: 20px; position: relative; }
+        .file-upload-box.dragover { border-color: var(--primary); background: rgba(59, 130, 246, 0.05); }
+        .file-input { display: none; }
+
+        .control-group { margin: 15px auto; max-width: 400px; display: flex; flex-direction: column; gap: 8px; text-align: left; font-size: 14px; }
+        .control-group label { font-weight: 600; }
+        .control-group select, .control-group input[type="range"], .control-group input[type="number"] { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--input-border); background: var(--bg-color); color: var(--text-color); }
+
+        /* Loader CSS */
+        .loader-container { display: none; margin: 20px auto; max-width: 320px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 10px auto; }
+        .progress-bar-bg { width: 100%; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: var(--success); transition: width 0.1s linear; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .status-msg { margin: 15px 0; font-weight: bold; font-size: 15px; display: none; }
+        .btn-group { display: flex; gap: 12px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
+        .btn-action { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; }
+        .btn-action:hover { background: var(--primary-hover); }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: var(--success-hover); }
+        .btn-close { background: var(--danger); }
+        .btn-close:hover { background: var(--danger-hover); }
+        .btn-reset { background: var(--text-muted); color: white; }
+
+        .preview-box { max-width: 100%; max-height: 250px; margin: 15px auto; display: none; border-radius: 8px; border: 1px solid var(--border-color); object-fit: contain; }
+        .color-preview { width: 80px; height: 80px; margin: 15px auto; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: none; }
+
+        .related-section { margin-top: 50px; background: var(--card-bg); padding: 25px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .related-title { font-weight: bold; font-size: 16px; margin-bottom: 15px; }
+        .related-links a { color: var(--primary); margin-right: 15px; text-decoration: none; font-weight: 600; font-size: 14px; background: var(--bg-color); padding: 8px 16px; border-radius: 50px; border: 1px solid var(--border-color); display: inline-block; }
+        .related-links a:hover { background: var(--primary); color: white; }
+
+        /* Hidden standard wrapper for rendering perfect Unicode Bengali PDF text safely */
+        #bengali-pdf-render-trap { position: absolute; left: -9999px; top: -9999px; width: 680px; padding: 30px; background: #ffffff; color: #000000; font-size: 16px; line-height: 1.6; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-area">
+        <a href="../../index.html" class="back-btn" aria-label="হোমপেজে ফিরে যান">← হোমপেজে ফিরুন</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="ডার্ক ও লাইট মোড পরিবর্তন">🌓 মোড পরিবর্তন</button>
+    </div>
+    
+    <nav aria-label="Breadcrumb">
+        <ul class="breadcrumb">
+            <li><a href="../../index.html">হোম</a></li>
+            <li id="bread-active" class="active">কনভার্টার টুলস</li>
+        </ul>
+    </nav>
+    
+    <div id="main-menu">
+        <h1>🔄 কনভার্টার টুলস (Advanced Converter Tools)</h1>
+        <p class="sub-title">ইমেজ, পিডিএফ, কালার এবং ফাইল ফরম্যাট রূপান্তরের সকল মেগা টুলস এক জায়গায়।</p>
+        <div class="grid" role="menu" id="menu-grid">
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('jpg-png', '১. JPG to PNG')"><span class="icon">🖼️</span><h3>১. JPG to PNG</h3><p>যেকোনো JPG ছবিকে তাৎক্ষণিক PNG ফরম্যাটে রূপান্তর করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('png-jpg', '২. PNG to JPG')"><span class="icon">🖼️</span><h3>২. PNG to JPG</h3><p>PNG ছবিকে ব্যাকগ্রাউন্ডসহ JPG ফরম্যাটে কনভার্ট করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('any-webp', '৩. Image to WebP')"><span class="icon">🌐</span><h3>৩. Image to WebP</h3><p>SEO ফ্রেন্ডলি ওয়েবসাইটের জন্য ছবিকে WebP ফরম্যাটে রূপান্তর করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('webp-any', '৪. WebP to JPG/PNG')"><span class="icon">🔄</span><h3>৪. WebP to JPG/PNG</h3><p>WebP ছবিকে সাধারণ JPG বা PNG ফরম্যাটে রূপান্তর করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('img-pdf', '৫. Image to PDF')"><span class="icon">📄</span><h3>৫. Image to PDF</h3><p>এক বা একাধিক ছবি দিয়ে প্রফেশনাল PDF ফাইল তৈরি করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('img-base64', '৬. Image to Base64')"><span class="icon">💻</span><h3>৬. Image to Base64</h3><p>যেকোনো ছবিকে কোডিংয়ে ব্যবহারের জন্য Base64 টেক্সট করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('base64-img', '৭. Base64 to Image')"><span class="icon">🎨</span><h3>৭. Base64 to Image</h3><p>Base64 কোড বা স্ট্রিং থেকে পুনরায় আসল ছবি ফিরিয়ে আনুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('color-conv', '৮. কালার কোড কনভার্টার')"><span class="icon">🎨</span><h3>৮. কালার কোড কনভার্টার</h3><p>HEX, RGB এবং HSL কালার কোড একে অপরে রূপান্তর করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('txt-pdf', '৯. TXT to PDF')"><span class="icon">📝</span><h3>৯. TXT to PDF</h3><p>যেকোনো টেক্সট নোট বা ফাইলকে সরাসরি PDF-এ রূপান্তর করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('svg-png', '১০. SVG to PNG')"><span class="icon">📐</span><h3>১০. SVG to PNG</h3><p>ভেক্টর SVG গ্রাফিক্স ফাইলকে হাই-কোয়ালিটি PNG তে রূপান্তর করুন</p></div>
+        </div>
+    </div>
+
+    <div id="tool-jpg-png" class="tool-section">
+        <h2>১. JPG to PNG কনভার্টার</h2>
+        <div class="file-upload-box" id="drop-jpg" role="button" aria-label="JPG ফাইল আপলোড করুন">
+            <p>📁 এখানে ড্র্যাগ করুন অথবা ক্লিক করে JPG ফাইল সিলেক্ট করুন</p>
+            <input type="file" id="jpg-file" class="file-input" accept=".jpg, .jpeg">
+        </div>
+        <img id="jpg-prev" class="preview-box" alt="Preview">
+        <div class="control-group">
+            <label for="jpg-quality">কোয়ালিটি কম্প্রেস অপশন (Quality):</label>
+            <input type="range" id="jpg-quality" min="0.1" max="1" step="0.1" value="1">
+        </div>
+        <div id="jpg-loader" class="loader-container"><div class="spinner"></div><div class="progress-bar-bg"><div class="progress-bar"></div></div></div>
+        <div id="jpg-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="processGenericImage('jpg-file', 'image/png', 'converted.png', 'jpg-status', 'jpg-quality', 'jpg-loader')">PNG ডাউনলোড</button>
+            <button class="btn-action btn-reset" onclick="resetTool('jpg-png')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-png-jpg" class="tool-section">
+        <h2>২. PNG to JPG কনভার্টার</h2>
+        <div class="file-upload-box" id="drop-png" role="button" aria-label="PNG ফাইল আপলোড করুন">
+            <p>📁 এখানে ড্র্যাগ করুন অথবা ক্লিক করে PNG ফাইল সিলেক্ট করুন</p>
+            <input type="file" id="png-file" class="file-input" accept=".png">
+        </div>
+        <img id="png-prev" class="preview-box" alt="Preview">
+        <div class="control-group">
+            <label for="png-quality">কোয়ালিটি কম্প্রেস অপশন (Quality):</label>
+            <input type="range" id="png-quality" min="0.1" max="1" step="0.1" value="1">
+        </div>
+        <div id="png-loader" class="loader-container"><div class="spinner"></div><div class="progress-bar-bg"><div class="progress-bar"></div></div></div>
+        <div id="png-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="processGenericImage('png-file', 'image/jpeg', 'converted.jpg', 'png-status', 'png-quality', 'png-loader')">JPG ডাউনলোড</button>
+            <button class="btn-action btn-reset" onclick="resetTool('png-jpg')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-any-webp" class="tool-section">
+        <h2>৩. Image to WebP কনভার্টার</h2>
+        <div class="file-upload-box" id="drop-any" role="button" aria-label="ছবি আপলোড করুন">
+            <p>📁 যেকোনো ছবি (JPG/PNG) ড্র্যাগ বা সিলেক্ট করুন</p>
+            <input type="file" id="any-file" class="file-input" accept="image/*">
+        </div>
+        <img id="any-prev" class="preview-box" alt="Preview">
+        <div class="control-group">
+            <label for="any-quality">কোয়ালিটি কম্প্রেস অপশন (Quality):</label>
+            <input type="range" id="any-quality" min="0.1" max="1" step="0.1" value="0.9">
+        </div>
+        <div id="any-loader" class="loader-container"><div class="spinner"></div><div class="progress-bar-bg"><div class="progress-bar"></div></div></div>
+        <div id="webp-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="processGenericImage('any-file', 'image/webp', 'optimized.webp', 'webp-status', 'any-quality', 'any-loader')">WebP ডাউনলোড</button>
+            <button class="btn-action btn-reset" onclick="resetTool('any-webp')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-webp-any" class="tool-section">
+        <h2>৪. WebP to JPG/PNG কনভার্টার</h2>
+        <div class="file-upload-box" id="drop-webp" role="button" aria-label="WebP ফাইল আপলোড করুন">
+            <p>📁 এখানে ড্র্যাগ করুন অথবা ক্লিক করে WebP ফাইল সিলেক্ট করুন</p>
+            <input type="file" id="webp-file" class="file-input" accept=".webp">
+        </div>
+        <img id="webp-prev" class="preview-box" alt="Preview">
+        <div id="webp-any-loader" class="loader-container"><div class="spinner"></div><div class="progress-bar-bg"><div class="progress-bar"></div></div></div>
+        <div id="webp-any-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action" onclick="processGenericImage('webp-file', 'image/jpeg', 'from_webp.jpg', 'webp-any-status', null, 'webp-any-loader')">JPG করুন</button>
+            <button class="btn-action btn-success" onclick="processGenericImage('webp-file', 'image/png', 'from_webp.png', 'webp-any-status', null, 'webp-any-loader')">PNG করুন</button>
+            <button class="btn-action btn-reset" onclick="resetTool('webp-any')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-img-pdf" class="tool-section">
+        <h2>৫. Image to PDF কনভার্টার (Auto Fit A4)</h2>
+        <div class="file-upload-box" id="drop-pdf" role="button" aria-label="পিডিএফ এর জন্য ছবি দিন">
+            <p>📁 এক বা একাধিক ছবি একসাথে ড্র্যাগ বা সিলেক্ট করুন (PNG/JPG)</p>
+            <input type="file" id="pdf-imgs" class="file-input" accept="image/jpeg, image/png" multiple>
+        </div>
+        <div id="pdf-loader" class="loader-container"><div class="spinner"></div><div class="progress-bar-bg"><div class="progress-bar"></div></div></div>
+        <div id="pdf-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="convertImgToPDF()">PDF তৈরি ও ডাউনলোড</button>
+            <button class="btn-action btn-reset" onclick="resetTool('img-pdf')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-img-base64" class="tool-section">
+        <h2>৬. Image to Base64 কনভার্টার</h2>
+        <div class="file-upload-box" id="drop-b64" role="button" aria-label="ছবি আপলোড করুন">
+            <p>📁 ছবি ড্র্যাগ বা সিলেক্ট করুন</p>
+            <input type="file" id="b64-file" class="file-input" accept="image/*">
+        </div>
+        <label for="b64-output" style="display:none;">Base64 Output</label>
+        <textarea id="b64-output" class="txt-area" placeholder="Base64 কোড এখানে আসবে..." readonly></textarea>
+        <div id="b64-loader" class="loader-container"><div class="spinner"></div></div>
+        <div id="b64-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="copyText('b64-output', 'b64-status')">কোড কপি</button>
+            <button class="btn-action" onclick="downloadTxtFile('b64-output', 'base64_string.txt', 'b64-status')">TXT হিসাবে ডাউনলোড</button>
+            <button class="btn-action btn-reset" onclick="resetTool('img-base64')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-base64-img" class="tool-section">
+        <h2>৭. Base64 to Image কনভার্টার</h2>
+        <label for="b64-input">আপনার ছবির Base64 ডাটা স্ট্রিংটি পেস্ট করুন:</label>
+        <textarea id="b64-input" class="txt-area" placeholder="data:image/png;base64,..."></textarea>
+        <img id="b64-img-prev" class="preview-box" alt="Extracted Preview">
+        <div id="b64-rev-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="convertBase64ToImg()">ছবিতে রূপান্তর ও ডাউনলোড</button>
+            <button class="btn-action btn-reset" onclick="resetTool('base64-img')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-color-conv" class="tool-section">
+        <h2>৮. কালার কোড কনভার্টার (HEX ⇄ RGB ⇄ HSL)</h2>
+        <div class="control-group">
+            <label for="hex-in">HEX কোড:</label>
+            <input type="text" id="hex-in" class="input-field" placeholder="#1e3a8a" oninput="handleColorConversion('hex')">
+        </div>
+        <div class="control-group">
+            <label for="rgb-in">RGB কোড:</label>
+            <input type="text" id="rgb-in" class="input-field" placeholder="rgb(30, 58, 138)" oninput="handleColorConversion('rgb')">
+        </div>
+        <div class="control-group">
+            <label for="hsl-in">HSL কোড:</label>
+            <input type="text" id="hsl-in" class="input-field" placeholder="hsl(224, 64%, 33%)" oninput="handleColorConversion('hsl')">
+        </div>
+        <div id="color-block" class="color-preview"></div>
+        <div id="color-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action" onclick="copyText('hex-in', 'color-status')">HEX কপি</button>
+            <button class="btn-action" onclick="copyText('rgb-in', 'color-status')">RGB কপি</button>
+            <button class="btn-action" onclick="copyText('hsl-in', 'color-status')">HSL কপি</button>
+            <button class="btn-action btn-reset" onclick="resetTool('color-conv')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-txt-pdf" class="tool-section">
+        <h2>৯. TXT to PDF কনভার্টার (Unicode Support)</h2>
+        <label for="pdf-txt-input">নিচের বক্সে আপনার বাংলা বা ইংরেজি টেক্সট লিখুন:</label>
+        <textarea id="pdf-txt-input" class="txt-area" placeholder="এখানে কিছু লিখুন (বাংলা বা ইংরেজি)..."></textarea>
+        <div id="txt-pdf-loader" class="loader-container"><div class="spinner"></div><div class="progress-bar-bg"><div class="progress-bar"></div></div></div>
+        <div id="txt-pdf-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="convertTxtToPDF()">PDF ফাইল ডাউনলোড</button>
+            <button class="btn-action btn-reset" onclick="resetTool('txt-pdf')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-svg-png" class="tool-section">
+        <h2>১০. SVG to PNG কনভার্টার (High Res)</h2>
+        <div class="file-upload-box" id="drop-svg" role="button" aria-label="SVG ফাইল আপলোড">
+            <p>📁 ভেক্টর .svg ফাইল ড্র্যাগ বা সিলেক্ট করুন</p>
+            <input type="file" id="svg-file" class="file-input" accept=".svg">
+        </div>
+        <div class="control-group">
+            <label for="svg-w">কাস্টম প্রস্থ (Width - px):</label>
+            <input type="number" id="svg-w" class="input-field" placeholder="Original">
+        </div>
+        <div class="control-group">
+            <label for="svg-h">কাস্টম উচ্চতা (Height - px):</label>
+            <input type="number" id="svg-h" class="input-field" placeholder="Original">
+        </div>
+        <div id="svg-loader" class="loader-container"><div class="spinner"></div></div>
+        <div id="svg-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="convertSvgToPng()">PNG তে এক্সপোর্ট</button>
+            <button class="btn-action btn-reset" onclick="resetTool('svg-png')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAll()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div class="related-section">
+        <div class="related-title">🔗 অন্যান্য টুলস ক্যাটাগরি:</div>
+        <div class="related-links">
+            <a href="../text/index.html">✍️ টেক্সট টুলস</a>
+            <a href="../image/index.html">🖼️ ইমেজ টুলস</a>
+            <a href="../qr/index.html">📷 কিউআর কোড টুলস</a>
+        </div>
+    </div>
+</div>
+
+<div id="bengali-pdf-render-trap" aria-hidden="true"></div>
+
+<script>
+// গ্লোবাল স্টেট ট্র্যাকার এবং হিস্ট্রি ব্যাক নেভিগেশন মডিউল
+let activeToolId = null;
+
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('app-theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
+    // ব্রাউজারে প্রবেশ করার সাথে সাথে ইনপুট মেমোরি রিসেট নিশ্চিতকরণ
+    document.querySelectorAll('input, textarea').forEach(el => {
+        if(el.type === 'range') el.value = el.getAttribute('value') || 1;
+        else if(el.type !== 'button' && el.type !== 'submit') el.value = '';
+    });
+    
+    setupDragAndDrop();
+    setupKeyboardNavigation();
+});
+
+// পপস্টেট হ্যান্ডলার: ব্রাউজার ব্যাক বাটন প্রেস করলে প্রথমে খোলা টুল বন্ধ করবে
+window.addEventListener('popstate', (event) => {
+    if (activeToolId) {
+        closeAll(false); // হিস্ট্রি রি-পুশ না করে ইউজার ইন্টারফেস বন্ধ করবে
+    }
+});
+
+function toggleTheme() {
+    if (document.documentElement.hasAttribute('data-theme')) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('app-theme', 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('app-theme', 'dark');
+    }
+}
+
+function openTool(id, toolTitle) {
+    activeToolId = id;
+    document.getElementById('main-menu').style.display = 'none';
+    document.getElementById('tool-' + id).style.display = 'block';
+    document.getElementById('bread-active').innerHTML = `<a href="#" onclick="closeAll(true)">কনভার্টার টুলস</a>`;
+    
+    const breadcrumb = document.querySelector('.breadcrumb');
+    const oldSub = document.getElementById('bread-sub');
+    if(oldSub) oldSub.remove();
+    
+    const li = document.createElement('li');
+    li.id = 'bread-sub';
+    li.className = 'active';
+    li.innerText = toolTitle;
+    breadcrumb.appendChild(li);
+    
+    // ব্রাউজার হিস্ট্রি পুশ স্টেট যোগ (যাতে ব্যাক বাটন পেজ এক্সিট না করে)
+    history.pushState({tool: id}, toolTitle, window.location.href);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function closeAll(shouldGoBackInHistory = true) {
+    activeToolId = null;
+    document.getElementById('main-menu').style.display = 'block';
+    document.querySelectorAll('.tool-section').forEach(s => s.style.display = 'none');
+    document.getElementById('bread-active').innerText = "কনভার্টার টুলস";
+    const subBread = document.getElementById('bread-sub');
+    if(subBread) subBread.remove();
+    
+    if (shouldGoBackInHistory && window.history.state && window.history.state.tool) {
+        history.back();
+    }
+}
+
+// ইউনিভার্সাল মেসেজ ও এরর হ্যান্ডলার
+function showMsg(statusId, text, isSuccess = true) {
+    const el = document.getElementById(statusId);
+    if(!el) return;
+    el.style.display = "block";
+    el.style.color = isSuccess ? "var(--success)" : "var(--danger)";
+    el.innerText = text;
+    if(isSuccess) { setTimeout(() => { el.style.display = "none"; }, 6000); }
+}
+
+// ট্র্যাকিং ও লোডার প্রগ্রেস মডিউল
+function toggleLoader(loaderId, show, progressValue = 0) {
+    const loader = document.getElementById(loaderId);
+    if (!loader) return;
+    loader.style.display = show ? "block" : "none";
+    const bar = loader.querySelector('.progress-bar');
+    if (bar) bar.style.width = progressValue + "%";
+}
+
+// কিবোর্ড অ্যাক্সেসিবিলিটি এবং অ্যারো কি নেভিগেশন ইঞ্জিন
+function setupKeyboardNavigation() {
+    const cards = Array.from(document.querySelectorAll('#menu-grid .card'));
+    
+    cards.forEach((card, idx) => {
+        card.addEventListener('keydown', (e) => {
+            let nextIdx = idx;
+            const columns = window.innerWidth > 768 ? 4 : (window.innerWidth > 480 ? 2 : 1);
+            
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.click();
+            } else if (e.key === 'ArrowRight') {
+                nextIdx = (idx + 1) % cards.length;
+            } else if (e.key === 'ArrowLeft') {
+                nextIdx = (idx - 1 + cards.length) % cards.length;
+            } else if (e.key === 'ArrowDown') {
+                nextIdx = (idx + columns) < cards.length ? (idx + columns) : idx;
+            } else if (e.key === 'ArrowUp') {
+                nextIdx = (idx - columns) >= 0 ? (idx - columns) : idx;
+            }
+            
+            if (nextIdx !== idx) {
+                e.preventDefault();
+                cards[nextIdx].focus();
+            }
+        });
+    });
+}
+
+// গ্লোবাল ড্র্যাগ অ্যান্ড ড্রপ আর্কিটেকচার (মোবাইল ও ডেক্সটপ সেফ)
+function setupDragAndDrop() {
+    const binds = [
+        {box: 'drop-jpg', input: 'jpg-file', prev: 'jpg-prev'},
+        {box: 'drop-png', input: 'png-file', prev: 'png-prev'},
+        {box: 'drop-any', input: 'any-file', prev: 'any-prev'},
+        {box: 'drop-webp', input: 'webp-file', prev: 'webp-prev'},
+        {box: 'drop-pdf', input: 'pdf-imgs', prev: null},
+        {box: 'drop-b64', input: 'b64-file', prev: null},
+        {box: 'drop-svg', input: 'svg-file', prev: null}
+    ];
+
+    binds.forEach(item => {
+        const boxEl = document.getElementById(item.box);
+        const inputEl = document.getElementById(item.input);
+        if(!boxEl || !inputEl) return;
+
+        boxEl.addEventListener('click', () => inputEl.click());
+        
+        inputEl.addEventListener('change', () => { 
+            if(inputEl.files.length > 0 && item.prev) {
+                renderLocalPreview(inputEl, item.prev); 
+            }
+        });
+
+        ['dragenter', 'dragover'].forEach(evt => {
+            boxEl.addEventListener(evt, (e) => { 
+                e.preventDefault(); 
+                e.stopPropagation();
+                boxEl.classList.add('dragover'); 
+            }, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(evt => {
+            boxEl.addEventListener(evt, (e) => { 
+                e.preventDefault(); 
+                e.stopPropagation();
+                boxEl.classList.remove('dragover'); 
+            }, false);
+        });
+        
+        boxEl.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            if(dt && dt.files.length > 0) {
+                inputEl.files = dt.files;
+                inputEl.dispatchEvent(new Event('change'));
+            }
+        }, false);
+    });
+}
+
+function renderLocalPreview(input, prevId) {
+    const file = input.files[0];
+    if (file) {
+        if (!file.type.startsWith('image/')) {
+            return; 
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById(prevId);
+            if(img) { 
+                img.src = e.target.result; 
+                img.style.display = "block"; 
+            }
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+// ইমেজ প্রসেসিং ও কমপ্রেশন কোর ইঞ্জিন (টুলস ১, ২, ৩, ৪) - অরিজিনাল কোয়ালিটি ও আসপেক্ট রেশিও প্রোটেক্টেড
+function processGenericImage(inputId, format, filename, statusId, qualityId, loaderId) {
+    const fileInput = document.getElementById(inputId);
+    if (!fileInput || !fileInput.files || !fileInput.files[0]) {
+        return showMsg(statusId, "❌ ফাঁকা ইনপুট! অনুগ্রহ করে প্রথমে একটি বৈধ ইমেজ ফাইল ড্র্যাগ বা সিলেক্ট করুন।", false);
+    }
+    
+    const file = fileInput.files[0];
+    if(file.size > 20 * 1024 * 1024) return showMsg(statusId, "❌ ফাইলটি অত্যন্ত বড়! সর্বোচ্চ ফাইল সাইজ লিমিট ২০ মেগাবাইট।", false);
+
+    toggleLoader(loaderId, true, 30);
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        toggleLoader(loaderId, true, 60);
+        const img = new Image();
+        img.onerror = function() {
+            toggleLoader(loaderId, false);
+            showMsg(statusId, "❌ ফাইলটি ত্রুটিযুক্ত (Corrupted Image) বা এটি সমর্থিত ফরম্যাট নয়!", false);
+        };
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            
+            // ব্যাকগ্রাউন্ড আলফা চ্যানেল অপ্টিমাইজেশন
+            if(format === 'image/jpeg') {
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            ctx.drawImage(img, 0, 0);
+            
+            const qualityEl = qualityId ? document.getElementById(qualityId) : null;
+            const qualityValue = qualityEl ? parseFloat(qualityEl.value) : 1.0;
+            
+            try {
+                canvas.toBlob((blob) => {
+                    if (!blob) {
+                        toggleLoader(loaderId, false);
+                        return showMsg(statusId, "❌ ইমেজ রূপান্তর ব্যর্থ হয়েছে!", false);
+                    }
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = filename;
+                    link.href = blobUrl;
+                    toggleLoader(loaderId, true, 100);
+                    
+                    setTimeout(() => {
+                        link.click();
+                        toggleLoader(loaderId, false);
+                        showMsg(statusId, "✅ সফলভাবে আসল রেজোলিউশন ও সঠিক Aspect Ratio বজায় রেখে রূপান্তর সম্পন্ন হয়েছে!");
+                        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000); // মেমোরি ক্লিয়ারেন্স
+                    }, 300);
+                }, format, qualityValue);
+            } catch(err) {
+                toggleLoader(loaderId, false);
+                showMsg(statusId, "❌ ইমেজ এনকোডিং প্রসেস ব্যর্থ হয়েছে!", false);
+            }
+        }
+        img.src = e.target.result;
+    }
+    reader.readAsDataURL(file);
+}
+
+// ইমেজ টু পিডিএফ (পারফেক্ট আসপেক্ট রেশিও এবং অটো এ৪ ফিট সিস্টেম)
+function convertImgToPDF() {
+    const fileInput = document.getElementById('pdf-imgs');
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        return showMsg('pdf-status', "❌ অনুগ্রহ করে এক বা একাধিক ছবি যুক্ত করুন!", false);
+    }
+
+    toggleLoader('pdf-loader', true, 20);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const a4W = 210, a4H = 297; 
+    
+    const processFile = (index) => {
+        if(index >= fileInput.files.length) {
+            pdf.save('Advanced_Converted_Images.pdf');
+            toggleLoader('pdf-loader', false);
+            showMsg('pdf-status', "✅ সমস্ত ছবি নিখুঁতভাবে Aspect Ratio বজায় রেখে A4 আকারে পিডিএফে কনভার্ট হয়েছে!");
+            return;
+        }
+
+        const file = fileInput.files[index];
+        // স্বয়ংক্রিয়ভাবে ফাইলের এক্সটেনশন ডিটেক্ট করে টাইপ নির্ধারণ
+        let fileType = file.type === "image/png" ? "PNG" : "JPEG";
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onerror = function() {
+                toggleLoader('pdf-loader', false);
+                showMsg('pdf-status', `❌ ${index+1} নং ফাইলটি নষ্ট বা অসমর্থিত ইমেজ ফরম্যাট!`, false);
+            };
+            img.onload = function() {
+                if (index > 0) pdf.addPage();
+                
+                let imgW = img.naturalWidth;
+                let imgH = img.naturalHeight;
+                let ratio = imgW / imgH;
+                
+                let targetW = a4W - 20; 
+                let targetH = targetW / ratio;
+                
+                if(targetH > (a4H - 20)) {
+                    targetH = a4H - 20;
+                    targetW = targetH * ratio;
+                }
+                
+                let xCentering = (a4W - targetW) / 2;
+                let yCentering = (a4H - targetH) / 2;
+
+                pdf.addImage(img, fileType, xCentering, yCentering, targetW, targetH, undefined, 'FAST');
+                
+                toggleLoader('pdf-loader', true, Math.floor(((index+1)/fileInput.files.length)*100));
+                processFile(index + 1);
+            }
+            img.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    };
+
+    processFile(0);
+}
+
+// Base64 টেক্সট মডিউল (Image -> Base64)
+document.getElementById('b64-file')?.addEventListener('change', function() {
+    const file = this.files[0];
+    if(!file) return;
+    toggleLoader('b64-loader', true);
+    const reader = new FileReader();
+    reader.onloadend = function() {
+        document.getElementById('b64-output').value = reader.result;
+        toggleLoader('b64-loader', false);
+        showMsg('b64-status', "✅ ইমেজটি সফলভাবে Base64 কোডে এনকোড করা হয়েছে!");
+    }
+    reader.readAsDataURL(file);
+});
+
+// Base64 to Image Converter (ডাটা ইউআরএল এর পরিবর্তে ব্লব মেথড ব্যবহার করে ডাউনলোড)
+function convertBase64ToImg() {
+    const b64String = document.getElementById('b64-input').value.trim();
+    if(!b64String) return showMsg('b64-rev-status', "❌ ইনপুট খালি! দয়া করে একটি বৈধ Base64 কোড পেস্ট করুন।", false);
+    
+    if(!b64String.startsWith('data:image/')) {
+        return showMsg('b64-rev-status', "❌ অবৈধ ডাটা ফরম্যাট! এটি কোনো সঠিক ইমেজ Base64 কোড নয়।", false);
+    }
+
+    try {
+        const imgPrev = document.getElementById('b64-img-prev');
+        imgPrev.src = b64String;
+        imgPrev.style.display = "block";
+        
+        // ডিকোড সিস্টেমকে ব্লবে রূপান্তর (Safe Multi-Browser Support)
+        const parts = b64String.split(';base64,');
+        const contentType = parts[0].split(':')[1];
+        const raw = window.atob(parts[1]);
+        const rawLength = raw.length;
+        const uInt8Array = new Uint8Array(rawLength);
+
+        for (let i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i);
+        }
+
+        const blob = new Blob([uInt8Array], {type: contentType});
+        const blobUrl = URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.download = "base64_decoded_image." + (contentType.split('/')[1] || 'png');
+        link.href = blobUrl;
+        
+        setTimeout(() => { 
+            link.click(); 
+            showMsg('b64-rev-status', "✅ ইমেজটি সফলভাবে ডিকোড এবং ডাউনলোড সম্পন্ন হয়েছে!");
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        }, 200);
+    } catch(err) {
+        showMsg('b64-rev-status', "❌ প্রসেসিং ত্রুটি! Base64 কোডটি অসম্পূর্ণ বা ক্র্যাশড।", false);
+    }
+}
+
+// অ্যাডভান্সড কালার কোড কনভার্টার (৩ ডিজিট ও ৬ ডিজিট HEX সাপোর্ট সহ)
+function handleColorConversion(sourceType) {
+    const hexInput = document.getElementById('hex-in');
+    const rgbInput = document.getElementById('rgb-in');
+    const hslInput = document.getElementById('hsl-in');
+    const block = document.getElementById('color-block');
+    const statusId = 'color-status';
+
+    let r, g, b, hex, hsl;
+
+    if (sourceType === 'hex') {
+        hex = hexInput.value.trim();
+        
+        // ৩ ডিজিট হেক্স কোডকে স্বয়ংক্রিয়ভাবে ৬ ডিজিটে ম্যাপ করা
+        if (/^#[0-9A-F]{3}$/i.test(hex)) {
+            hex = "#" + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+        }
+        
+        if (!/^#[0-9A-F]{6}$/i.test(hex)) {
+            block.style.display = "none";
+            return; 
+        }
+        r = parseInt(hex.slice(1, 3), 16);
+        g = parseInt(hex.slice(3, 5), 16);
+        b = parseInt(hex.slice(5, 7), 16);
+        hsl = rgbToHsl(r, g, b);
+        
+        rgbInput.value = `rgb(${r}, ${g}, ${b})`;
+        hslInput.value = `hsl(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%)`;
+    } 
+    else if (sourceType === 'rgb') {
+        const rgbVal = rgbInput.value.trim();
+        const match = rgbVal.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+        if (!match) return;
+        r = parseInt(match[1]); g = parseInt(match[2]); b = parseInt(match[3]);
+        if(r>255 || g>255 || b>255) return showMsg(statusId, "❌ রং এর মান সর্বোচ্চ ২৫৫ হতে পারে!", false);
+        
+        hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        hsl = rgbToHsl(r, g, b);
+        
+        hexInput.value = hex;
+        hslInput.value = `hsl(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%)`;
+    } 
+    else if (sourceType === 'hsl') {
+        const hslVal = hslInput.value.trim();
+        const match = hslVal.match(/^hsl\s*\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*\)$/i);
+        if (!match) return;
+        let h = parseInt(match[1]), s = parseInt(match[2]), l = parseInt(match[3]);
+        if(h>360 || s>100 || l>100) return;
+        
+        const rgb = hslToRgb(h / 360, s / 100, l / 100);
+        r = rgb[0]; g = rgb[1]; b = rgb[2];
+        hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        
+        hexInput.value = hex;
+        rgbInput.value = `rgb(${r}, ${g}, ${b})`;
+    }
+
+    block.style.display = "block";
+    block.style.backgroundColor = hex;
+}
+
+function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+function hslToRgb(h, s, l) {
+    let r, g, b;
+    if (s === 0) { r = g = b = l; } else {
+        const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1; if (t > 1) t -= 1;
+            if (t < 1/6) return p + (q - p) * 6 * t;
+            if (t < 1/2) return q;
+            if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+            return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3); g = hue2rgb(p, q, h); b = hue2rgb(p, q, h - 1/3);
+    }
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+// TXT to PDF বাংলা ইউনিকোড ইঞ্জিন (html2canvas স্যান্ডবক্সিং মেকানিজম)
+function convertTxtToPDF() {
+    const txt = document.getElementById('pdf-txt-input').value.trim();
+    if(!txt) return showMsg('txt-pdf-status', "❌ ইনপুট বক্সটি সম্পূর্ণ খালি!", false);
+    
+    toggleLoader('txt-pdf-loader', true, 30);
+    
+    // স্যান্ডবক্স ট্র্যাপ কন্টেনারে টেক্সট ইনজেক্ট করা
+    const trap = document.getElementById('bengali-pdf-render-trap');
+    trap.innerText = txt;
+    
+    toggleLoader('txt-pdf-loader', true, 60);
+
+    setTimeout(() => {
+        html2canvas(trap, { scale: 2, useCORS: true }).then(canvas => {
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            
+            const imgWidth = 190; 
+            const pageHeight = 295;  
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 10;
+
+            pdf.addImage(imgData, 'JPEG', 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight + 10;
+                pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            
+            pdf.save('Unicode_Document.pdf');
+            trap.innerText = ""; // মেমোরি ফ্লাশ
+            toggleLoader('txt-pdf-loader', false);
+            showMsg('txt-pdf-status', "📥 বাংলা ও ইংরেজি টেক্সট সহ পিডিএফটি ডাউনলোড সম্পন্ন হয়েছে!");
+        }).catch(err => {
+            toggleLoader('txt-pdf-loader', false);
+            showMsg('txt-pdf-status', "❌ পিডিএফ তৈরি করতে সমস্যা হয়েছে!", false);
+        });
+    }, 400);
+}
+
+// SVG to PNG হাই রেজোলিউশন ইঞ্জিন
+function convertSvgToPng() {
+    const fileInput = document.getElementById('svg-file');
+    if (!fileInput || !fileInput.files || !fileInput.files[0]) return showMsg('svg-status', "❌ অনুগ্রহ করে একটি বৈধ .svg ভেক্টর ফাইল ইনপুট দিন!", false);
+
+    toggleLoader('svg-loader', true);
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onerror = function() {
+            toggleLoader('svg-loader', false);
+            showMsg('svg-status', "❌ ভেক্টর ফাইলটি ত্রুটিযুক্ত বা কারাপ্টেড!", false);
+        };
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            
+            const customW = parseInt(document.getElementById('svg-w').value);
+            const customH = parseInt(document.getElementById('svg-h').value);
+            
+            canvas.width = customW || img.naturalWidth || 800;
+            canvas.height = customH || img.naturalHeight || 800;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            canvas.toBlob((blob) => {
+                if(blob) {
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = "svg_high_res.png";
+                    link.href = blobUrl;
+                    link.click();
+                    toggleLoader('svg-loader', false);
+                    showMsg('svg-status', "✅ হাই-রেজোলিউশন ট্রান্সপারেন্ট PNG ছবি ডাউনলোড হয়েছে!");
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+                }
+            }, 'image/png');
+        }
+        img.src = e.target.result;
+    }
+    reader.readAsDataURL(file);
+}
+
+// ইউনিভার্সাল ইউটিলিটি মডিউলস (কপি ও রিসেট মেমোরি ক্লিয়ারেন্স)
+function copyText(outputId, statusId) {
+    const el = document.getElementById(outputId);
+    if(!el || !el.value.trim()) return showMsg(statusId, "❌ কপি করার মতো কোনো কন্টেন্ট পাওয়া যায়নি!", false);
+    
+    navigator.clipboard.writeText(el.value).then(() => {
+        showMsg(statusId, "📋 সফলভাবে টেক্সট ক্লিপবোর্ডে কপি হয়েছে!");
+    }).catch(() => {
+        showMsg(statusId, "❌ কপি করার পারমিশন ব্রাউজার রিজেক্ট করেছে!", false);
+    });
+}
+
+function downloadTxtFile(outputId, filename, statusId) {
+    const txt = document.getElementById(outputId).value;
+    if(!txt.trim()) return showMsg(statusId, "❌ সেভ করার মতো ডাটা নেই!", false);
+    const blob = new Blob([txt], {type: 'text/plain;charset=utf-8'});
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename;
+    a.click();
+    showMsg(statusId, "📥 টেক্সট ফাইলটি সংরক্ষিত হয়েছে!");
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+}
+
+// ক্র্যাশ-সেফ এবং অবজেক্ট-গার্ডেড রিসেট মেথড
+function resetTool(sectionId) {
+    const section = document.getElementById('tool-' + sectionId);
+    if(!section) return;
+    
+    section.querySelectorAll('input, textarea').forEach(el => {
+        if(el.type === 'range') el.value = el.getAttribute('value') || 1;
+        else if(el.type !== 'button') el.value = '';
+    });
+    
+    section.querySelectorAll('.preview-box, .color-preview, .loader-container, .status-msg').forEach(el => {
+        el.style.display = "none";
+        // টাইপ সেফটি চেক যাতে শুধুমাত্র ইমেজ এলিমেন্টের src রিসেট হয়
+        if(el.tagName === 'IMG' || el.src !== undefined) {
+            el.src = "";
+        }
+    });
+}
+</script>
+</body>
+</html>
