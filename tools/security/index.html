@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সিকিউরিটি টুলস (Security & Hash Toolkit) - All in One</title>
+    
+    <meta name="description" content="নিরাপদ ও শক্তিশালী পাসওয়ার্ড জেনারেটর, ক্রিপ্টোগ্রাফিক হ্যাশ মেকার এবং সিকিউরিটি অ্যানালাইসিস টুলস এক জায়গায়।">
+    <meta name="keywords" content="Security Tools, Password Generator, MD5 Hash, SHA256, Base64 Encode, Password Strength, Caesar Cipher">
+    <link rel="canonical" href="https://salmanfarshi1630.github.io/tools/security/index.html">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="সিকিউরিটি টুলস (Security & Hash Toolkit) - All in One">
+    <meta property="og:description" content="সম্পূর্ণ ক্লায়েন্ট-সাইড এবং নিরাপদ পাসওয়ার্ড ও হ্যাশ মেকার টুলকিট।">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Advanced Security Tools",
+      "operatingSystem": "All",
+      "applicationCategory": "SecurityApplication"
+    }
+    </script>
+
+    <style>
+        :root { 
+            --bg-color: #f8fafc; 
+            --card-bg: #ffffff; 
+            --text-color: #1e293b; 
+            --text-muted: #64748b; 
+            --primary: #0f172a; 
+            --primary-hover: #1e293b; 
+            --success: #10b981; 
+            --success-hover: #059669; 
+            --danger: #ef4444; 
+            --danger-hover: #dc2626;
+            --border-color: #e2e8f0; 
+            --input-border: #cbd5e1; 
+        }
+        [data-theme="dark"] { 
+            --bg-color: #0f172a; 
+            --card-bg: #1e293b; 
+            --text-color: #f1f5f9; 
+            --text-muted: #94a3b8; 
+            --primary: #3b82f6; 
+            --primary-hover: #2563eb; 
+            --border-color: #334155; 
+            --input-border: #475569; 
+        }
+        * { font-family: 'Hind Siliguri', sans-serif !important; box-sizing: border-box; transition: background-color 0.2s, color 0.2s; }
+        body { background: var(--bg-color); margin: 0; padding: 15px; color: var(--text-color); }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .back-btn { padding: 10px 22px; background: var(--primary); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; }
+        .back-btn:hover { background: var(--primary-hover); }
+        .theme-toggle { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        
+        .breadcrumb { display: flex; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 25px; list-style: none; padding: 0; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .breadcrumb li::after { content: "/"; margin-left: 8px; color: var(--text-muted); }
+        .breadcrumb li:last-child::after { content: ""; }
+        .breadcrumb .active { color: var(--text-color); font-weight: bold; }
+
+        h1 { text-align: center; font-size: 28px; color: var(--text-color); margin-bottom: 5px; }
+        .sub-title { text-align: center; color: var(--text-muted); margin-top: 0; font-size: 14px; margin-bottom: 30px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); padding: 25px 15px; border-radius: 14px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .card:focus, .card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); outline: none; }
+        .card h3 { font-size: 18px; margin: 12px 0 6px 0; color: var(--text-color); }
+        .card p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.4; }
+        .icon { font-size: 32px; display: block; }
+
+        .tool-section { display: none; background: var(--card-bg); padding: 35px; border-radius: 16px; border: 1px solid var(--border-color); margin-top: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
+        .tool-section h2 { font-size: 24px; margin-bottom: 10px; color: var(--text-color); }
+        .tool-section p { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; }
+        
+        .txt-area { width: 100%; height: 120px; padding: 12px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--bg-color); color: var(--text-color); font-size: 15px; resize: vertical; margin-bottom: 15px; text-align: left; }
+        .input-field { width: 100%; max-width: 400px; padding: 12px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--bg-color); color: var(--text-color); text-align: center; margin: 10px auto; display: block; font-size: 15px; }
+        
+        .checkbox-group { display: flex; flex-direction: column; gap: 10px; max-width: 320px; margin: 15px auto; text-align: left; }
+        .checkbox-label { display: flex; align-items: center; gap: 10px; font-size: 15px; cursor: pointer; }
+        .checkbox-label input { width: 18px; height: 18px; cursor: pointer; }
+
+        .control-group { margin: 15px auto; max-width: 400px; display: flex; flex-direction: column; gap: 8px; text-align: left; font-size: 14px; }
+        .control-group label { font-weight: 600; }
+        .control-group select, .control-group input[type="range"], .control-group input[type="number"] { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--input-border); background: var(--bg-color); color: var(--text-color); }
+
+        .status-msg { margin: 15px 0; font-weight: bold; font-size: 15px; display: none; min-height: 22px; }
+        .btn-group { display: flex; gap: 12px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
+        .btn-action { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; }
+        .btn-action:hover { background: var(--primary-hover); }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: var(--success-hover); }
+        .btn-close { background: var(--danger); }
+        .btn-close:hover { background: var(--danger-hover); }
+        .btn-reset { background: var(--text-muted); color: white; }
+
+        .strength-meter { max-width: 400px; margin: 10px auto; text-align: left; }
+        .strength-bar-bg { width: 100%; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; margin-top: 5px; }
+        .strength-bar { width: 0%; height: 100%; background: var(--danger); transition: width 0.3s, background-color 0.3s; }
+
+        .related-section { margin-top: 50px; background: var(--card-bg); padding: 25px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .related-title { font-weight: bold; font-size: 16px; margin-bottom: 15px; }
+        .related-links a { color: var(--primary); margin-right: 15px; text-decoration: none; font-weight: 600; font-size: 14px; background: var(--bg-color); padding: 8px 16px; border-radius: 50px; border: 1px solid var(--border-color); display: inline-block; }
+        .related-links a:hover { background: var(--primary); color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-area">
+        <a href="../index.html" class="back-btn">← মেইন মেন্যু</a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 মোড পরিবর্তন</button>
+    </div>
+    
+    <nav aria-label="Breadcrumb">
+        <ul class="breadcrumb">
+            <li><a href="../index.html">হোম</a></li>
+            <li id="bread-active" class="active">সিকিউরিটি টুলস</li>
+        </ul>
+    </nav>
+    
+    <div id="main-menu">
+        <h1>🔐 সিকিউরিটি টুলস (Security & Hash Toolkit)</h1>
+        <p class="sub-title">পাসওয়ার্ড তৈরি, হ্যাশ ক্যালকুলেশন ও সম্পূর্ণ ক্লায়েন্ট-সাইড এনক্রিপশনের ১০টি মেগা টুলস।</p>
+        <div class="grid" role="menu" id="menu-grid">
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('pass-gen', '১. স্ট্রং পাসওয়ার্ড জেনারেটর')"><span class="icon">🔑</span><h3>১. পাসওয়ার্ড জেনারেটর</h3><p>কাস্টমাইজড শক্তিশালী ও হ্যাক-প্রুফ পাসওয়ার্ড তৈরি করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('hash-md5', '২. MD5 হ্যাশ মেকার')"><span class="icon">🛡️</span><h3>২. MD5 হ্যাশ মেকার</h3><p>যেকোনো স্ট্রিং বা টেক্সটের তাৎক্ষণিক MD5 হ্যাশ তৈরি করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('hash-sha256', '৩. SHA-256 হ্যাশ জেনারেটর')"><span class="icon">🔒</span><h3>৩. SHA-256 জেনারেটর</h3><p>নিরাপদ ডেটার জন্য স্ট্যান্ডার্ড SHA-256 সিগনেচার তৈরি করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('pass-checker', '৪. পাসওয়ার্ড স্ট্রেন্থ অ্যানালাইজার')"><span class="icon">📊</span><h3>৪. স্ট্রেন্থ অ্যানালাইজার</h3><p>আপনার পাসওয়ার্ড কতটা নিরাপদ তা রিয়েল-টাইমে চেক করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('b64-cipher', '৫. Base64 টেক্সট এনকোডার/ডিকোড')"><span class="icon">🔏</span><h3>৫. Base64 টেক্সট মডিউল</h3><p>যেকোনো সাধারণ টেক্সটকে Base64-এ এনকোড বা ডিকোড করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('url-encode', '৬. URL এনকোডার ও ডিকোডার')"><span class="icon">🌐</span><h3>৬. URL এনকোড/ডিকোড</h3><p>ওয়েব ইউআরএল-এর স্পেশাল ক্যারেক্টার এনকোড বা ডিকোড করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('caesar-cipher', '৭. সিজার সাইফার এনক্রিপশন')"><span class="icon">🏛️</span><h3>৭. সিজার সাইফার</h3><p>প্রাচীন ক্রিপ্টোগ্রাফি পদ্ধতিতে টেক্সট মেসেজ হাইড করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('uuid-gen', '৮. UUID / GUID জেনারেটর')"><span class="icon">🆔</span><h3>৮. UUID জেনারেটর</h3><p>ডেটাবেজের জন্য ইউনিক v4 UUID টোকেন তৈরি করুন</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('secure-pin', '৯. সেফ পিন (PIN) মেকার')"><span class="icon">🔢</span><h3>৯. সেফ পিন মেকার</h3><p>ব্যাংকিং বা ওটিপি (OTP) ভেরিফিকেশনের জন্য র‍্যান্ডম পিন জেনারেটর</p></div>
+            <div class="card" role="menuitem" tabindex="0" onclick="openTool('text-hex', '১০. Text to HEX কনভার্টার')"><span class="icon">💻</span><h3>১০. Text to HEX</h3><p>যেকোনো ডাটা টেক্সটকে হেক্সাডেসিমেল কোডে রূপান্তর করুন</p></div>
+        </div>
+    </div>
+
+    <div id="tool-pass-gen" class="tool-section">
+        <h2>১. স্ট্রং পাসওয়ার্ড জেনারেটর</h2>
+        <p>আপনার অ্যাকাউন্ট সুরক্ষিত রাখতে কাস্টমাইজড পাসওয়ার্ড তৈরি করুন।</p>
+        <div class="control-group">
+            <label for="pass-length">পাসওয়ার্ডের দৈর্ঘ্য (Length): <span id="length-val">12</span></label>
+            <input type="range" id="pass-length" min="6" max="32" value="12" oninput="document.getElementById('length-val').innerText=this.value">
+        </div>
+        <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" id="chk-upper" checked> বড় হাতের অক্ষর (A-Z)</label>
+            <label class="checkbox-label"><input type="checkbox" id="chk-lower" checked> ছোট হাতের অক্ষর (a-z)</label>
+            <label class="checkbox-label"><input type="checkbox" id="chk-num" checked> সংখ্যা (0-9)</label>
+            <label class="checkbox-label"><input type="checkbox" id="chk-sym" checked> স্পেশাল ক্যারেক্টার (!@#$%^&*)</label>
+        </div>
+        <input type="text" id="pass-out" class="input-field" placeholder="পাসওয়ার্ড এখানে আসবে..." readonly>
+        <div id="pass-gen-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="generatePassword()">পাসওয়ার্ড তৈরি করুন</button>
+            <button class="btn-action" onclick="copySecureText('pass-out', 'pass-gen-status')">কপি করুন</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('pass-gen')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-hash-md5" class="tool-section">
+        <h2>২. MD5 হ্যাশ মেকার</h2>
+        <p>যেকোনো স্ট্রিং বা প্লেইন টেক্সটকে ১২৮-বিট MD5 হ্যাশ বা ডাইজেস্টে রূপান্তর করুন।</p>
+        <textarea id="md5-in" class="txt-area" placeholder="আপনার টেক্সট এখানে লিখুন..." oninput="calculateMD5()"></textarea>
+        <input type="text" id="md5-out" class="input-field" placeholder="MD5 Hash Result..." readonly>
+        <div id="hash-md5-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="copySecureText('md5-out', 'hash-md5-status')">হ্যাশ কপি করুন</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('hash-md5')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-hash-sha256" class="tool-section">
+        <h2>৩. SHA-256 হ্যাশ জেনারেটর</h2>
+        <p>নিরাপদ ক্রিপ্টোগ্রাফিক অ্যালগরিদম ব্যবহার করে টেক্সটের SHA-256 সিগনেচার তৈরি করুন।</p>
+        <textarea id="sha-in" class="txt-area" placeholder="আপনার টেক্সট এখানে লিখুন..." oninput="calculateSHA256()"></textarea>
+        <input type="text" id="sha-out" class="input-field" placeholder="SHA-256 Hash Result..." readonly>
+        <div id="hash-sha256-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="copySecureText('sha-out', 'hash-sha256-status')">হ্যাশ কপি করুন</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('hash-sha256')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-pass-checker" class="tool-section">
+        <h2>৪. পাসওয়ার্ড স্ট্রেন্থ অ্যানালাইজার</h2>
+        <p>আপনার পাসওয়ার্ডটি কতটা শক্তিশালী এবং এটি হ্যাক হতে কেমন সময় লাগতে পারে তা জানুন।</p>
+        <input type="text" id="check-pass-in" class="input-field" placeholder="পাসওয়ার্ডটি টাইপ করুন..." oninput="analyzePasswordStrength()">
+        <div class="strength-meter">
+            <span id="strength-label">স্ট্যাটাস: ওয়েটিং...</span>
+            <div class="strength-bar-bg"><div id="strength-bar-progress" class="strength-bar"></div></div>
+        </div>
+        <div id="pass-checker-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('pass-checker')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-b64-cipher" class="tool-section">
+        <h2>৫. Base64 টেক্সট এনকোডার ও ডিকোডার</h2>
+        <p>প্লেইন টেক্সটকে সুরক্ষিত উপায়ে Base64 স্ট্রিং-এ রূপান্তর অথবা ডিকোড করুন।</p>
+        <textarea id="b64-txt-in" class="txt-area" placeholder="এখানে টেক্সট বা Base64 কোড দিন..."></textarea>
+        <textarea id="b64-txt-out" class="txt-area" placeholder="ফলাফল এখানে আসবে..." readonly></textarea>
+        <div id="b64-cipher-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action" onclick="processBase64Text(true)">এনকোড (Encode)</button>
+            <button class="btn-action btn-success" onclick="processBase64Text(false)">ডিকোড (Decode)</button>
+            <button class="btn-action" onclick="copySecureText('b64-txt-out', 'b64-cipher-status')">ফলাফল কপি</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('b64-cipher')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-url-encode" class="tool-section">
+        <h2>৬. URL এনকোডার ও ডিকোডার</h2>
+        <p>ওয়েব অ্যাড্রেস বা কুয়েরি প্যারামিটারের স্পেশাল ক্যারেক্টারগুলোকে পারফেক্টলি হ্যান্ডেল করুন।</p>
+        <textarea id="url-in" class="txt-area" placeholder="ইউআরএল (URL) এখানে পেস্ট করুন..."></textarea>
+        <textarea id="url-out" class="txt-area" placeholder="ফলাফল এখানে আসবে..." readonly></textarea>
+        <div id="url-encode-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action" onclick="processURLComponent(true)">এনকোড করুন</button>
+            <button class="btn-action btn-success" onclick="processURLComponent(false)">ডিকোড করুন</button>
+            <button class="btn-action" onclick="copySecureText('url-out', 'url-encode-status')">কপি করুন</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('url-encode')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-caesar-cipher" class="tool-section">
+        <h2>৭. সিজার সাইফার (Caesar Cipher) এনক্রিপশন</h2>
+        <p>অক্ষর শিফটিং পদ্ধতিতে মেসেজ এনক্রিপ্ট বা ডিক্রিপ্ট করুন।</p>
+        <textarea id="caesar-in" class="txt-area" placeholder="আপনার মেসেজ এখানে লিখুন..."></textarea>
+        <div class="control-group">
+            <label for="caesar-shift">শিফট কি (Shift Key - Number):</label>
+            <input type="number" id="caesar-shift" value="3" min="1" max="25">
+        </div>
+        <textarea id="caesar-out" class="txt-area" placeholder="ফলাফল এখানে রেন্ডার হবে..." readonly></textarea>
+        <div id="caesar-cipher-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action" onclick="processCaesar(true)">এনক্রিপ্ট (Encrypt)</button>
+            <button class="btn-action btn-success" onclick="processCaesar(false)">ডিক্রিপ্ট (Decrypt)</button>
+            <button class="btn-action" onclick="copySecureText('caesar-out', 'caesar-cipher-status')">কপি করুন</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('caesar-cipher')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-uuid-gen" class="tool-section">
+        <h2>৮. RFC4122 কমপ্লায়েন্ট UUID v4 জেনারেটর</h2>
+        <p>সম্পূর্ণ ইউনিক এবং গ্লোবালি অ্যাক্সেপ্টেড র্যান্ডম UUID (v4) জেনারেট করুন।</p>
+        <input type="text" id="uuid-out" class="input-field" placeholder="UUID টোকেন এখানে তৈরি হবে..." readonly>
+        <div id="uuid-gen-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="generateUUIDv4()">UUID তৈরি করুন</button>
+            <button class="btn-action" onclick="copySecureText('uuid-out', 'uuid-gen-status')">কপি টোকেন</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('uuid-gen')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-secure-pin" class="tool-section">
+        <h2>৯. সেফ পিন (PIN) মেকার</h2>
+        <p>ওটিপি, এটিএম কার্ড বা সিকিউরিটি লকের জন্য র্যান্ডম নাম্বার পিন কোড তৈরি করুন।</p>
+        <div class="control-group">
+            <label for="pin-digits">পিন ডিজিটের সংখ্যা নির্বাচন করুন:</label>
+            <select id="pin-digits">
+                <option value="4">৪ ডিজিট পিন (Standard)</option>
+                <option value="6">৬ ডিজিট পিন (High Secure)</option>
+                <option value="8">৮ ডিজিট পিন (Advanced)</option>
+            </select>
+        </div>
+        <input type="text" id="pin-out" class="input-field" style="font-size: 24px; letter-spacing: 5px;" placeholder="----" readonly>
+        <div id="secure-pin-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="generateSecurePIN()">পিন জেনারেট করুন</button>
+            <button class="btn-action" onclick="copySecureText('pin-out', 'secure-pin-status')">পিন কপি</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('secure-pin')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div id="tool-text-hex" class="tool-section">
+        <h2>১০. Text to HEX কনভার্টার</h2>
+        <p>যেকোনো টেক্সট ক্যারেক্টারকে হেক্সাডেসিমেল (Hexadecimal) কোড ফরম্যাটে রূপান্তর করুন।</p>
+        <textarea id="tohex-in" class="txt-area" placeholder="আপনার সাধারণ টেক্সট এখানে লিখুন..." oninput="convertTextToHex()"></textarea>
+        <textarea id="tohex-out" class="txt-area" placeholder="Hex কোড আউটপুট..." readonly></textarea>
+        <div id="text-hex-status" class="status-msg"></div>
+        <div class="btn-group">
+            <button class="btn-action btn-success" onclick="copySecureText('tohex-out', 'text-hex-status')">কোড কপি করুন</button>
+            <button class="btn-action btn-reset" onclick="resetSecurityTool('text-hex')">রিসেট</button>
+            <button class="btn-action btn-close" onclick="closeAllSecurityTools()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <div class="related-section">
+        <div class="related-title">🔗 অন্যান্য মেগা টুলস ক্যাটাগরি:</div>
+        <div class="related-links">
+            <a href="../converter/index.html">🔄 কনভার্টার টুলস</a>
+            <a href="../text/index.html">✍️ টেক্সট টুলস</a>
+            <a href="../image/index.html">🖼️ ইমেজ টুলস</a>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentOpenToolId = null;
+
+window.addEventListener('DOMContentLoaded', () => {
+    const activeTheme = localStorage.getItem('app-theme');
+    if (activeTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    setupKeyboardGrid();
+});
+
+window.addEventListener('popstate', (e) => {
+    if (currentOpenToolId) {
+        closeAllSecurityTools(false);
+    }
+});
+
+function toggleTheme() {
+    if (document.documentElement.hasAttribute('data-theme')) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('app-theme', 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('app-theme', 'dark');
+    }
+}
+
+function openTool(id, title) {
+    currentOpenToolId = id;
+    document.getElementById('main-menu').style.display = 'none';
+    document.getElementById('tool-' + id).style.display = 'block';
+    document.getElementById('bread-active').innerHTML = `<a href="#" onclick="closeAllSecurityTools(true)">সিকিউরিটি টুলস</a>`;
+    
+    const breadcrumb = document.querySelector('.breadcrumb');
+    const oldSub = document.getElementById('bread-sub');
+    if(oldSub) oldSub.remove();
+    
+    const li = document.createElement('li');
+    li.id = 'bread-sub';
+    li.className = 'active';
+    li.innerText = title;
+    breadcrumb.appendChild(li);
+    
+    history.pushState({securityTool: id}, title, window.location.href);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function closeAllSecurityTools(shouldTriggerHistory = true) {
+    currentOpenToolId = null;
+    document.getElementById('main-menu').style.display = 'block';
+    document.querySelectorAll('.tool-section').forEach(s => s.style.display = 'none');
+    document.getElementById('bread-active').innerText = "সিকিউরিটি টুলস";
+    const subBread = document.getElementById('bread-sub');
+    if(subBread) subBread.remove();
+    
+    if (shouldTriggerHistory && window.history.state && window.history.state.securityTool) {
+        history.back();
+    }
+}
+
+function showMsg(id, msg, isSuccess = true) {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.style.display = "block";
+    el.style.color = isSuccess ? "var(--success)" : "var(--danger)";
+    el.innerText = msg;
+    if(isSuccess) { setTimeout(() => { el.style.display = "none"; }, 5000); }
+}
+
+function copySecureText(outId, statusId) {
+    const val = document.getElementById(outId).value.trim();
+    if(!val) return showMsg(statusId, "❌ কপি করার মতো কোনো ডেটা নেই!", false);
+    navigator.clipboard.writeText(val).then(() => {
+        showMsg(statusId, "📋 সফলভাবে কপি হয়েছে!");
+    }).catch(() => {
+        showMsg(statusId, "❌ কপি করার পারমিশন ব্রাউজার রিজেক্ট করেছে!", false);
+    });
+}
+
+function setupKeyboardGrid() {
+    const cards = Array.from(document.querySelectorAll('#menu-grid .card'));
+    cards.forEach((card, idx) => {
+        card.addEventListener('keydown', (e) => {
+            let targetIdx = idx;
+            const cols = window.innerWidth > 768 ? 4 : (window.innerWidth > 480 ? 2 : 1);
+            
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.click();
+            } else if (e.key === 'ArrowRight') {
+                targetIdx = (idx + 1) % cards.length;
+            } else if (e.key === 'ArrowLeft') {
+                targetIdx = (idx - 1 + cards.length) % cards.length;
+            } else if (e.key === 'ArrowDown') {
+                targetIdx = (idx + cols) < cards.length ? (idx + cols) : idx;
+            } else if (e.key === 'ArrowUp') {
+                targetIdx = (idx - cols) >= 0 ? (idx - cols) : idx;
+            }
+            
+            if (targetIdx !== idx) {
+                e.preventDefault();
+                cards[targetIdx].focus();
+            }
+        });
+    });
+}
+
+function resetSecurityTool(id) {
+    if (id === 'pass-gen') {
+        document.getElementById('pass-length').value = 12;
+        document.getElementById('length-val').innerText = 12;
+        document.getElementById('chk-upper').checked = true;
+        document.getElementById('chk-lower').checked = true;
+        document.getElementById('chk-num').checked = true;
+        document.getElementById('chk-sym').checked = true;
+        document.getElementById('pass-out').value = '';
+        document.getElementById('pass-gen-status').innerText = '';
+    } else if (id === 'hash-md5') {
+        document.getElementById('md5-in').value = '';
+        document.getElementById('md5-out').value = '';
+        document.getElementById('hash-md5-status').innerText = '';
+    } else if (id === 'hash-sha256') {
+        document.getElementById('sha-in').value = '';
+        document.getElementById('sha-out').value = '';
+        document.getElementById('hash-sha256-status').innerText = '';
+    } else if (id === 'pass-checker') {
+        document.getElementById('check-pass-in').value = '';
+        document.getElementById('strength-label').innerText = 'স্ট্যাটাস: ওয়েটিং...';
+        document.getElementById('strength-bar-progress').style.width = '0%';
+        document.getElementById('strength-bar-progress').style.backgroundColor = 'var(--border-color)';
+        document.getElementById('pass-checker-status').innerText = '';
+    } else if (id === 'b64-cipher') {
+        document.getElementById('b64-txt-in').value = '';
+        document.getElementById('b64-txt-out').value = '';
+        document.getElementById('b64-cipher-status').innerText = '';
+    } else if (id === 'url-encode') {
+        document.getElementById('url-in').value = '';
+        document.getElementById('url-out').value = '';
+        document.getElementById('url-encode-status').innerText = '';
+    } else if (id === 'caesar-cipher') {
+        document.getElementById('caesar-in').value = '';
+        document.getElementById('caesar-shift').value = 3;
+        document.getElementById('caesar-out').value = '';
+        document.getElementById('caesar-cipher-status').innerText = '';
+    } else if (id === 'uuid-gen') {
+        document.getElementById('uuid-out').value = '';
+        document.getElementById('uuid-gen-status').innerText = '';
+    } else if (id === 'secure-pin') {
+        document.getElementById('pin-digits').value = '4';
+        document.getElementById('pin-out').value = '';
+        document.getElementById('secure-pin-status').innerText = '';
+    } else if (id === 'text-hex') {
+        document.getElementById('tohex-in').value = '';
+        document.getElementById('tohex-out').value = '';
+        document.getElementById('text-hex-status').innerText = '';
+    }
+}
+
+// ১. পাসওয়ার্ড জেনারেটর
+function generatePassword() {
+    const len = parseInt(document.getElementById('pass-length').value);
+    const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lower = "abcdefghijklmnopqrstuvwxyz";
+    const num = "0123456789";
+    const sym = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    
+    let pool = "";
+    if(document.getElementById('chk-upper').checked) pool += upper;
+    if(document.getElementById('chk-lower').checked) pool += lower;
+    if(document.getElementById('chk-num').checked) pool += num;
+    if(document.getElementById('chk-sym').checked) pool += sym;
+    
+    if(!pool) return showMsg('pass-gen-status', "❌ কমপক্ষে একটি অপশন সিলেক্ট করতে হবে!", false);
+    
+    let res = "";
+    const cryptoArray = new Uint32Array(len);
+    window.crypto.getRandomValues(cryptoArray);
+    for(let i = 0; i < len; i++) {
+        res += pool[cryptoArray[i] % pool.length];
+    }
+    document.getElementById('pass-out').value = res;
+    showMsg('pass-gen-status', "✅ একটি হাই-সিকিউর পাসওয়ার্ড তৈরি করা হয়েছে।");
+}
+
+// ২. MD5 হ্যাশ মেকার (নিরাপদ ক্লায়েন্ট সাইড অ্যালগরিদম)
+function calculateMD5() {
+    const str = document.getElementById('md5-in').value;
+    if(!str) { document.getElementById('md5-out').value = ''; return; }
+    
+    const k = [
+        0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
+        0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be, 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821,
+        0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa, 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8,
+        0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed, 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a,
+        0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c, 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70,
+        0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05, 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,
+        0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
+        0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
+    ];
+
+    const rotateLeft = (lValue, iShiftBits) => (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
+
+    const addUnsigned = (lX, lY) => {
+        const lX4 = lX & 0x40000000;
+        const lY4 = lY & 0x40000000;
+        const lX8 = lX & 0x80000000;
+        const lY8 = lY & 0x80000000;
+        const lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+        if (lX4 & lY4) return lResult ^ 0x80000000 ^ lX8 ^ lY8;
+        if (lX4 | lY4) {
+            if (lResult & 0x40000000) return lResult ^ 0xC0000000 ^ lX8 ^ lY8;
+            return lResult ^ 0x40000000 ^ lX8 ^ lY8;
+        }
+        return lResult ^ lX8 ^ lY8;
+    };
+
+    const convertToWordArray = (string) => {
+        const lWordCount = ((string.length + 8) >>> 6) * 16 + 16;
+        const lWordArray = Array(lWordCount - 1).fill(0);
+        let lBytePosition = 0;
+        let lByteCount = 0;
+        while (lByteCount < string.length) {
+            lBytePosition = (lByteCount >>> 2);
+            lWordArray[lBytePosition] |= (string.charCodeAt(lByteCount) & 0xFF) << ((lByteCount % 4) * 8);
+            lByteCount++;
+        }
+        lBytePosition = (lByteCount >>> 2);
+        lWordArray[lBytePosition] |= 0x80 << ((lByteCount % 4) * 8);
+        lWordArray[lWordCount - 2] = string.length * 8;
+        return lWordArray;
+    };
+
+    const wordToHex = (lValue) => {
+        let wordToHexValue = "", wordToHexValueType = "", lByte = 0;
+        for (let lCount = 0; lCount <= 3; lCount++) {
+            lByte = (lValue >>> (lCount * 8)) & 255;
+            wordToHexValueType = "0" + lByte.toString(16);
+            wordToHexValue = wordToHexValue + wordToHexValueType.substr(wordToHexValueType.length - 2, 2);
+        }
+        return wordToHexValue;
+    };
+
+    const utf8Encode = (string) => {
+        string = string.replace(/\r\n/g, "\n");
+        let utftext = "";
+        for (let n = 0; n < string.length; n++) {
+            let c = string.charCodeAt(n);
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            } else if ((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >>> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            } else {
+                utftext += String.fromCharCode((c >>> 12) | 224);
+                utftext += String.fromCharCode(((c >>> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+        }
+        return utftext;
+    };
+
+    const x = convertToWordArray(utf8Encode(str));
+    let a = 0x67452301, b = 0xEFCDAB89, c = 0x98BADCFE, d = 0x10325476;
+
+    for (let i = 0; i < x.length; i += 16) {
+        let olda = a, oldb = b, oldc = c, oldd = d;
+        // Round 1
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & c) | (~b & d), x[i+0]), k[0])), 7));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & b) | (~a & c), x[i+1]), k[1])), 12));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & a) | (~d & b), x[i+2]), k[2])), 17));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & d) | (~c & a), x[i+3]), k[3])), 22));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & c) | (~b & d), x[i+4]), k[4])), 7));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & b) | (~a & c), x[i+5]), k[5])), 12));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & a) | (~d & b), x[i+6]), k[6])), 17));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & d) | (~c & a), x[i+7]), k[7])), 22));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & c) | (~b & d), x[i+8]), k[8])), 7));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & b) | (~a & c), x[i+9]), k[9])), 12));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & a) | (~d & b), x[i+10]), k[10])), 17));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & d) | (~c & a), x[i+11]), k[11])), 22));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & c) | (~b & d), x[i+12]), k[12])), 7));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & b) | (~a & c), x[i+13]), k[13])), 12));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & a) | (~d & b), x[i+14]), k[14])), 17));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & d) | (~c & a), x[i+15]), k[15])), 22));
+        // Round 2
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & d) | (c & ~d), x[i+1]), k[16])), 5));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & c) | (b & ~c), x[i+6]), k[17])), 9));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & b) | (a & ~b), x[i+11]), k[18])), 14));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & a) | (d & ~d), x[i+0]), k[19])), 20));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & d) | (c & ~d), x[i+5]), k[20])), 5));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & c) | (b & ~c), x[i+10]), k[21])), 9));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & b) | (a & ~b), x[i+15]), k[22])), 14));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & a) | (d & ~d), x[i+4]), k[23])), 20));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & d) | (c & ~d), x[i+9]), k[24])), 5));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & c) | (b & ~c), x[i+14]), k[25])), 9));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & b) | (a & ~b), x[i+3]), k[26])), 14));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & a) | (d & ~d), x[i+8]), k[27])), 20));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b & d) | (c & ~d), x[i+13]), k[28])), 5));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a & c) | (b & ~c), x[i+2]), k[29])), 9));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d & b) | (a & ~b), x[i+7]), k[30])), 14));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c & a) | (d & ~d), x[i+12]), k[31])), 20));
+        // Round 3
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b ^ c ^ d), x[i+5]), k[32])), 4));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a ^ b ^ c), x[i+8]), k[33])), 11));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d ^ a ^ b), x[i+11]), k[34])), 16));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c ^ d ^ a), x[i+14]), k[35])), 23));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b ^ c ^ d), x[i+1]), k[36])), 4));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a ^ b ^ c), x[i+4]), k[37])), 11));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d ^ a ^ b), x[i+7]), k[38])), 16));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c ^ d ^ a), x[i+10]), k[39])), 23));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b ^ c ^ d), x[i+13]), k[40])), 4));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a ^ b ^ c), x[i+0]), k[41])), 11));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d ^ a ^ b), x[i+3]), k[42])), 16));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c ^ d ^ a), x[i+6]), k[43])), 23));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((b ^ c ^ d), x[i+9]), k[44])), 4));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((a ^ b ^ c), x[i+12]), k[45])), 11));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((d ^ a ^ b), x[i+15]), k[46])), 16));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((c ^ d ^ a), x[i+2]), k[47])), 23));
+        // Round 4
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((c ^ (b | ~d)), x[i+0]), k[48])), 6));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((b ^ (a | ~c)), x[i+7]), k[49])), 10));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((a ^ (d | ~b)), x[i+14]), k[50])), 15));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((d ^ (c | ~a)), x[i+5]), k[51])), 21));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((c ^ (b | ~d)), x[i+12]), k[52])), 6));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((b ^ (a | ~c)), x[i+3]), k[53])), 10));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((a ^ (d | ~b)), x[i+10]), k[54])), 15));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((d ^ (c | ~a)), x[i+1]), k[55])), 21));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((c ^ (b | ~d)), x[i+8]), k[56])), 6));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((b ^ (a | ~c)), x[i+15]), k[57])), 10));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((a ^ (d | ~b)), x[i+6]), k[58])), 15));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((d ^ (c | ~a)), x[i+13]), k[59])), 21));
+        a = addUnsigned(b, rotateLeft(addUnsigned(a, addUnsigned(addUnsigned((c ^ (b | ~d)), x[i+4]), k[60])), 6));
+        d = addUnsigned(a, rotateLeft(addUnsigned(d, addUnsigned(addUnsigned((b ^ (a | ~c)), x[i+11]), k[61])), 10));
+        c = addUnsigned(d, rotateLeft(addUnsigned(c, addUnsigned(addUnsigned((a ^ (d | ~b)), x[i+2]), k[62])), 15));
+        b = addUnsigned(c, rotateLeft(addUnsigned(b, addUnsigned(addUnsigned((d ^ (c | ~a)), x[i+9]), k[63])), 21));
+
+        a = addUnsigned(a, olda); b = addUnsigned(b, oldb); c = addUnsigned(c, oldc); d = addUnsigned(d, oldd);
+    }
+    document.getElementById('md5-out').value = (wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d)).toLowerCase();
+}
+
+// ৩. SHA-256 হ্যাশ জেনারেটর (Web Crypto API সহ)
+function calculateSHA256() {
+    const text = document.getElementById('sha-in').value;
+    if (!text) { document.getElementById('sha-out').value = ''; return; }
+
+    const msgBuffer = new TextEncoder().encode(text);
+    crypto.subtle.digest('SHA-256', msgBuffer).then(hashBuffer => {
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        document.getElementById('sha-out').value = hashHex;
+    }).catch(err => {
+        showMsg('hash-sha256-status', "❌ আপনার ব্রাউজারে ক্রিপ্টো এপিআই ইরর তৈরি হয়েছে!", false);
+    });
+}
+
+// ৪. পাসওয়ার্ড স্ট্রেন্থ অ্যানালাইজার
+function analyzePasswordStrength() {
+    const pass = document.getElementById('check-pass-in').value;
+    const label = document.getElementById('strength-label');
+    const bar = document.getElementById('strength-bar-progress');
+    
+    if(!pass) {
+        label.innerText = 'স্ট্যাটাস: ওয়েটিং...';
+        bar.style.width = '0%';
+        bar.style.backgroundColor = 'var(--border-color)';
+        return;
+    }
+
+    let score = 0;
+    if (pass.length >= 6) score++;
+    if (pass.length >= 10) score++;
+    if (/[A-Z]/.test(pass)) score++;
+    if (/[a-z]/.test(pass)) score++;
+    if (/[0-9]/.test(pass)) score++;
+    if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+    let percentage = Math.min((score / 6) * 100, 100);
+    bar.style.width = percentage + '%';
+
+    if(score <= 2) {
+        label.innerText = 'স্ট্যাটাস: দুর্বল (Weak) ❌';
+        bar.style.backgroundColor = 'var(--danger)';
+    } else if(score <= 3) {
+        label.innerText = 'স্ট্যাটাস: মাঝারি (Medium) ⚠️';
+        bar.style.backgroundColor = '#f59e0b';
+    } else if(score <= 4) {
+        label.innerText = 'স্ট্যাটাস: শক্তিশালী (Strong) 💪';
+        bar.style.backgroundColor = '#3b82f6';
+    } else {
+        label.innerText = 'স্ট্যাটাস: অত্যন্ত শক্তিশালী (Very Strong) 🔥';
+        bar.style.backgroundColor = 'var(--success)';
+    }
+}
+
+// ৫. Base64 টেক্সট মডিউল (UTF-8 সেফ)
+function processBase64Text(isEncode) {
+    const inEl = document.getElementById('b64-txt-in');
+    const outEl = document.getElementById('b64-txt-out');
+    const statusId = 'b64-cipher-status';
+    
+    if(!inEl.value.trim()) return showMsg(statusId, "❌ দয়া করে ইনপুট ফিল্ডে টেক্সট প্রদান করুন!", false);
+
+    try {
+        if(isEncode) {
+            const bytes = new TextEncoder().encode(inEl.value);
+            let binary = "";
+            for (let i = 0; i < bytes.byteLength; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            outEl.value = btoa(binary);
+            showMsg(statusId, "✅ সফলভাবে এনকোড সম্পন্ন হয়েছে!");
+        } else {
+            const binary = atob(inEl.value.trim());
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            outEl.value = new TextDecoder().decode(bytes);
+            showMsg(statusId, "✅ সফলভাবে ডিকোড সম্পন্ন হয়েছে!");
+        }
+    } catch(e) {
+        showMsg(statusId, "❌ ভুল Base64 ফরম্যাট! ডিকোড করা সম্ভব হচ্ছে না।", false);
+        outEl.value = "";
+    }
+}
+
+// ৬. URL এনকোড/ডিকোড
+function processURLComponent(isEncode) {
+    const inEl = document.getElementById('url-in');
+    const outEl = document.getElementById('url-out');
+    const statusId = 'url-encode-status';
+
+    if(!inEl.value.trim()) return showMsg(statusId, "❌ দয়া করে ইনপুট ফিল্ডে ইউআরএল দিন!", false);
+
+    try {
+        if(isEncode) {
+            outEl.value = encodeURIComponent(inEl.value);
+            showMsg(statusId, "✅ URL এনকোড সফল হয়েছে!");
+        } else {
+            outEl.value = decodeURIComponent(inEl.value.trim());
+            showMsg(statusId, "✅ URL ডিকোড সফল হয়েছে!");
+        }
+    } catch(e) {
+        showMsg(statusId, "❌ ভুল বা অবৈধ ইউআরএল এনকোডিং ক্যারেক্টার!", false);
+        outEl.value = "";
+    }
+}
+
+// ৭. সিজার সাইফার
+function processCaesar(isEncrypt) {
+    const text = document.getElementById('caesar-in').value;
+    let shift = parseInt(document.getElementById('caesar-shift').value) || 0;
+    const statusId = 'caesar-cipher-status';
+
+    if(!text) return showMsg(statusId, "❌ ইনপুট বক্সে কোনো মেসেজ বা টেক্সট পাওয়া যায়নি!", false);
+    if(!isEncrypt) shift = (26 - shift) % 26;
+
+    let result = "";
+    for(let i = 0; i < text.length; i++) {
+        let code = text.charCodeAt(i);
+        if (code >= 65 && code <= 90) {
+            result += String.fromCharCode(((code - 65 + shift) % 26) + 65);
+        } else if (code >= 97 && code <= 122) {
+            result += String.fromCharCode(((code - 97 + shift) % 26) + 97);
+        } else {
+            result += text.charAt(i);
+        }
+    }
+    document.getElementById('caesar-out').value = result;
+    showMsg(statusId, isEncrypt ? "✅ সফলভাবে মেসেজ এনক্রিপ্ট হয়েছে!" : "✅ সফলভাবে মেসেজ ডিক্রিপ্ট হয়েছে!");
+}
+
+// ৮. UUID জেনারেটর
+function generateUUIDv4() {
+    let uuid = "";
+    if (typeof crypto.randomUUID === 'function') {
+        uuid = crypto.randomUUID();
+    } else {
+        const bytes = new Uint8Array(16);
+        crypto.getRandomValues(bytes);
+        bytes[6] = (bytes[6] & 0x0f) | 0x40; // Version 4
+        bytes[8] = (bytes[8] & 0x3f) | 0x80; // Variant 10xxxxxx
+        const hex = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+        uuid = `${hex.substr(0,8)}-${hex.substr(8,4)}-${hex.substr(12,4)}-${hex.substr(16,4)}-${hex.substr(20,12)}`;
+    }
+    document.getElementById('uuid-out').value = uuid;
+    showMsg('uuid-gen-status', "✅ একটি ইউনিক UUID v4 টোকেন তৈরি করা হয়েছে।");
+}
+
+// ৯. সেফ পিন মেকার
+function generateSecurePIN() {
+    const digits = parseInt(document.getElementById('pin-digits').value) || 4;
+    const randomArray = new Uint32Array(digits);
+    crypto.getRandomValues(randomArray);
+    
+    let pin = "";
+    for(let i = 0; i < digits; i++) {
+        pin += (randomArray[i] % 10).toString();
+    }
+    document.getElementById('pin-out').value = pin;
+    showMsg('secure-pin-status', `✅ সুরক্ষিত ${digits} ডিজিটের পিন জেনারেট করা হয়েছে।`);
+}
+
+// ১০. Text to HEX কনভার্টার (UTF-8 সেফ)
+function convertTextToHex() {
+    const text = document.getElementById('tohex-in').value;
+    if(!text) { document.getElementById('tohex-out').value = ''; return; }
+
+    const encoder = new TextEncoder();
+    const bytes = encoder.encode(text);
+    const hexString = Array.from(bytes).map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ');
+    
+    document.getElementById('tohex-out').value = hexString;
+}
+</script>
+</body>
+</html>
