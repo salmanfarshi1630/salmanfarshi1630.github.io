@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পিডিএফ টুলস – Merge, Split, Compress & Convert PDF Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #f8fafc; --card-bg: #ffffff; --text-color: #1e293b; --text-muted: #64748b; --primary: #1e3a8a; --primary-hover: #172554; --success: #10b981; --success-hover: #059669; --danger: #ef4444; --border-color: #e2e8f0; --input-border: #cbd5e1; }
+        [data-theme="dark"] { --bg-color: #0f172a; --card-bg: #1e293b; --text-color: #f1f5f9; --text-muted: #94a3b8; --primary: #3b82f6; --primary-hover: #2563eb; --border-color: #334155; --input-border: #475569; }
+        * { font-family: 'Hind Siliguri', sans-serif !important; box-sizing: border-box; }
+        body { background: var(--bg-color); margin: 0; padding: 15px; color: var(--text-color); }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .back-btn { padding: 10px 22px; background: var(--primary); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
+        .theme-toggle { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 15px; border-radius: 50px; cursor: pointer; }
+        .breadcrumb { display: flex; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 25px; list-style: none; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        h2 { text-align: center; font-size: 26px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); padding: 25px 15px; border-radius: 14px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; }
+        .card:hover { border-color: var(--primary); }
+        .tool-section { display: none; background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-top: 25px; text-align: center; }
+        .btn-action { background: var(--success); color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+        .related-section { margin-top: 50px; background: var(--card-bg); padding: 20px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .related-links a { color: var(--primary); margin-right: 10px; text-decoration: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-area">
+        <a href="../../index.html" class="back-btn">← হোমপেজে ফিরুন</a>
+        <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')">🌓 মোড পরিবর্তন</button>
+    </div>
+    <ul class="breadcrumb"><li><a href="../../index.html">হোম</a></li><li class="active">পিডিএফ টুলস</li></ul>
+    
+    <div id="main-menu">
+        <h2>📄 পিডিএফ টুলস (Advanced PDF Tools)</h2>
+        <div class="grid">
+            <div class="card" onclick="openTool('merge')"><h3>১. পিডিএফ জোড়া দিন (Merge)</h3></div>
+            <div class="card" onclick="openTool('split')"><h3>২. পিডিএফ আলাদা করুন (Split)</h3></div>
+            <div class="card" onclick="openTool('compress')"><h3>৩. পিডিএফ সাইজ কমান (Compress)</h3></div>
+        </div>
+    </div>
+
+    <!-- টুলস সেকশন -->
+    <div id="tool-merge" class="tool-section"><h2>🔗 পিডিএফ জোড়া দিন</h2><button class="btn-action" onclick="closeAll()">বন্ধ করুন</button></div>
+    <div id="tool-split" class="tool-section"><h2>✂️ পিডিএফ আলাদা করুন</h2><button class="btn-action" onclick="closeAll()">বন্ধ করুন</button></div>
+    <div id="tool-compress" class="tool-section"><h2>🗜️ পিডিএফ সাইজ কমান</h2><button class="btn-action" onclick="closeAll()">বন্ধ করুন</button></div>
+
+    <div class="related-section">
+        <div class="related-title">🔗 অন্যান্য টুলস:</div>
+        <div class="related-links">
+            <a href="../image/index.html">🖼️ ইমেজ টুলস</a>
+            <a href="../qr/index.html">📷 কিউআর কোড টুলস</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function openTool(id) {
+    document.getElementById('main-menu').style.display = 'none';
+    document.getElementById('tool-' + id).style.display = 'block';
+}
+function closeAll() {
+    document.getElementById('main-menu').style.display = 'block';
+    document.querySelectorAll('.tool-section').forEach(s => s.style.display = 'none');
+}
+</script>
+</body>
+</html>
