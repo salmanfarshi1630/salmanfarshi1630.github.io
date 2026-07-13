@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ডকুমেন্ট ও সিভিツールস (Document & CV Tools) | Salman Farshi</title>
+    <meta name="description" content="Professional Document & CV Generation Utility Suite by Salman Farshi.">
+    
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle at top left, #f8fafc 0%, #e2e8f0 100%);
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.15);
+            --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
+            --inner-bg: rgba(255, 255, 255, 0.75);
+            --inner-border: #cbd5e1;
+            --card-radius: 24px;
+            --blur: 20px;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: radial-gradient(circle at top left, #0f172a 0%, #020617 100%);
+            --glass-bg: rgba(15, 23, 42, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.04);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --inner-bg: rgba(30, 41, 59, 0.7);
+            --inner-border: #334155;
+            --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Sub-Page Premium Header */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            position: relative;
+        }
+
+        .header-controls {
+            position: absolute;
+            left: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .home-btn {
+            background: var(--inner-bg);
+            border: 1px solid var(--inner-border);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .home-btn:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Modern Dark Mode Toggle Switch */
+        .theme-toggle {
+            background: var(--inner-bg);
+            border: 1px solid var(--inner-border);
+            color: var(--text-main);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: scale(1.05);
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* Promotion Badge style */
+        .promo-badge {
+            margin-top: 10px;
+            display: inline-block;
+            font-size: 11px;
+            background: var(--primary-glow);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        /* 10 Tools Grid Layout */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1200px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 900px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { 
+            .tools-grid { grid-template-columns: 1fr; }
+            .header-controls { position: static; transform: none; margin-bottom: 16px; justify-content: center; width: 100%; }
+        }
+
+        /* Premium Minimalist Item Card */
+        .tool-item-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 28px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .tool-item-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px -10px var(--primary-glow);
+        }
+
+        .icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .tool-item-card:hover .icon-box {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px var(--primary-glow);
+        }
+
+        .tool-item-card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .tool-item-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px 0 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-controls">
+            <a href="../../index.html" class="home-btn"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
+            <button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        <h1><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> ডকুমেন্ট ও সিভি টুলস</h1>
+        <p>ডিজিটাল সিগনেচার, প্রফেশনাল সিভি এবং ডকুমেন্ট তৈরির মেগা প্ল্যাটফর্ম</p>
+        <span class="promo-badge"><i class="fas fa-globe mr-1"></i> Powered by: salmanfarshi1630.github.io</span>
+    </header>
+
+    <div class="tools-grid">
+        
+        <a href="signature/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-pen-nib"></i></div>
+            <h2>১. ডিজিটাল সিগনেচার মেকার</h2>
+            <p>প্যাডে বা স্ক্রিনে কাস্টম ডিজিটাল স্বাক্ষর তৈরি ও ডাউনলোড করুন</p>
+        </a>
+
+        <a href="cv-builder/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-file-invoice"></i></div>
+            <h2>২. প্রফেশনাল সিভি মেকার</h2>
+            <p>সহজে আপনার তথ্য দিয়ে প্রফেশনাল স্ট্যান্ডার্ড সিভি তৈরি করুন</p>
+        </a>
+
+        <a href="cover-letter/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
+            <h2>৩. কভার লেটার জেনারেটর</h2>
+            <p>যেকোনো চাকরির পদের জন্য কাস্টমাইজড রেডি কভার লেটার বানান</p>
+        </a>
+
+        <a href="invoice/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-receipt"></i></div>
+            <h2>৪. ইনভয়েস ও বিল মেকার</h2>
+            <p>ব্যবসায়িক বা ফ্রিল্যান্সিং কাজের জন্য প্রফেশনাল বিল জেনারেট করুন</p>
+        </a>
+
+        <a href="pad-maker/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-scroll"></i></div>
+            <h2>৫. প্রত্যয়নপত্র ও প্যাড মেকার</h2>
+            <p>অফিশিয়াল লেটারহেড প্যাড এবং প্রত্যয়নপত্র ফরম্যাট রেডি করুন</p>
+        </a>
+
+        <a href="application/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-file-alt"></i></div>
+            <h2>৬. অ্যাপ্লিকেশন রাইটার</h2>
+            <p>ছুটি বা অফিশিয়াল দরখাস্ত লেখার রেডিমেড অটোমেটিক ফরম্যাট</p>
+        </a>
+
+        <a href="id-card/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-id-card"></i></div>
+            <h2>৭. আইডি কার্ড মেকার</h2>
+            <p>স্টুডেন্ট বা এমপ্লয়ি আইডি কার্ডের কাস্টম ডেমো ডিজাইন ও প্রিন্ট</p>
+        </a>
+
+        <a href="doc-converter/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-file-word"></i></div>
+            <h2>৮. টেক্সট টু ডক ফাইল মেকার</h2>
+            <p>যেকোনো লেখাকে সরাসরি ক্লিকেই .doc বা .txt ফাইলে রূপান্তর</p>
+        </a>
+
+        <a href="business-card/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-address-card"></i></div>
+            <h2>৯. বিজনেস কার্ড মেকার</h2>
+            <p>সহজেই নিজের কন্টাক্ট ইনফো দিয়ে মিনিমাল বিজনেস কার্ড তৈরি করুন</p>
+        </a>
+
+        <a href="notepad/index.html" class="tool-item-card">
+            <div class="icon-box"><i class="fas fa-sticky-note"></i></div>
+            <h2>১০. ক্লাউড ও লোকাল নোটপ্যাড</h2>
+            <p>জরুরি নোটিশ বা টেক্সট লিখে তাৎক্ষণিক সুরক্ষিতভাবে সেভ করে রাখুন</p>
+        </a>
+
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 সালমান ফারসী। সর্বস্বত্ব সংরক্ষিত। | <span id="brandUrl">salmanfarshi1630.github.io</span></p>
+</footer>
+
+<script>
+    // Theme Management Engine
+    function initTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateToggleIcon(savedTheme);
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateToggleIcon(newTheme);
+    }
+
+    function updateToggleIcon(theme) {
+        const btn = document.getElementById('themeBtn');
+        if (theme === 'dark') {
+            btn.innerHTML = '<i class="fas fa-sun text-amber-400"></i>';
+        } else {
+            btn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    }
+
+    // Global Watermark Config Engine for Child Tools
+    window.CV_BUILDER_CONFIG = {
+        watermarkText: "salmanfarshi1630.github.io",
+        enablePromotion: true
+    };
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', initTheme);
+</script>
+</body>
+</html>
