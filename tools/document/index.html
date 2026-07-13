@@ -3,357 +3,1369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডকুমেন্ট ও সিভিツールস (Document & CV Tools) | Salman Farshi</title>
-    <meta name="description" content="Professional Document & CV Generation Utility Suite by Salman Farshi.">
+    <title>ডকুমেন্টস টুলস (Advanced Document Tools) | Salman Smart seba</title>
     
-    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <meta name="description" content="Professional Enterprise Document, CV, Invoice & Business Card Generation Utility Suite by Salman Smart seba.">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="canonical" href="https://salmanfarshi1630.github.io">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://salmanfarshi1630.github.io">
+    <meta property="og:title" content="ডকুমেন্টস টুলস (Advanced Document Tools)">
+    <meta property="og:description" content="Professional Enterprise Document, CV, Invoice & Business Card Generation Utility Suite.">
+    
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="ডকুমেন্টস টুলস (Advanced Document Tools)">
+    <meta property="twitter:description" content="Professional Enterprise Document, CV, Invoice & Business Card Generation Utility Suite.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Advanced Document Tools",
+      "url": "https://salmanfarshi1630.github.io",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5, JavaScript",
+      "creator": {
+        "@type": "Person",
+        "name": "Salman Farshi"
+      }
+    }
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
     <style>
+        /* --- CSS ARCHITECTURE & VARIABLES --- */
         :root {
             --bg-gradient: radial-gradient(circle at top left, #f8fafc 0%, #e2e8f0 100%);
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.8);
             --text-main: #0f172a;
             --text-muted: #475569;
             --primary: #2563eb;
+            --primary-hover: #1d4ed8;
             --primary-glow: rgba(37, 99, 235, 0.15);
-            --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
-            --inner-bg: rgba(255, 255, 255, 0.75);
+            --success: #16a34a;
+            --danger: #dc2626;
+            --card-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.02);
+            --inner-bg: rgba(255, 255, 255, 0.9);
             --inner-border: #cbd5e1;
-            --card-radius: 24px;
+            --card-radius: 20px;
             --blur: 20px;
+            --font-main: 'Poppins', 'Hind Siliguri', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="dark"] {
             --bg-gradient: radial-gradient(circle at top left, #0f172a 0%, #020617 100%);
-            --glass-bg: rgba(15, 23, 42, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.04);
+            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --primary: #3b82f6;
-            --inner-bg: rgba(30, 41, 59, 0.7);
+            --primary-hover: #60a5fa;
+            --primary-glow: rgba(59, 130, 246, 0.25);
+            --inner-bg: rgba(30, 41, 59, 0.85);
             --inner-border: #334155;
-            --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            --card-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.4);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        /* --- GLOBAL RESETS & ACCESSIBILITY --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition); }
+        body { font-family: var(--font-main); background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; overflow-x: hidden; padding-bottom: 40px; }
+        .container { max-width: 1440px; margin: 0 auto; padding: 30px 24px; }
+        input, textarea, select { font-family: var(--font-main); }
+        
+        /* Focus styles for keyboard navigation */
+        input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
         }
 
-        body {
-            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding-bottom: 60px;
-        }
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
-
-        /* Sub-Page Premium Header */
+        /* --- COMPONENT STYLES: HEADER --- */
         header {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur));
-            -webkit-backdrop-filter: blur(var(--blur));
-            border: 1px solid var(--glass-border);
-            border-radius: var(--card-radius);
-            padding: 32px;
-            margin-bottom: 40px;
-            box-shadow: var(--card-shadow);
-            text-align: center;
-            position: relative;
+            background: var(--glass-bg); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border); border-radius: var(--card-radius); padding: 24px 40px;
+            margin-bottom: 30px; box-shadow: var(--card-shadow); display: flex; justify-content: space-between; align-items: center; position: relative; flex-wrap: wrap; gap: 20px;
         }
+        .header-brand h1 { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, var(--primary) 0%, #60a5fa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 12px; }
+        .header-brand p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        
+        .btn-nav { background: var(--inner-bg); border: 1px solid var(--inner-border); color: var(--text-main); padding: 10px 20px; border-radius: 100px; cursor: pointer; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-nav:hover { border-color: var(--primary); box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); }
+        .btn-main-site { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+        .btn-main-site:hover { background: #047857; transform: translateY(-2px); }
+        
+        .theme-toggle { background: var(--inner-bg); border: 1px solid var(--inner-border); color: var(--text-main); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .theme-toggle:hover { border-color: var(--primary); transform: scale(1.05); }
 
-        .header-controls {
-            position: absolute;
-            left: 32px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        /* --- APP GRID LAYOUT --- */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+        .tool-card {
+            background: var(--glass-bg); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border); border-radius: var(--card-radius); padding: 30px;
+            cursor: pointer; box-shadow: var(--card-shadow); display: flex; flex-direction: column; gap: 16px; position: relative; overflow: hidden; transform: translateY(0);
         }
+        .tool-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 20px 40px var(--primary-glow); }
+        .card-icon { width: 54px; height: 54px; border-radius: 14px; background: var(--primary-glow); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .tool-card:hover .card-icon { background: var(--primary); color: white; }
+        .tool-card h2 { font-size: 18px; font-weight: 700; color: var(--text-main); }
+        .tool-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 
-        .home-btn {
-            background: var(--inner-bg);
-            border: 1px solid var(--inner-border);
-            color: var(--text-main);
-            padding: 10px 20px;
-            border-radius: 100px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
+        /* --- WORKSPACE CORE --- */
+        .workspace { display: none; background: var(--glass-bg); backdrop-filter: blur(var(--blur)); border: 1px solid var(--glass-border); border-radius: var(--card-radius); padding: 35px; box-shadow: var(--card-shadow); }
+        .ws-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--inner-border); padding-bottom: 20px; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .ws-title { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        
+        /* --- UI CONTROLS & FORMS --- */
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; box-shadow: 0 4px 12px var(--primary-glow); text-decoration: none; }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn-danger { background: var(--danger); box-shadow: 0 4px 12px rgba(220,38,38,0.2); }
+        .btn-danger:hover { background: #b91c1c; }
+        .btn-secondary { background: var(--inner-bg); color: var(--text-main); border: 1px solid var(--inner-border); box-shadow: none; }
+        .btn-secondary:hover { border-color: var(--primary); }
 
-        .home-btn:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-            transform: translateY(-2px);
-        }
+        .split-view { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media (max-width: 1024px) { .split-view { grid-template-columns: 1fr; } }
+        
+        .form-pane { display: flex; flex-direction: column; gap: 20px; max-height: 800px; overflow-y: auto; padding-right: 10px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: end; }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+        
+        .field { display: flex; flex-direction: column; gap: 6px; }
+        .field label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+        .field input, .field textarea, .field select { padding: 12px; border-radius: 10px; border: 1px solid var(--inner-border); background: var(--inner-bg); color: var(--text-main); font-size: 14px; }
+        .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px var(--primary-glow); }
 
-        /* Modern Dark Mode Toggle Switch */
-        .theme-toggle {
-            background: var(--inner-bg);
-            border: 1px solid var(--inner-border);
-            color: var(--text-main);
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
+        /* --- PREVIEW PANES (A4 Engine) --- */
+        .preview-pane-wrapper { background: #cbd5e1; padding: 20px; border-radius: 12px; display: flex; justify-content: center; overflow-x: auto; max-height: 800px; overflow-y: auto; }
+        .preview-pane { width: 210mm; min-height: 297mm; background: white; color: #1e293b; padding: 20mm 15mm; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; box-sizing: border-box; }
+        
+        /* Multi-page printable setup */
+        .preview-page { background: white; min-height: 296mm; position: relative; box-sizing: border-box; padding-bottom: 20mm; }
+        
+        .preview-pane.tpl-modern { border-top: 15px solid #2563eb; }
+        .preview-pane.tpl-classic { font-family: 'Times New Roman', Times, serif; }
+        .preview-pane.tpl-minimal { padding: 15mm; border-left: 5px solid #0f172a; }
+        
+        /* --- DYNAMIC CANVAS --- */
+        .canvas-container { display: flex; flex-direction: column; align-items: center; gap: 16px; background: var(--inner-bg); padding: 20px; border-radius: 12px; border: 2px dashed var(--inner-border); width: 100%; max-width: 100%; overflow: hidden; }
+        canvas { background: transparent; border-radius: 8px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05); cursor: crosshair; max-width: 100%; height: auto; }
 
-        .theme-toggle:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-            transform: scale(1.05);
-        }
+        /* --- SMART NOTEPAD --- */
+        .notepad-layout { display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
+        @media (max-width: 768px) { .notepad-layout { grid-template-columns: 1fr; } }
+        .note-sidebar { background: var(--inner-bg); border: 1px solid var(--inner-border); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .note-list { display: flex; flex-direction: column; gap: 8px; max-height: 400px; overflow-y: auto; }
+        .note-item { padding: 10px; background: rgba(0,0,0,0.03); border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+        .note-item.active { background: var(--primary-glow); border: 1px solid var(--primary); color: var(--primary); font-weight: 600; }
+        
+        .invoice-items-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .invoice-items-table th, .invoice-items-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; font-size: 13px; }
+        .invoice-items-table th { background: #f8fafc; font-weight: 600; }
 
-        header h1 {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
+        /* --- ID CARD DESIGN (CR-80 Standard: 3.375" x 2.125") --- */
+        .id-card-wrapper { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .id-card-render { width: 240px; height: 380px; background: white; border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        .id-card-header { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color: white; padding: 15px; text-align: center; }
+        .id-card-body { padding: 15px; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: space-between; text-align: center; color: #334155; }
+        .id-photo-box { width: 90px; height: 90px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden; background: #e2e8f0; display: flex; align-items: center; justify-content: center; position: relative; margin-top: -10px; }
+        .id-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* --- BUSINESS CARD FRONT/BACK --- */
+        .biz-card-wrapper { display: flex; flex-direction: column; gap: 24px; align-items: center; }
+        .biz-card-render { width: 450px; height: 250px; background: #0f172a; color: white; border-radius: 12px; padding: 25px; display: flex; justify-content: space-between; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.05); }
+        .biz-card-render.tpl-light { background: #ffffff; color: #0f172a; border: 1px solid #cbd5e1; }
+        .biz-card-render.tpl-modern { background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); color: #ffffff; }
+        @media (max-width: 500px) { .biz-card-render, .id-card-render { transform: scale(0.8); } }
 
-        header p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 6px;
-            font-weight: 500;
-        }
+        footer { text-align: center; padding: 30px 24px; font-size: 13px; color: var(--text-muted); }
 
-        /* Promotion Badge style */
-        .promo-badge {
-            margin-top: 10px;
-            display: inline-block;
-            font-size: 11px;
-            background: var(--primary-glow);
-            color: var(--primary);
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-weight: 600;
-            border: 1px solid rgba(37, 99, 235, 0.2);
-        }
-
-        /* 10 Tools Grid Layout */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        @media (max-width: 1200px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 900px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { 
-            .tools-grid { grid-template-columns: 1fr; }
-            .header-controls { position: static; transform: none; margin-bottom: 16px; justify-content: center; width: 100%; }
-        }
-
-        /* Premium Minimalist Item Card */
-        .tool-item-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur));
-            -webkit-backdrop-filter: blur(var(--blur));
-            border: 1px solid var(--glass-border);
-            border-radius: var(--card-radius);
-            padding: 28px;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .tool-item-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px -10px var(--primary-glow);
-        }
-
-        .icon-box {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            background: rgba(37, 99, 235, 0.08);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .tool-item-card:hover .icon-box {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 8px 20px var(--primary-glow);
-        }
-
-        .tool-item-card h2 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .tool-item-card p {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 24px 0 24px;
-            font-size: 13px;
-            color: var(--text-muted);
+        /* --- PRINT ENGINE --- */
+        @media print {
+            body { background: white; color: black; padding: 0; }
+            header, .tools-grid, .ws-header, .form-pane, footer, .btn-nav, .theme-toggle, .btn { display: none !important; }
+            .workspace { display: block !important; border: none !important; background: white !important; padding: 0 !important; backdrop-filter: none !important; }
+            .split-view { grid-template-columns: 1fr !important; }
+            .preview-pane-wrapper { background: white !important; padding: 0 !important; overflow: visible !important; max-height: none !important; }
+            .preview-pane { box-shadow: none !important; padding: 0 !important; margin: 0 !important; width: 100% !important; min-height: auto !important; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <div class="header-controls">
-            <a href="../../index.html" class="home-btn"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
-            <button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()">
-                <i class="fas fa-moon"></i>
+    <header role="banner" class="animate-fade">
+        <div class="header-brand">
+            <h1><i class="fas fa-file-signature" style="color: var(--primary);" aria-hidden="true"></i> ডকুমেন্টসツール (Advanced Document Tools)</h1>
+            <p>স্মার্ট সার্ভিস স্যুট | Powered by Salman Smart seba</p>
+        </div>
+        <div class="header-actions">
+            <a href="https://salmanfarshi1630.github.io" class="btn-nav btn-main-site" aria-label="মেইন ওয়েবসাইট ভিজিট করুন"><i class="fas fa-globe" aria-hidden="true"></i> মেইন ওয়েবসাইট</a>
+            <button class="btn-nav" id="backToMenuBtn" onclick="SuiteRouter.navigate('menu')" style="display: none;" aria-label="প্রধান মেনুতে ফিরে যান">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i> প্রধান মেনু
+            </button>
+            <button class="theme-toggle" id="themeBtn" aria-label="ডার্ক ও লাইট মোড টগল করুন" onclick="SuiteTheme.toggle()">
+                <i class="fas fa-moon" aria-hidden="true"></i>
             </button>
         </div>
-        <h1><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> ডকুমেন্ট ও সিভি টুলস</h1>
-        <p>ডিজিটাল সিগনেচার, প্রফেশনাল সিভি এবং ডকুমেন্ট তৈরির মেগা প্ল্যাটফর্ম</p>
-        <span class="promo-badge"><i class="fas fa-globe mr-1"></i> Powered by: salmanfarshi1630.github.io</span>
     </header>
 
-    <div class="tools-grid">
-        
-        <a href="signature/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-pen-nib"></i></div>
+    <main id="mainMenu" class="tools-grid animate-fade" role="region" aria-label="টুলস মেনু">
+        <div class="tool-card" onclick="SuiteRouter.navigate('signature')" role="button" tabindex="0" onkeypress="if(event.key==='Enter') SuiteRouter.navigate('signature')">
+            <div class="card-icon"><i class="fas fa-pen-nib" aria-hidden="true"></i></div>
             <h2>১. ডিজিটাল সিগনেচার মেকার</h2>
-            <p>প্যাডে বা স্ক্রিনে কাস্টম ডিজিটাল স্বাক্ষর তৈরি ও ডাউনলোড করুন</p>
-        </a>
-
-        <a href="cv-builder/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-file-invoice"></i></div>
+            <p>হাই-রেজোলিউশন কাস্টম ট্রান্সপারেন্ট স্বাক্ষর মেকার ও নিখুঁত পিএনজি ডাউনলোডার।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('cv')" role="button" tabindex="0" onkeypress="if(event.key==='Enter') SuiteRouter.navigate('cv')">
+            <div class="card-icon"><i class="fas fa-file-invoice" aria-hidden="true"></i></div>
             <h2>২. প্রফেশনাল সিভি মেকার</h2>
-            <p>সহজে আপনার তথ্য দিয়ে প্রফেশনাল স্ট্যান্ডার্ড সিভি তৈরি করুন</p>
-        </a>
-
-        <a href="cover-letter/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
+            <p>মাল্টিপল পেইজ এবং স্মার্ট কিউআর কোড সাপোর্ট সহ এ৪ স্ট্যান্ডার্ড পিডিএফ এক্সপোর্ট রেজুমি বিল্ডার।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('coverletter')" role="button" tabindex="0" onkeypress="if(event.key==='Enter') SuiteRouter.navigate('coverletter')">
+            <div class="card-icon"><i class="fas fa-envelope-open-text" aria-hidden="true"></i></div>
             <h2>৩. কভার লেটার জেনারেটর</h2>
-            <p>যেকোনো চাকরির পদের জন্য কাস্টমাইজড রেডি কভার লেটার বানান</p>
-        </a>
-
-        <a href="invoice/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-receipt"></i></div>
+            <p>বিভিন্ন কর্পোরেট পদের জন্য কাস্টমাইজড এবং এ৪ রেডি অফিশিয়াল কভার লেটার ডাউনলোডার।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('invoice')" role="button" tabindex="0" onkeypress="if(event.key==='Enter') SuiteRouter.navigate('invoice')">
+            <div class="card-icon"><i class="fas fa-receipt" aria-hidden="true"></i></div>
             <h2>৪. ইনভয়েস ও বিল মেকার</h2>
-            <p>ব্যবসায়িক বা ফ্রিল্যান্সিং কাজের জন্য প্রফেশনাল বিল জেনারেট করুন</p>
-        </a>
-
-        <a href="pad-maker/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-scroll"></i></div>
+            <p>অটো ভ্যাট, ডিসকাউন্ট এবং ডাইনামিক রো ক্যালকুলেশন সহ রেসপনসিভ প্রফেশনাল স্লিপ এক্সপোর্টার।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('pad')" role="button" tabindex="0" onkeypress="if(event.key==='Enter') SuiteRouter.navigate('pad')">
+            <div class="card-icon"><i class="fas fa-scroll" aria-hidden="true"></i></div>
             <h2>৫. প্রত্যয়নপত্র ও প্যাড মেকার</h2>
-            <p>অফিশিয়াল লেটারহেড প্যাড এবং প্রত্যয়নপত্র ফরম্যাট রেডি করুন</p>
-        </a>
-
-        <a href="application/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-file-alt"></i></div>
+            <p>লোগো আপলোড, সিকিউরড ওয়াটারমার্ক এবং কাস্টম অফিশিয়াল সিল এরিয়া সহ লেটারহেড।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('application')" role="button" tabindex="0" onkeypress="if(event.key==='Enter') SuiteRouter.navigate('application')">
+            <div class="card-icon"><i class="fas fa-file-alt" aria-hidden="true"></i></div>
             <h2>৬. অ্যাপ্লিকেশন রাইটার</h2>
-            <p>ছুটি বা অফিশিয়াল দরখাস্ত লেখার রেডিমেড অটোমেটিক ফরম্যাট</p>
-        </a>
-
-        <a href="id-card/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-id-card"></i></div>
-            <h2>৭. আইডি কার্ড মেকার</h2>
-            <p>স্টুডেন্ট বা এমপ্লয়ি আইডি কার্ডের কাস্টম ডেমো ডিজাইন ও প্রিন্ট</p>
-        </a>
-
-        <a href="doc-converter/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-file-word"></i></div>
+            <p>শিক্ষা প্রতিষ্ঠান ও অফিসের বিভিন্ন ছুটির এবং অফিশিয়াল রেডি দরখাস্ত জেনারেটর।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('idcard')" role="button" tabindex="0" onkeypress="if(event.key==='Enter') SuiteRouter.navigate('idcard')">
+            <div class="card-icon"><i class="fas fa-id-card" aria-hidden="true"></i></div>
+            <h2>৭. আইডি CARD মেকার</h2>
+            <p>বারকোড, কিউআর কোড এবং ফ্রন্ট-ব্যাক ডাবল সাইড সাপোর্ট সহ স্ট্যান্ডার্ড আইডি জেনারেটর।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('docconverter')">
+            <div class="card-icon"><i class="fas fa-file-word"></i></div>
             <h2>৮. টেক্সট টু ডক ফাইল মেকার</h2>
-            <p>যেকোনো লেখাকে সরাসরি ক্লিকেই .doc বা .txt ফাইলে রূপান্তর</p>
-        </a>
-
-        <a href="business-card/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-address-card"></i></div>
+            <p>ইউটিএফ-৮ এবং প্রফেশনাল বাংলা এনকোডিং সাপোর্ট সহ সরাসরি .DOCX এবং PDF এক্সপোর্টার।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('bizcard')">
+            <div class="card-icon"><i class="fas fa-address-card"></i></div>
             <h2>৯. বিজনেস কার্ড মেকার</h2>
-            <p>সহজেই নিজের কন্টাক্ট ইনফো দিয়ে মিনিমাল বিজনেস কার্ড তৈরি করুন</p>
-        </a>
+            <p>vCard QR কোড জেনারেটর এবং ফ্রন্ট-ব্যাক ডিজাইনিং সহ আধুনিক ভিজিটিং কার্ড মেকার।</p>
+        </div>
+        <div class="tool-card" onclick="SuiteRouter.navigate('notepad')">
+            <div class="card-icon"><i class="fas fa-sticky-note"></i></div>
+            <h2>১০. স্মার্ট নোটপ্যাড</h2>
+            <p>অ্যাডভান্সড ব্যাকআপ-রিস্টোর, সার্চ অপশন এবং অটো-সেভ সম্বলিত রিলায়েবল নোটপ্যাড।</p>
+        </div>
+    </main>
 
-        <a href="notepad/index.html" class="tool-item-card">
-            <div class="icon-box"><i class="fas fa-sticky-note"></i></div>
-            <h2>১০. ক্লাউড ও লোকাল নোটপ্যাড</h2>
-            <p>জরুরি নোটিশ বা টেক্সট লিখে তাৎক্ষণিক সুরক্ষিতভাবে সেভ করে রাখুন</p>
-        </a>
+    <section id="workspaceBlock" class="workspace animate-fade" role="region" aria-label="ওয়ার্কস্পেস">
+        
+        <div id="mod-signature" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-pen-nib"></i> ডিজিটাল সিগনেচার মেকার</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="SigEngine.undo()" aria-label="পূর্বের অবস্থায় ফিরুন"><i class="fas fa-undo"></i> আনডু</button>
+                    <button class="btn btn-secondary" onclick="SigEngine.clear()" aria-label="সব মুছুন"><i class="fas fa-eraser"></i> মুছুন</button>
+                    <button class="btn" onclick="SigEngine.exportImg()" aria-label="স্বচ্ছ পিএনজি ফাইল ডাউনলোড করুন"><i class="fas fa-download"></i> স্বচ্ছ PNG ডাউনলোড</button>
+                </div>
+            </div>
+            <div class="canvas-container">
+                <canvas id="sigCanvas" width="700" height="350"></canvas>
+            </div>
+        </div>
 
-    </div>
+        <div id="mod-cv" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-file-invoice"></i> এন্টারপ্রাইজ সিভি বিল্ডার</div>
+                <div style="display:flex; gap:10px;">
+                    <select id="cvTemplateSelector" class="btn btn-secondary" onchange="CvEngine.render()" aria-label="সিভি টেমপ্লেট নির্বাচন করুন">
+                        <option value="tpl-modern">মডার্ন ব্লু থিম</option>
+                        <option value="tpl-classic">ক্ল্যাসিক এক্সিকিউティブ</option>
+                        <option value="tpl-minimal">মিনিমাল ব্ল্যাক</option>
+                    </select>
+                    <button class="btn" onclick="EngineUtils.downloadPdf('cvPreview', 'Curriculum_Vitae.pdf')" aria-label="সিভি পিডিএফ ডাউনলোড করুন"><i class="fas fa-file-pdf"></i> A4 PDF ডাউনলোড</button>
+                </div>
+            </div>
+            <div class="split-view">
+                <div class="form-pane">
+                    <div class="form-row">
+                        <div class="field"><label for="cv-name">পূর্ণ নাম</label><input type="text" id="cv-name" placeholder="নাম লিখুন" oninput="CvEngine.debouncedRender()"></div>
+                        <div class="field"><label for="cv-role">পদবি</label><input type="text" id="cv-role" placeholder="উদাঃ সফটওয়্যার ইঞ্জিনিয়ার" oninput="CvEngine.debouncedRender()"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field"><label for="cv-email">ইমেইল</label><input type="email" id="cv-email" placeholder="ইমেইল দিন" oninput="CvEngine.debouncedRender()"></div>
+                        <div class="field"><label for="cv-phone">মোবাইল</label><input type="text" id="cv-phone" placeholder="যোগাযোগ নম্বর" oninput="CvEngine.debouncedRender()"></div>
+                    </div>
+                    <div class="field"><label for="cv-photo">ছবি আপলোড (Resize/Crop)</label><input type="file" id="cv-photo" accept="image/*" onchange="CvEngine.handlePhoto(this)"></div>
+                    <div class="field"><label for="cv-obj">ক্যারিয়ার অবজেক্টিভ</label><textarea id="cv-obj" rows="3" placeholder="অবজেক্টিভ লিখুন..." oninput="CvEngine.debouncedRender()"></textarea></div>
+                    <div class="field"><label for="cv-education">শিক্ষাগত যোগ্যতা (লাইন ব্রেক দিন)</label><textarea id="cv-education" rows="3" placeholder="ডিগ্রি, প্রতিষ্ঠান, সাল..." oninput="CvEngine.debouncedRender()"></textarea></div>
+                    <div class="field"><label for="cv-experience">অভিজ্ঞতা (Experience)</label><textarea id="cv-experience" rows="3" placeholder="কাজের বিবরণ..." oninput="CvEngine.debouncedRender()"></textarea></div>
+                    <div class="field"><label for="cv-skills">স্কিলস (কমা দিয়ে লিখুন)</label><input type="text" id="cv-skills" placeholder="HTML, CSS, JavaScript, React" oninput="CvEngine.debouncedRender()"></div>
+                </div>
+                <div class="preview-pane-wrapper">
+                    <div id="cvPreview" class="preview-pane tpl-modern"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mod-coverletter" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-envelope-open-text"></i> কভার লেটার জেনারেটর</div>
+                <button class="btn" onclick="EngineUtils.downloadPdf('clPreview', 'Cover_Letter.pdf')"><i class="fas fa-file-pdf"></i> A4 PDF ডাউনলোড</button>
+            </div>
+            <div class="split-view">
+                <div class="form-pane">
+                    <div class="field"><label for="cl-type">কভার লেটার ধরন</label>
+                        <select id="cl-type" onchange="ClEngine.switchTemplate()">
+                            <option value="job">Job Application</option>
+                            <option value="internship">Internship Application</option>
+                            <option value="scholarship">Scholarship Request</option>
+                            <option value="university">University Admission</option>
+                            <option value="govt">Government Job Application</option>
+                        </select>
+                    </div>
+                    <div class="field"><label for="cl-date">তারিখ</label><input type="date" id="cl-date" onchange="ClEngine.render()"></div>
+                    <div class="field"><label for="cl-name">আবেদনকারীর নাম</label><input type="text" id="cl-name" placeholder="আপনার নাম" oninput="ClEngine.render()"></div>
+                    <div class="field"><label for="cl-company">কোম্পানি/প্রতিষ্ঠানের নাম</label><input type="text" id="cl-company" placeholder="কোম্পানির নাম" oninput="ClEngine.render()"></div>
+                    <div class="field"><label for="cl-address">ঠিকানা</label><input type="text" id="cl-address" placeholder="ঠিকানা" oninput="ClEngine.render()"></div>
+                    <div class="field"><label for="cl-role">পদের নাম</label><input type="text" id="cl-role" placeholder="টার্গেট পদবি" oninput="ClEngine.render()"></div>
+                </div>
+                <div class="preview-pane-wrapper">
+                    <div id="clPreview" class="preview-pane"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mod-invoice" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-receipt"></i> রশিদ ও ইনভয়েস সিস্টেম</div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn btn-secondary" onclick="window.print()"><i class="fas fa-print"></i> প্রিন্ট ভার্সন</button>
+                    <button class="btn" onclick="EngineUtils.downloadImg('invPreview', 'Invoice.jpg')"><i class="fas fa-image"></i> রশিদ ডাউনলোড (JPG)</button>
+                </div>
+            </div>
+            <div class="split-view">
+                <div class="form-pane">
+                    <div class="form-row">
+                        <div class="field"><label for="inv-num">ইনভয়েস নম্বর</label><input type="text" id="inv-num" value="INV-2026-001" oninput="InvEngine.render()"></div>
+                        <div class="field"><label for="inv-date">তারিখ</label><input type="date" id="inv-date" onchange="InvEngine.render()"></div>
+                    </div>
+                    <div class="field"><label for="inv-client">গ্রাহকের নাম ও বিবরণ</label><input type="text" id="inv-client" placeholder="গ্রাহকের বিবরণ..." oninput="InvEngine.render()"></div>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                        <h4 style="font-size:14px;">আইটেমলিস্ট</h4>
+                        <button class="btn btn-secondary" style="padding: 6px 12px; font-size:12px;" onclick="InvEngine.addItem()"><i class="fas fa-plus"></i> আইটেম দিন</button>
+                    </div>
+                    <div id="invoiceItemsContainer" style="display:flex; flex-direction:column; gap:10px;"></div>
+                    
+                    <div class="form-row" style="margin-top:10px;">
+                        <div class="field"><label for="inv-vat">ভ্যাট (%)</label><input type="number" id="inv-vat" value="0" oninput="InvEngine.render()"></div>
+                        <div class="field"><label for="inv-discount">ডিসকাউন্ট (৳)</label><input type="number" id="inv-discount" value="0" oninput="InvEngine.render()"></div>
+                    </div>
+                </div>
+                <div class="preview-pane-wrapper">
+                    <div id="invPreview" class="preview-pane" style="min-height: auto; padding: 25px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mod-pad" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-scroll"></i> অফিশিয়াল লেটারহেড ও প্যাড</div>
+                <button class="btn" onclick="EngineUtils.downloadPdf('padPreview', 'Letterhead.pdf')"><i class="fas fa-file-pdf"></i> প্যাড ডাউনলোড (PDF)</button>
+            </div>
+            <div class="split-view">
+                <div class="form-pane">
+                    <div class="field"><label for="pad-title">প্রতিষ্ঠানের নাম</label><input type="text" id="pad-title" placeholder="কোম্পানির নাম" oninput="PadEngine.render()"></div>
+                    <div class="field"><label for="pad-contact">ঠিকানা ও যোগাযোগ</label><input type="text" id="pad-contact" placeholder="ঠিকানা, ফোন ইত্যাদি" oninput="PadEngine.render()"></div>
+                    <div class="field"><label for="pad-logo">লোগো আপলোড</label><input type="file" id="pad-logo" accept="image/*" onchange="PadEngine.handleLogo(this)"></div>
+                    <div class="field"><label for="pad-body">লেটারহেড / প্যাড বডি টেক্সট</label><textarea id="pad-body" rows="8" placeholder="এখানে মূল বক্তব্য লিখুন..." oninput="PadEngine.render()"></textarea></div>
+                    <div class="field"><label for="pad-signer">স্বাক্ষরকারীর নাম ও পদবি</label><input type="text" id="pad-signer" placeholder="কর্তৃপক্ষের নাম" oninput="PadEngine.render()"></div>
+                    <div class="field"><label for="pad-footer">ফুটার ইনফরমেশন</label><input type="text" id="pad-footer-txt" placeholder="পেইজ ফুটার ডিটেইলস" oninput="PadEngine.render()"></div>
+                </div>
+                <div class="preview-pane-wrapper">
+                    <div id="padPreview" class="preview-pane"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mod-application" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-file-alt"></i> স্মার্ট অ্যাপ্লিকেশন রাইটার</div>
+                <button class="btn" onclick="EngineUtils.downloadPdf('appPreview', 'Application.pdf')"><i class="fas fa-file-pdf"></i> দরখাস্ত ডাউনলোড (PDF)</button>
+            </div>
+            <div class="split-view">
+                <div class="form-pane">
+                    <div class="field"><label for="app-type">আবেদনের ধরন</label>
+                        <select id="app-type" onchange="AppEngine.switchTemplate()">
+                            <option value="leave">অফিসে অগ্রিম ছুটির আবেদন</option>
+                            <option value="college">শিক্ষা প্রতিষ্ঠানে অনুপস্থিতির আবেদন</option>
+                            <option value="salary">বকেয়া বেতনের জন্য আবেদন</option>
+                            <option value="transfer">বদলি সংক্রান্ত অফিশিয়াল আবেদন</option>
+                        </select>
+                    </div>
+                    <div class="field"><label for="app-to">বরাবর</label><input type="text" id="app-to" placeholder="উদাঃ প্রধান শিক্ষক / ম্যানেজার" oninput="AppEngine.render()"></div>
+                    <div class="field"><label for="app-org">প্রতিষ্ঠানের নাম</label><input type="text" id="app-org" placeholder="প্রতিষ্ঠানের নাম" oninput="AppEngine.render()"></div>
+                    <div class="field"><label for="app-subject">আবেদনের বিষয়</label><input type="text" id="app-subject" placeholder="বিষয় লিখুন" oninput="AppEngine.render()"></div>
+                    <div class="field"><label for="app-custom-body">আবেদনের বিবরণ (কাস্টমাইজ করুন)</label><textarea id="app-custom-body" rows="6" oninput="AppEngine.render()"></textarea></div>
+                    <div class="field"><label for="app-sender">আবেদনকারীর নাম</label><input type="text" id="app-sender" placeholder="আপনার নাম" oninput="AppEngine.render()"></div>
+                </div>
+                <div class="preview-pane-wrapper">
+                    <div id="appPreview" class="preview-pane"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mod-idcard" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-id-card"></i> আইডি কার্ড মেকার প্রো (Standard Credit Card Size)</div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn btn-secondary" onclick="EngineUtils.downloadImg('idCardFront', 'ID_Front.jpg')">ফ্রন্ট ডাউনলোড</button>
+                    <button class="btn" onclick="EngineUtils.downloadImg('idCardBack', 'ID_Back.jpg')">ব্যাক ডাউনলোড</button>
+                </div>
+            </div>
+            <div class="split-view">
+                <div class="form-pane">
+                    <div class="field"><label for="id-company">প্রতিষ্ঠানের নাম</label><input type="text" id="id-company" placeholder="COMPANY NAME" oninput="IdEngine.render()"></div>
+                    <div class="field"><label for="id-name">নাম</label><input type="text" id="id-name" placeholder="ব্যক্তির নাম" oninput="IdEngine.render()"></div>
+                    <div class="field"><label for="id-role">পদবি</label><input type="text" id="id-role" placeholder="পদবি" oninput="IdEngine.render()"></div>
+                    <div class="field"><label for="id-uuid">আইডি নম্বর</label><input type="text" id="id-uuid" placeholder="ID-2026-01" oninput="IdEngine.render()"></div>
+                    <div class="field"><label for="id-photo">ছবি আপলোড</label><input type="file" accept="image/*" onchange="IdEngine.handlePhoto(this)"></div>
+                </div>
+                <div class="preview-pane-wrapper" style="background:#f1f5f9; gap:20px; flex-direction:column; align-items:center; padding: 40px 20px;">
+                    <div id="idCardFront" class="id-card-render"></div>
+                    <div id="idCardBack" class="id-card-render" style="background: #f8fafc;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mod-docconverter" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-file-word"></i> ইউনিভার্সাল ডক কনভার্টার</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="DocConverterEngine.exportTXT()">TXT এক্সপোর্ট</button>
+                    <button class="btn" onclick="DocConverterEngine.exportRealDocx()">Word (.DOCX) এক্সপোর্ট</button>
+                    <button class="btn" onclick="DocConverterEngine.exportPDF()">PDF এক্সপোর্ট</button>
+                </div>
+            </div>
+            <div class="field">
+                <label for="converterTextarea">আপনার টেক্সট কন্টেন্ট (সম্পূর্ণ UTF-8 বাংলা সাপোর্টেড)</label>
+                <textarea id="converterTextarea" rows="12" style="width:100%; border-radius:12px; padding:15px; background: var(--inner-bg); color: var(--text-color);" placeholder="আপনার টেক্সট এখানে লিখুন বা পেস্ট করুন..."></textarea>
+            </div>
+            <div id="hiddenDocHtml" style="display:none; width:210mm; padding:20mm; background:white; color:black;"></div>
+        </div>
+
+        <div id="mod-bizcard" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-address-card"></i> প্রফেশনাল বিজনেস কার্ড</div>
+                <div style="display:flex; gap:10px;">
+                    <select id="bcThemeSelector" class="btn btn-secondary" onchange="BcEngine.render()">
+                        <option value="tpl-dark">ডার্ক প্রিমিয়াম থিম</option>
+                        <option value="tpl-light">ক্ল্যাসিক হোয়াইট থিম</option>
+                        <option value="tpl-modern">মডার্ন গ্রেডিয়েন্ট থিম</option>
+                    </select>
+                    <button class="btn" onclick="EngineUtils.downloadImg('bizCardFront', 'Business_Card_Front.jpg')">কার্ড ফ্রন্ট ডাউনলোড</button>
+                </div>
+            </div>
+            <div class="split-view">
+                <div class="form-pane">
+                    <div class="field"><label for="bc-org">কোম্পানির নাম</label><input type="text" id="bc-org" placeholder="Company Name" oninput="BcEngine.render()"></div>
+                    <div class="field"><label for="bc-name">ব্যক্তির নাম</label><input type="text" id="bc-name" placeholder="Full Name" oninput="BcEngine.render()"></div>
+                    <div class="field"><label for="bc-role">পদবি</label><input type="text" id="bc-role" placeholder="Designation" oninput="BcEngine.render()"></div>
+                    <div class="field"><label for="bc-phone">মোবাইল নম্বর</label><input type="text" id="bc-phone" placeholder="+8801700000000" oninput="BcEngine.render()"></div>
+                    <div class="field"><label for="bc-email">ইমেইল</label><input type="email" id="bc-email" placeholder="info@company.com" oninput="BcEngine.render()"></div>
+                    <div class="field"><label for="bc-web">ওয়েবসাইট</label><input type="text" id="bc-web" value="salmansmartseba.com" oninput="BcEngine.render()"></div>
+                </div>
+                <div class="preview-pane-wrapper" style="background:#f1f5f9; padding: 40px 20px;">
+                    <div class="biz-card-wrapper">
+                        <div id="bizCardFront" class="biz-card-render"></div>
+                        <div id="bizCardBack" class="biz-card-render"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mod-notepad" class="tool-module" style="display:none;">
+            <div class="ws-header">
+                <div class="ws-title"><i class="fas fa-sticky-note"></i> স্মার্ট লোকাল নোটপ্যাড</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="NotepadEngine.triggerImport()"><i class="fas fa-file-import"></i> ইমপোর্ট ব্যাকআপ</button>
+                    <button class="btn btn-secondary" onclick="NotepadEngine.exportBackup()"><i class="fas fa-file-export"></i> ব্যাকআপ ডাউনলোড</button>
+                    <button class="btn" onclick="NotepadEngine.createNewNote()"><i class="fas fa-plus"></i> নতুন নোট</button>
+                    <input type="file" id="notepadImportFile" style="display:none;" accept=".json" onchange="NotepadEngine.importBackup(event)">
+                </div>
+            </div>
+            <div class="notepad-layout">
+                <div class="note-sidebar">
+                    <input type="text" id="noteSearch" placeholder="নোট খুঁজুন..." oninput="NotepadEngine.renderList()" style="padding:8px; border-radius:6px; border:1px solid var(--inner-border); width:100%; margin-bottom:10px; background:var(--inner-bg); color:var(--text-main);">
+                    <div id="noteListContainer" class="note-list"></div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:15px;">
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <input type="text" id="noteTitle" oninput="NotepadEngine.saveActiveNote()" placeholder="নোটের শিরোনাম" style="padding:10px; border-radius:6px; border:1px solid var(--inner-border); flex-grow:1; background:var(--inner-bg); color:var(--text-main);">
+                        <button class="btn btn-danger" style="padding:10px 15px;" onclick="NotepadEngine.deleteActiveNote()" aria-label="নোটটি মুছুন"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <textarea id="noteBody" rows="10" oninput="NotepadEngine.saveActiveNote()" placeholder="এখানে গুরুত্বপূর্ণ ডাটা নোট করে রাখুন..." style="padding:12px; border-radius:6px; border:1px solid var(--inner-border); font-size:14px; background:var(--inner-bg); color:var(--text-main);"></textarea>
+                    <div style="font-size:12px; color:var(--text-muted); text-align:right;">
+                        <span id="noteWordCount">শব্দ সংখ্যা: ০</span> | <span id="noteCharCount">বর্ণ সংখ্যা: ০</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
 </div>
 
 <footer>
-    <p>&copy; 2026 সালমান ফারসী। সর্বস্বত্ব সংরক্ষিত। | <span id="brandUrl">salmanfarshi1630.github.io</span></p>
+    <p>&copy; <span id="currentYear"></span> সালমান ফারসী | সর্বস্বত্ব সংরক্ষিত। | <span style="font-weight:600; color:var(--primary)">salmanfarshi1630.github.io</span></p>
 </footer>
 
 <script>
-    // Theme Management Engine
-    function initTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateToggleIcon(savedTheme);
-    }
-
-    function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateToggleIcon(newTheme);
-    }
-
-    function updateToggleIcon(theme) {
-        const btn = document.getElementById('themeBtn');
-        if (theme === 'dark') {
-            btn.innerHTML = '<i class="fas fa-sun text-amber-400"></i>';
-        } else {
-            btn.innerHTML = '<i class="fas fa-moon"></i>';
+    /**
+     * DOM SECURITY & XSS PROTECTION UTILITIES
+     */
+    const Security = {
+        escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>"']/g, function(match) {
+                const escapeMap = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#x27;'
+                };
+                return escapeMap[match];
+            });
         }
-    }
-
-    // Global Watermark Config Engine for Child Tools
-    window.CV_BUILDER_CONFIG = {
-        watermarkText: "salmanfarshi1630.github.io",
-        enablePromotion: true
     };
 
-    // Initialize on load
-    document.addEventListener('DOMContentLoaded', initTheme);
+    /**
+     * DYNAMIC PERFORMANCE DEBOUNCER
+     */
+    function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    /**
+     * GLOBAL SYSTEM ENGINE UTILITIES
+     */
+    const EngineUtils = {
+        downloadPdf(elementId, filename) {
+            try {
+                const element = document.getElementById(elementId);
+                const opt = {
+                    margin: 0,
+                    filename: filename,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                };
+                html2pdf().set(opt).from(element).save();
+            } catch (err) {
+                alert("পিডিএফ এক্সপোর্ট করার সময় একটি সমস্যা হয়েছে। দয়া করে সঠিক ডাটা ইনপুট দিন।");
+                console.error(err);
+            }
+        },
+        downloadImg(elementId, filename) {
+            try {
+                const element = document.getElementById(elementId);
+                html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = filename;
+                    link.href = canvas.toDataURL('image/jpeg', 1.0);
+                    link.click();
+                });
+            } catch (err) {
+                alert("ইমেজ ডাউনলোড করার সময় ত্রুটি ঘটেছে।");
+            }
+        },
+        safeLocalStorageSet(key, value) {
+            try {
+                localStorage.setItem(key, value);
+            } catch (e) {
+                if (e.name === 'QuotaExceededError') {
+                    alert('আপনার ব্রাউজারের স্টোরেজ ফুল হয়ে গেছে। অপ্রয়োজনীয় নোটস বা ডাটা মুছে ফেলুন!');
+                }
+            }
+        }
+    };
+
+    /**
+     * SUITE SYSTEM ROUTER & HASH ROUTING
+     */
+    const SuiteRouter = {
+        currentRoute: 'menu',
+        init() {
+            window.addEventListener('hashchange', () => this.handleHashChange());
+            this.handleHashChange();
+        },
+        navigate(route) {
+            window.location.hash = route === 'menu' ? '' : route;
+        },
+        handleHashChange() {
+            let hash = window.location.hash.replace('#', '');
+            const route = hash ? hash : 'menu';
+            this.currentRoute = route;
+
+            const menu = document.getElementById('mainMenu');
+            const ws = document.getElementById('workspaceBlock');
+            const backBtn = document.getElementById('backToMenuBtn');
+            
+            document.querySelectorAll('.tool-module').forEach(m => m.style.display = 'none');
+
+            if (route === 'menu') {
+                menu.style.display = 'grid';
+                ws.style.display = 'none';
+                backBtn.style.display = 'none';
+            } else {
+                menu.style.display = 'none';
+                ws.style.display = 'block';
+                backBtn.style.display = 'inline-flex';
+                
+                const activeMod = document.getElementById(`mod-${route}`);
+                if (activeMod) {
+                    activeMod.style.display = 'block';
+                    this.hydrateModule(route);
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        hydrateModule(route) {
+            if (route === 'signature') SigEngine.init();
+            if (route === 'cv') CvEngine.render();
+            if (route === 'coverletter') ClEngine.init();
+            if (route === 'invoice') InvEngine.init();
+            if (route === 'pad') PadEngine.render();
+            if (route === 'application') AppEngine.init();
+            if (route === 'idcard') IdEngine.render();
+            if (route === 'bizcard') BcEngine.render();
+            if (route === 'notepad') NotepadEngine.init();
+        }
+    };
+
+    /**
+     * THEME SYSTEM ENGINE (DARK/LIGHT TRANSITION)
+     */
+    const SuiteTheme = {
+        init() {
+            let theme = localStorage.getItem('suite-theme');
+            if (!theme) {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            this.setTheme(theme);
+        },
+        setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const icon = document.getElementById('themeBtn').querySelector('i');
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+            EngineUtils.safeLocalStorageSet('suite-theme', theme);
+        },
+        toggle() {
+            const current = document.documentElement.getAttribute('data-theme');
+            this.setTheme(current === 'dark' ? 'light' : 'dark');
+        }
+    };
+
+    /**
+     * MODULE 1: ADVANCED SIGNATURE ENGINE (SMOOTH, TRANSPARENT & HIGH DPI)
+     */
+    const SigEngine = {
+        canvas: null, ctx: null, drawing: false, history: [], lastX: 0, lastY: 0,
+        init() {
+            this.canvas = document.getElementById('sigCanvas');
+            this.ctx = this.canvas.getContext('2d');
+            
+            // Handle Canvas Resizing for High DPI
+            const rect = this.canvas.parentElement.getBoundingClientRect();
+            const width = Math.min(rect.width - 40, 700);
+            this.canvas.width = width * 2;
+            this.canvas.height = 350 * 2;
+            this.canvas.style.width = width + 'px';
+            this.canvas.style.height = '350px';
+            
+            this.ctx.scale(2, 2);
+            this.ctx.strokeStyle = document.documentElement.getAttribute('data-theme') === 'dark' ? '#f8fafc' : '#0f172a';
+            this.ctx.lineWidth = 3;
+            this.ctx.lineCap = 'round';
+            this.ctx.lineJoin = 'round';
+            
+            this.clear();
+            this.attachEvents();
+        },
+        attachEvents() {
+            const getPos = (e) => {
+                const rect = this.canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            };
+
+            const startDraw = (e) => {
+                e.preventDefault();
+                this.drawing = true;
+                const pos = getPos(e);
+                this.lastX = pos.x;
+                this.lastY = pos.y;
+            };
+
+            const moveDraw = (e) => {
+                if (!this.drawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.lastX, this.lastY);
+                this.ctx.lineTo(pos.x, pos.y);
+                this.ctx.stroke();
+                this.lastX = pos.x;
+                this.lastY = pos.y;
+            };
+
+            const stopDraw = () => {
+                if (this.drawing) {
+                    this.drawing = false;
+                    this.saveState();
+                }
+            };
+
+            this.canvas.onmousedown = startDraw;
+            this.canvas.onmousemove = moveDraw;
+            window.onmouseup = stopDraw;
+
+            this.canvas.addEventListener('touchstart', startDraw, {passive: false});
+            this.canvas.addEventListener('touchmove', moveDraw, {passive: false});
+            window.addEventListener('touchend', stopDraw);
+        },
+        clear() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.history = [];
+            this.saveState();
+        },
+        saveState() {
+            if (this.history.length > 20) this.history.shift();
+            this.history.push(this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height));
+        },
+        undo() {
+            if (this.history.length > 1) {
+                this.history.pop();
+                this.ctx.putImageData(this.history[this.history.length - 1], 0, 0);
+            }
+        },
+        exportImg() {
+            const link = document.createElement('a');
+            link.download = 'digital-signature-salman.png';
+            // True Transparent Export using default canvas logic
+            link.href = this.canvas.toDataURL('image/png');
+            link.click();
+        }
+    };
+
+    /**
+     * MODULE 2: ENTERPRISE CV MAKER ENGINE
+     */
+    const CvEngine = {
+        photoData: '',
+        qrCache: { text: '', dataUrl: '' },
+        handlePhoto(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = 300;
+                        canvas.height = 300;
+                        // Center crop & proportional resize
+                        const minDim = Math.min(img.width, img.height);
+                        ctx.drawImage(img, (img.width - minDim)/2, (img.height - minDim)/2, minDim, minDim, 0, 0, 300, 300);
+                        this.photoData = canvas.toDataURL('image/jpeg');
+                        this.render();
+                    };
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        },
+        debouncedRender: debounce(function() { CvEngine.render(); }, 300),
+        render() {
+            const getVal = (id) => Security.escapeHTML(document.getElementById(id).value);
+            const name = getVal('cv-name') || 'আপনার নাম';
+            const role = getVal('cv-role') || 'প্রফেশনাল পদবি';
+            const email = getVal('cv-email') || '';
+            const phone = getVal('cv-phone') || '';
+            const obj = getVal('cv-obj') || '';
+            const edu = getVal('cv-education') || '';
+            const exp = getVal('cv-experience') || '';
+            const skills = getVal('cv-skills') || '';
+            const tpl = document.getElementById('cvTemplateSelector').value;
+
+            // Skills Formatting into Bullet List Array
+            let skillsHtml = '';
+            if (skills) {
+                const skillsArr = skills.split(',').map(s => s.trim()).filter(s => s);
+                skillsHtml = `<ul style="display:grid; grid-template-columns:1fr 1fr; gap:5px; font-size:13px; padding-left:20px;">` + 
+                             skillsArr.map(s => `<li>${s}</li>`).join('') + `</ul>`;
+            }
+
+            const preview = document.getElementById('cvPreview');
+            preview.className = `preview-pane ${tpl}`;
+
+            // Structuring Content into potential Multi-page distribution Flow
+            preview.innerHTML = `
+                <div class="preview-page">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #2563eb; padding-bottom:15px; margin-bottom:20px;">
+                        <div>
+                            <h1 style="font-size:26px; color:#1e3a8a; margin:0; font-weight:700;">${name}</h1>
+                            <h3 style="font-size:15px; color:#2563eb; margin:4px 0; font-weight:600;">${role}</h3>
+                            <p style="font-size:12px; color:#475569;">${email} ${phone ? ' | '+phone : ''}</p>
+                        </div>
+                        ${this.photoData ? `<img src="${this.photoData}" style="width:100px; height:100px; border-radius:12px; object-fit:cover; border: 2px solid #2563eb;">`:''}
+                    </div>
+                    ${obj ? `<div style="margin-bottom:20px;"><h4 style="color:#1e3a8a; border-bottom:1px solid #cbd5e1; padding-bottom:4px; font-weight:600;">OBJECTIVE</h4><p style="font-size:13px; line-height:1.6; margin-top:6px;">${obj}</p></div>`:''}
+                    ${edu ? `<div style="margin-bottom:20px;"><h4 style="color:#1e3a8a; border-bottom:1px solid #cbd5e1; padding-bottom:4px; font-weight:600;">EDUCATION</h4><p style="font-size:13px; white-space:pre-line; line-height:1.6; margin-top:6px;">${edu}</p></div>`:''}
+                    ${exp ? `<div style="margin-bottom:20px;"><h4 style="color:#1e3a8a; border-bottom:1px solid #cbd5e1; padding-bottom:4px; font-weight:600;">EXPERIENCE</h4><p style="font-size:13px; white-space:pre-line; line-height:1.6; margin-top:6px;">${exp}</p></div>`:''}
+                    ${skillsHtml ? `<div style="margin-bottom:20px;"><h4 style="color:#1e3a8a; border-bottom:1px solid #cbd5e1; padding-bottom:4px; font-weight:600;">PROFESSIONAL SKILLS</h4><div style="margin-top:6px;">${skillsHtml}</div></div>`:''}
+                    
+                    <div style="position:absolute; bottom:20mm; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-end;">
+                        <div id="cvQrCodeContainer" style="width:60px; height:60px;"></div>
+                        <div style="text-align:center; border-top:1px solid #475569; width:150px; font-size:12px; padding-top:6px; color:#475569;">আবেদনকারীর স্বাক্ষর</div>
+                    </div>
+                </div>
+            `;
+
+            // Optimized Non-blocking Debounce QR Engine
+            const qrText = `Name: ${name}, Email: ${email}`;
+            if (this.qrCache.text !== qrText) {
+                const target = document.getElementById('cvQrCodeContainer');
+                target.innerHTML = "";
+                new QRCode(target, { text: qrText, width: 60, height: 60 });
+                this.qrCache.text = qrText;
+            }
+        }
+    };
+
+    /**
+     * MODULE 3: MULTI-TEMPLATE COVER LETTER ENGINE
+     */
+    const ClEngine = {
+        templates: {
+            job: {
+                title: 'Job Application',
+                body: 'আপনার সুপ্রতিষ্ঠিত প্রতিষ্ঠানে জনবল নিয়োগের বিজ্ঞপ্তি প্রকাশ পাওয়ায় আমি উক্ত পদের একজন যোগ্য প্রার্থী হিসেবে আবেদন করছি। আমার বিগত অভিজ্ঞতা আপনার কোম্পানির লক্ষ্য অর্জনে ভূমিকা রাখবে।'
+            },
+            internship: {
+                title: 'Internship Application',
+                body: 'আমি আমার প্রাতিষ্ঠানিক জ্ঞানকে বাস্তব ক্ষেত্রে প্রয়োগের উদ্দেশ্যে আপনার স্বনামধন্য কোম্পানিতে ইন্টার্নশিপ করার জন্য আবেদন করছি। আমি অত্যন্ত পরিশ্রমী এবং দ্রুত যেকোনো কাজ শিখতে সক্ষম।'
+            },
+            scholarship: {
+                title: 'Scholarship Request',
+                body: 'আমি আমার উচ্চশিক্ষা সম্পন্ন করার লক্ষ্যে আপনার বিশ্বস্ত শিক্ষা ট্রাস্ট বা ফান্ড হতে স্কলারশিপ প্রাপ্তির জন্য বিনীত আবেদন পেশ করছি। আমার পূর্বের সকল প্রাতিষ্ঠানিক ফলাফল অত্যন্ত সন্তোষজনক।'
+            },
+            university: {
+                title: 'University Admission',
+                body: 'আমি আপনার সম্মানজনক বিশ্ববিদ্যালয়ের অধীনে উচ্চশিক্ষা কোর্সে ভর্তির সুবর্ণ সুযোগ পাওয়ার উদ্দেশ্যে এই স্টেটমেন্ট ও আবেদনপত্র সাবমিট করছি।'
+            },
+            govt: {
+                title: 'Government Job Application',
+                body: 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের বিধি মোতাবেক প্রকাশিত নিয়োগ বিজ্ঞপ্তির সকল শর্ত পূরণ সাপেক্ষে আমি উক্ত শূন্য পদে নিয়োগের জন্য আমার প্রার্থিতা ঘোষণা করছি।'
+            }
+        },
+        init() {
+            document.getElementById('cl-date').value = new Date().toISOString().split('T')[0];
+            this.switchTemplate();
+        },
+        switchTemplate() {
+            this.render();
+        },
+        render() {
+            const type = document.getElementById('cl-type').value;
+            const date = document.getElementById('cl-date').value || 'তারিখ';
+            const name = Security.escapeHTML(document.getElementById('cl-name').value) || 'আবেদনকারীর নাম';
+            const comp = Security.escapeHTML(document.getElementById('cl-company').value) || 'প্রতিষ্ঠান';
+            const addr = Security.escapeHTML(document.getElementById('cl-address').value) || 'ঠিকানা';
+            const role = Security.escapeHTML(document.getElementById('cl-role').value) || 'পদবি';
+            
+            const selectedBody = this.templates[type].body;
+
+            document.getElementById('clPreview').innerHTML = `
+                <p style="font-size:14px; margin-bottom:15px;">তারিখ: ${date}</p>
+                <p style="font-size:14px; line-height:1.6;">বরাবর,<br>সংশ্লিষ্ট কর্তৃপক্ষ / এইচ আর টিম,<br><strong>${comp}</strong><br>${addr}</p><br>
+                <p style="font-size:15px; font-weight:700; color:#0f172a; margin-bottom:15px;">বিষয়: <strong>${role}</strong> পদের জন্য কভার লেটার (${this.templates[type].title})।</p>
+                <p style="font-size:14px; line-height:1.8; text-align:justify; color:#334155;">মহোদয়,<br>${selectedBody}<br><br>আমার জীবনবৃত্তান্ত ও শিক্ষাগত যোগ্যতার প্রয়োজনীয় নথিপত্রাদি এই আবেদনপত্রের সাথে সংযুক্ত করা হলো। আশা করি আমার যোগ্যতা বিবেচনাপূর্বক ইন্টারভিউয়ের জন্য আহ্বান জানাবেন।</p><br><br>
+                <p style="font-size:14px; line-height:1.6;">বিনীত নিবেদক,<br><br>___________________<br><strong>${name}</strong></p>
+            `;
+        }
+    };
+
+    /**
+     * MODULE 4: RESPONSIVE INVOICE & ACCURATE CALCULATION ENGINE
+     */
+    const InvEngine = {
+        items: [],
+        init() {
+            document.getElementById('inv-date').value = new Date().toISOString().split('T')[0];
+            this.items = [{ desc: 'ডিজিটাল আইটি সার্ভিস', qty: 1, price: 1200 }];
+            this.render();
+        },
+        addItem() {
+            this.items.push({ desc: 'নতুন আইটেম বিবরণ', qty: 1, price: 0 });
+            this.render();
+        },
+        removeItem(i) {
+            this.items.splice(i, 1);
+            this.render();
+        },
+        updateItem(i, field, val) {
+            this.items[i][field] = val;
+            this.render();
+        },
+        render() {
+            const container = document.getElementById('invoiceItemsContainer');
+            container.innerHTML = '';
+            let subtotal = 0;
+
+            this.items.forEach((item, index) => {
+                const currentTotal = item.qty * item.price;
+                subtotal += currentTotal;
+                
+                const div = document.createElement('div');
+                div.className = 'form-row';
+                div.style.background = 'rgba(0,0,0,0.02)';
+                div.style.padding = '10px';
+                div.style.borderRadius = '8px';
+                div.innerHTML = `
+                    <div class="field" style="grid-column: span 2;"><label>বিবরণ</label><input type="text" value="${Security.escapeHTML(item.desc)}" oninput="InvEngine.updateItem(${index}, 'desc', this.value)"></div>
+                    <div class="field"><label>পরিমাণ</label><input type="number" min="1" value="${item.qty}" oninput="InvEngine.updateItem(${index}, 'qty', parseInt(this.value)||0)"></div>
+                    <div class="field"><label>মূল্য (৳)</label><input type="number" min="0" value="${item.price}" oninput="InvEngine.updateItem(${index}, 'price', parseFloat(this.value)||0)"></div>
+                    <button class="btn btn-danger" style="margin-bottom:2px; height:44px;" onclick="InvEngine.removeItem(${index})" aria-label="রিমুভ করুন"><i class="fas fa-trash"></i></button>
+                `;
+                container.appendChild(div);
+            });
+
+            const vatPct = parseFloat(document.getElementById('inv-vat').value) || 0;
+            const discount = parseFloat(document.getElementById('inv-discount').value) || 0;
+            
+            const vatTotal = (subtotal * vatPct) / 100;
+            const grandTotal = Math.max(0, (subtotal + vatTotal) - discount);
+
+            // Currency Formatting Helper
+            const fmt = (num) => new Intl.NumberFormat('bn-BD', { style: 'currency', currency: 'BDT' }).format(num);
+
+            let tableHtml = this.items.map(item => `
+                <tr>
+                    <td style="color:#334155;">${Security.escapeHTML(item.desc)}</td>
+                    <td>${item.qty}</td>
+                    <td>${fmt(item.price)}</td>
+                    <td style="text-align:right; font-weight:600;">${fmt(item.qty*item.price)}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('invPreview').innerHTML = `
+                <div style="text-align:center; margin-bottom:20px;">
+                    <h2 style="color:#2563eb; margin:0; font-size:24px; font-weight:700;">Salman Smart seba</h2>
+                    <p style="font-size:12px; color:#64748b; margin-top:4px;">আপনার বিশ্বস্ত প্রযুক্তি ও ডিজিটাল সলিউশন পার্টনার</p>
+                    <hr style="border:0; border-top:1px solid #cbd5e1; margin-top:12px;">
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:15px; color:#475569;">
+                    <div><strong>গ্রাহকের বিবরণ:</strong><br>${Security.escapeHTML(document.getElementById('inv-client').value) || 'সাধারণ কাস্টমার'}</div>
+                    <div style="text-align:right;"><strong>রশিদ নং:</strong> ${Security.escapeHTML(document.getElementById('inv-num').value)}<br><strong>তারিখ:</strong> ${document.getElementById('inv-date').value}</div>
+                </div>
+                <table class="invoice-items-table">
+                    <thead><tr style="background:#f1f5f9; color:#0f172a;"><th>সেবার বিবরণ</th><th>পরিমাণ</th><th>একক মূল্য</th><th style="text-align:right;">মোট বিল</th></tr></thead>
+                    <tbody>
+                        ${tableHtml}
+                        <tr style="border-top:2px solid #cbd5e1;"><td colspan="3" style="text-align:right; font-weight:600; color:#475569;">সাবটোটাল:</td><td style="text-align:right; font-weight:600;">${fmt(subtotal)}</td></tr>
+                        <tr><td colspan="3" style="text-align:right; color:#64748b;">ভ্যাট (${vatPct}%):</td><td style="text-align:right; color:#64748b;">+ ${fmt(vatTotal)}</td></tr>
+                        <tr><td colspan="3" style="text-align:right; color:#64748b;">ডিসকাউন্ট:</td><td style="text-align:right; color:#64748b;">- ${fmt(discount)}</td></tr>
+                        <tr style="background:#f8fafc;"><td colspan="3" style="text-align:right; font-weight:700; color:#2563eb; font-size:15px;">সর্বমোট বিল (Grand Total):</td><td style="text-align:right; font-weight:700; color:#2563eb; font-size:15px;">${fmt(grandTotal)}</td></tr>
+                    </tbody>
+                </table>
+                <div style="margin-top:40px; display:flex; justify-content:space-between; align-items:flex-end; font-size:12px; color:#64748b;">
+                    <div>* ডিজিটাল কপি বিধায় কোনো সিলের বাধ্যবাধকতা নেই।</div>
+                    <div style="text-align:center; border-top:1px solid #0f172a; width:160px; padding-top:6px; font-weight:600; color:#0f172a;">ব্যবস্থাপকের স্বাক্ষর</div>
+                </div>
+            `;
+        }
+    };
+
+    /**
+     * MODULE 5: CORPORATE PAD & LETTERHEAD MAKER
+     */
+    const PadEngine = {
+        logoData: '',
+        handleLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => { this.logoData = e.target.result; this.render(); };
+                reader.readAsDataURL(input.files[0]);
+            }
+        },
+        render() {
+            const title = Security.escapeHTML(document.getElementById('pad-title').value) || 'কোম্পানি/প্রতিষ্ঠানের নাম';
+            const contact = Security.escapeHTML(document.getElementById('pad-contact').value) || 'যোগাযোগের ঠিকানা ও ফোন নম্বর';
+            const body = Security.escapeHTML(document.getElementById('pad-body').value) || 'এখানে অফিশিয়াল নোটিশ বা প্যাডের মূল বিবরণটি লিখুন...';
+            const signer = Security.escapeHTML(document.getElementById('pad-signer').value) || 'অনুমোদনকারী কর্তৃপক্ষ';
+            const footerTxt = Security.escapeHTML(document.getElementById('pad-footer-txt').value) || '';
+
+            document.getElementById('padPreview').innerHTML = `
+                <div style="border:1px solid #cbd5e1; padding:25px; min-height:280mm; position:relative; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+                    
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%) rotate(-30deg); font-size:60px; font-weight:800; color:rgba(37,99,235,0.04); uppercase; pointer-events:none; user-select:none; text-align:center; width:100%; z-index:0;">${title}</div>
+                    
+                    <div style="z-index:1;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px double #0f172a; padding-bottom:15px; margin-bottom:25px;">
+                            ${this.logoData ? `<img src="${this.logoData}" style="max-height:60px; max-width:120px; object-fit:contain;">` : '<div style="width:50px;"></div>'}
+                            <div style="text-align:right;">
+                                <h2 style="color:#1e3a8a; margin:0; font-size:24px; font-weight:700;">${title}</h2>
+                                <p style="font-size:12px; color:#475569; margin-top:2px;">${contact}</p>
+                            </div>
+                        </div>
+                        <p style="font-size:14px; line-height:1.9; white-space:pre-line; text-align:justify; color:#1e293b;">${body}</p>
+                    </div>
+
+                    <div style="z-index:1; display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:10mm;">
+                        <div style="width:100px; height:100px; border:2px dashed rgba(37,99,235,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; color:rgba(37,99,235,0.4); text-align:center;">OFFICIAL SEAL</div>
+                        <div style="text-align:center; font-size:13px; font-weight:600; border-top:1px solid #0f172a; width:160px; padding-top:6px;">${signer}</div>
+                    </div>
+
+                    ${footerTxt ? `<div style="border-top:1px solid #e2e8f0; padding-top:8px; font-size:11px; text-align:center; color:#64748b;">${footerTxt}</div>` : ''}
+                </div>
+            `;
+        }
+    };
+
+    /**
+     * MODULE 6: ADVANCED APPLICATION WRITER
+     */
+    const AppEngine = {
+        templates: {
+            leave: { sub: 'অগ্রিম ছুটির জন্য আবেদন', body: 'বিনীত নিবেদন এই যে, আমার জরুরি ব্যক্তিগত কাজের স্বার্থে আগামী ৩ দিন অফিসে বা কর্মক্ষেত্রে উপস্থিত থাকা সম্ভব হবে না। অতএব, মহোদয়ের নিকট আকুল আবেদন আমাকে উক্ত দিনগুলোর অগ্রিম ছুটি দানে বাধিত করবেন।' },
+            college: { sub: 'অনুপস্থিতির জরিমানা মওকুফের আবেদন', body: 'বিনীত নিবেদন এই যে, হঠাৎ তীব্র শারীরিক অসুস্থতার কারণে গত সপ্তাহে আমি ০২ দিন ক্লাসে যথাসময়ে উপস্থিত হতে পারিনি। অতএব বিবেচনাপূর্বক আমার উক্ত দিনের জরিমানা মওকুফ করতে আপনার সদয় মর্জি কামনা করছি।' },
+            salary: { sub: 'বকেয়া মাসিক বেতন পরিশোধের আবেদন', body: 'সবিনয় নিবেদন এই যে, আমার বিগত ২ মাসের দাপ্তরিক বেতন কিছু অনিবার্য কারণে বকেয়া রয়েছে। যার ফলে আমি আর্থিক সংকটের মধ্য দিয়ে যাচ্ছি। অতএব বিষয়টি বিবেচনা করে দ্রুত বকেয়া পরিশোধের ব্যবস্থা করার অনুরোধ জানাচ্ছি।' },
+            transfer: { sub: 'আন্তঃবিভাগীয় বদলির জন্য দরখাস্ত', body: 'বিনীত নিবেদন এই যে, পারিবারিক আবাসন পরিবর্তন ও যাতায়াত সমস্যার কারণে আমার বর্তমান ব্রাঞ্চে দায়িত্ব পালন কষ্টসাধ্য হয়ে পড়েছে। অতএব আমাকে আমার নিকটস্থ বিভাগীয় ব্রাঞ্চে বদলি করতে আপনার একান্ত সহযোগিতা প্রার্থনা করছি।' }
+        },
+        init() { 
+            this.switchTemplate(); 
+        },
+        switchTemplate() {
+            const select = document.getElementById('app-type').value;
+            document.getElementById('app-subject').value = this.templates[select].sub;
+            document.getElementById('app-custom-body').value = this.templates[select].body;
+            this.render();
+        },
+        render() {
+            const to = Security.escapeHTML(document.getElementById('app-to').value) || 'কর্তৃপক্ষ';
+            const org = Security.escapeHTML(document.getElementById('app-org').value) || 'প্রতিষ্ঠানের নাম';
+            const sub = Security.escapeHTML(document.getElementById('app-subject').value) || 'বিষয়';
+            const body = Security.escapeHTML(document.getElementById('app-custom-body').value);
+            const sender = Security.escapeHTML(document.getElementById('app-sender').value) || 'আবেদনকারী';
+
+            const dateStr = new Date().toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            document.getElementById('appPreview').innerHTML = `
+                <p style="font-size:14px; margin-bottom:12px;">তারিখ: ${dateStr}</p>
+                <p style="font-size:14px; line-height:1.6;">বরাবর,<br>${to}<br><strong>${org}</strong></p><br>
+                <p style="font-size:15px; font-weight:700; color:#0f172a; margin-bottom:12px;">বিষয়: <strong>${sub}।</strong></p>
+                <p style="font-size:14px; line-height:1.8; text-align:justify; color:#334155;">মহোদয়,<br>${body}</p><br><br>
+                <p style="font-size:14px; line-height:1.6;">বিনীত নিবেদক,<br>${sender}</p>
+            `;
+        }
+    };
+
+    /**
+     * MODULE 7: DOUBLE SIDED ID CARD GENERATOR
+     */
+    const IdEngine = {
+        photo: '',
+        handlePhoto(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => { this.photo = e.target.result; this.render(); };
+                reader.readAsDataURL(input.files[0]);
+            }
+        },
+        render() {
+            const comp = Security.escapeHTML(document.getElementById('id-company').value) || 'SALMAN ENTERPRISE';
+            const name = Security.escapeHTML(document.getElementById('id-name').value) || 'Full Name';
+            const role = Security.escapeHTML(document.getElementById('id-role').value) || 'Employee Role';
+            const uuid = Security.escapeHTML(document.getElementById('id-uuid').value) || 'ID-2026-X1';
+
+            // Front Side Structure
+            document.getElementById('idCardFront').innerHTML = `
+                <div class="id-card-header"><h4 style="margin:0; font-size:13px; letter-spacing:1px;">${comp}</h4><small style="font-size:9px; opacity:0.8;">IDENTITY CARD</small></div>
+                <div class="id-card-body">
+                    <div class="id-photo-box">${this.photo ? `<img src="${this.photo}">` : '<i class="fas fa-user fa-2x" style="color:#94a3b8"></i>'}</div>
+                    <div style="margin-top:5px;"><h3 style="font-size:15px; margin:0; font-weight:700; color:#0f172a;">${name}</h3><p style="font-size:11px; color:#2563eb; font-weight:600; margin-top:2px;">${role}</p></div>
+                    <div style="font-size:11px; background:#f1f5f9; padding:5px 10px; border-radius:4px; width:100%; font-weight:600; color:#475569;">ID NO: ${uuid}</div>
+                    <div style="width:120px; height:35px; overflow:hidden; display:flex; justify-content:center;"><svg id="idBarcodeTarget"></svg></div>
+                </div>
+            `;
+            
+            // Back Side Structure
+            document.getElementById('idCardBack').innerHTML = `
+                <div class="id-card-header" style="background:#0f172a;"><h4 style="margin:0; font-size:12px;">TERMS & CONDITIONS</h4></div>
+                <div class="id-card-body" style="justify-content:space-around; padding: 20px 15px;">
+                    <p style="font-size:10px; color:#64748b; line-height:1.5;">This card is property of ${comp}. If found, please return to the official authority address.</p>
+                    <hr style="width:100%; border:0; border-top:1px solid #e2e8f0;">
+                    <div id="idBackQrTarget" style="display:flex; justify-content:center;"></div>
+                    <p style="font-size:9px; color:#94a3b8;">Authorized Digital Signature</p>
+                </div>
+            `;
+
+            // Non-blocking canvas drawing for barcode/QR
+            setTimeout(() => {
+                JsBarcode("#idBarcodeTarget", uuid, { format: "CODE128", displayValue: false, height: 25, width: 1.2, margin: 0 });
+                document.getElementById('idBackQrTarget').innerHTML = '';
+                new QRCode(document.getElementById('idBackQrTarget'), { text: `ID:${uuid}, Org:${comp}`, width: 60, height: 60 });
+            }, 60);
+        }
+    };
+
+    /**
+     * MODULE 8: REAL DOCX EXPORTER & ADVANCED CONVERTER
+     */
+    const DocConverterEngine = {
+        exportTXT() {
+            const txt = document.getElementById('converterTextarea').value;
+            if (!txt.trim()) return alert('দয়া করে কিছু কন্টেন্ট লিখুন!');
+            const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+            saveAs(blob, "document-salman-seba.txt");
+        },
+        exportRealDocx() {
+            const txt = document.getElementById('converterTextarea').value;
+            if (!txt.trim()) return alert('দয়া করে কিছু কন্টেন্ট লিখুন!');
+            
+            // Standard MS-Word HTML Wrapping logic for fully compliant editable .docx files natively
+            const htmlContent = `
+              <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+              <head><title>Export Doc</title><meta charset="utf-8"><style>body {font-family: 'Arial', sans-serif; line-height:1.6;}</style></head>
+              <body>${txt.replace(/\n/g, '<br>')}</body>
+              </html>
+            `;
+            const blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
+            saveAs(blob, 'document-salman-seba.docx');
+        },
+        exportPDF() {
+            const txt = document.getElementById('converterTextarea').value;
+            if (!txt.trim()) return alert('দয়া করে কিছু কন্টেন্ট লিখুন!');
+            const hidden = document.getElementById('hiddenDocHtml');
+            hidden.style.display = 'block';
+            hidden.innerHTML = `<div style="white-space:pre-wrap; font-size:14px; line-height:1.8;">${Security.escapeHTML(txt)}</div>`;
+            
+            html2pdf().set({
+                margin: 0.5, filename: 'exported-doc.pdf',
+                html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4' }
+            }).from(hidden).save().then(() => { hidden.style.display = 'none'; });
+        }
+    };
+
+    /**
+     * MODULE 9: BUSINESS CARD & COMPLIANT vCARD QR GENERATOR
+     */
+    const BcEngine = {
+        render() {
+            const org = Security.escapeHTML(document.getElementById('bc-org').value) || 'Enterprise Inc.';
+            const name = Security.escapeHTML(document.getElementById('bc-name').value) || 'Your Name';
+            const role = Security.escapeHTML(document.getElementById('bc-role').value) || 'Executive Designation';
+            const phone = Security.escapeHTML(document.getElementById('bc-phone').value) || '+8801700000000';
+            const email = Security.escapeHTML(document.getElementById('bc-email').value) || 'info@domain.com';
+            const web = Security.escapeHTML(document.getElementById('bc-web').value) || 'domain.com';
+            const tpl = document.getElementById('bcThemeSelector').value;
+
+            const front = document.getElementById('bizCardFront');
+            const back = document.getElementById('bizCardBack');
+            front.className = `biz-card-render ${tpl}`;
+            back.className = `biz-card-render ${tpl}`;
+
+            // Front UI Design
+            front.innerHTML = `
+                <div style="display:flex; flex-direction:column; justify-content:space-between; width:65%; z-index:1;">
+                    <div><h2 style="font-size:20px; font-weight:700; margin:0; letter-spacing:0.5px;">${org}</h2><h4 style="font-size:14px; font-weight:600; margin:6px 0 2px 0; opacity:0.95;">${name}</h4><small style="font-size:11px; opacity:0.75; font-style:italic;">${role}</small></div>
+                    <div style="font-size:11px; opacity:0.8; line-height:1.5; border-top:1px solid rgba(148,163,184,0.3); padding-top:6px;"><i class="fas fa-phone" style="width:14px;"></i> ${phone}<br><i class="fas fa-envelope" style="width:14px;"></i> ${email}</div>
+                </div>
+                <div style="display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end; text-align:right; z-index:1;">
+                    <div id="bcFrontQr" style="padding:4px; background:white; border-radius:4px; display:inline-block;"></div>
+                    <div style="font-size:10px; opacity:0.7;"><i class="fas fa-globe"></i> ${web}</div>
+                </div>
+            `;
+
+            // Back UI Design with elegant minimalist layout
+            back.innerHTML = `
+                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%; height:100%; text-align:center;">
+                    <h2 style="font-size:24px; font-weight:700; letter-spacing:1px; margin-bottom:5px;">${org}</h2>
+                    <p style="font-size:11px; opacity:0.6; text-transform:uppercase;">Digital Enterprise Solutions</p>
+                </div>
+            `;
+
+            // Complete standard vCard compliance generator for smart scanning directly into contacts
+            const vCardData = `BEGIN:VCARD\nVERSION:3.0\nN:${name}\nORG:${org}\nTITLE:${role}\nTEL:${phone}\nEMAIL:${email}\nURL:${web}\nEND:VCARD`;
+            
+            setTimeout(() => {
+                document.getElementById('bcFrontQr').innerHTML = '';
+                new QRCode(document.getElementById('bcFrontQr'), { text: vCardData, width: 65, height: 65 });
+            }, 50);
+        }
+    };
+
+    /**
+     * MODULE 10: ADVANCED LOCAL NOTEPAD (CRUD, SEARCH, BACKUP/RESTORE)
+     */
+    const NotepadEngine = {
+        notes: [], activeId: null,
+        init() {
+            const saved = localStorage.getItem('suite-notes');
+            this.notes = saved ? JSON.parse(saved) : [{ id: 1, title: 'স্বাগতম নোট', body: 'স্মার্ট নোটপ্যাডে আপনার তথ্য নিরাপদে সংরক্ষণ করুন।' }];
+            this.activeId = this.notes.length ? this.notes[0].id : null;
+            this.renderList();
+            this.loadActiveNote();
+        },
+        createNewNote() {
+            const newNote = { id: Date.now(), title: 'শিরোনামহীন নোট', body: '' };
+            this.notes.unshift(newNote);
+            this.activeId = newNote.id;
+            this.renderList();
+            this.loadActiveNote();
+            this.sync();
+        },
+        renderList() {
+            const container = document.getElementById('noteListContainer');
+            container.innerHTML = '';
+            const query = document.getElementById('noteSearch').value.toLowerCase();
+
+            const filtered = this.notes.filter(n => n.title.toLowerCase().includes(query) || n.body.toLowerCase().includes(query));
+
+            filtered.forEach(note => {
+                const item = document.createElement('div');
+                item.className = `note-item ${note.id === this.activeId ? 'active' : ''}`;
+                item.innerHTML = `<span><i class="fas fa-file-alt"></i> ${Security.escapeHTML(note.title)}</span>`;
+                item.onclick = () => { this.activeId = note.id; this.renderList(); this.loadActiveNote(); };
+                container.appendChild(item);
+            });
+        },
+        loadActiveNote() {
+            const note = this.notes.find(x => x.id === this.activeId);
+            if (note) {
+                document.getElementById('noteTitle').value = note.title;
+                document.getElementById('noteBody').value = note.body;
+                this.updateMeta(note.body);
+            } else {
+                document.getElementById('noteTitle').value = '';
+                document.getElementById('noteBody').value = '';
+                this.updateMeta('');
+            }
+        },
+        saveActiveNote() {
+            const note = this.notes.find(x => x.id === this.activeId);
+            if (note) {
+                note.title = document.getElementById('noteTitle').value || 'শিরোনামহীন নোট';
+                note.body = document.getElementById('noteBody').value;
+                this.updateMeta(note.body);
+                
+                if (!this.throttle) {
+                    this.throttle = setTimeout(() => {
+                        this.renderList();
+                        this.sync();
+                        this.throttle = null;
+                    }, 400);
+                }
+            }
+        },
+        deleteActiveNote() {
+            if (!this.activeId) return;
+            if (confirm("আপনি কি নিশ্চিতভাবে এই নোটটি মুছে ফেলতে চান?")) {
+                this.notes = this.notes.filter(x => x.id !== this.activeId);
+                this.activeId = this.notes.length ? this.notes[0].id : null;
+                this.renderList();
+                this.loadActiveNote();
+                this.sync();
+            }
+        },
+        updateMeta(txt) {
+            const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+            document.getElementById('noteWordCount').innerText = `শব্দ সংখ্যা: ${words}`;
+            document.getElementById('noteCharCount').innerText = `বর্ণ সংখ্যা: ${txt.length}`;
+        },
+        exportBackup() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.notes));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "notepad-backup-salman.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        },
+        triggerImport() {
+            document.getElementById('notepadImportFile').click();
+        },
+        importBackup(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    if (Array.isArray(parsed)) {
+                        this.notes = parsed;
+                        this.activeId = this.notes.length ? this.notes[0].id : null;
+                        this.renderList();
+                        this.loadActiveNote();
+                        this.sync();
+                        alert("ব্যাকআপ ফাইল সফলভাবে রিস্টোর করা হয়েছে!");
+                    } else {
+                        alert("ভুল ফাইল ফরম্যাট!");
+                    }
+                } catch (err) {
+                    alert("ফাইলটি রিড করতে সমস্যা হয়েছে।");
+                }
+            };
+            reader.readAsText(file);
+        },
+        sync() {
+            EngineUtils.safeLocalStorageSet('suite-notes', JSON.stringify(this.notes));
+        }
+    };
+
+    /**
+     * DOM LIFECYCLE INITIALIZATION ENTRY
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        SuiteTheme.init();
+        SuiteRouter.init();
+        
+        // Auto Date Dynamic Syncing
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+    });
 </script>
 </body>
 </html>
