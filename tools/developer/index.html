@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Tools Hub | Salman Farshi</title>
+    <meta name="description" content="Developer Tools Hub with JSON Formatter, Base64 Encoder, Regex Tester, Color Picker, UUID Generator, Hash Generator and more.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Developer Tools Hub | Salman Farshi">
+    <meta property="og:description" content="Professional Developer Utility Collection by Salman Farshi.">
+    <meta property="og:url" content="https://salmanfarshi1630.github.io/tools/developer/index.html">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Developer Tools Hub | Salman Farshi">
+    <meta name="twitter:description" content="Professional Developer Utility Collection by Salman Farshi.">
+    
+    <link rel="canonical" href="https://salmanfarshi1630.github.io/tools/developer/index.html">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Developer Tools Hub",
+      "url": "https://salmanfarshi1630.github.io/tools/developer/index.html",
+      "description": "Developer Tools Hub with JSON Formatter, Base64 Encoder, Regex Tester, Color Picker, UUID Generator, Hash Generator and more.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "Salman Farshi"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+            --inner-bg: #ffffff;
+            --inner-border: #cbd5e1;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-hover: #60a5fa;
+            --inner-bg: #0f172a;
+            --inner-border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Style */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-btn, .theme-toggle {
+            background: var(--inner-bg);
+            border: 1px solid var(--inner-border);
+            color: var(--text-main);
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .home-btn:hover, .theme-toggle:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .title-area {
+            text-align: center;
+        }
+
+        .title-area h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-area p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Search & Stats Area */
+        .controls-area {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border-radius: 50px;
+            border: 1px solid var(--inner-border);
+            background: var(--inner-bg);
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Dashboard Rows */
+        .dashboard-row {
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .dashboard-row.active {
+            display: block;
+        }
+
+        .row-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mini-grid {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .mini-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .mini-card:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        /* Main Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tool Card Base */
+        .tool-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transform: translateY(0);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08);
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .tool-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .tool-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .tool-title h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .tool-title p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .fav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .fav-btn.active {
+            color: #f59e0b;
+        }
+
+        /* Workspace Elements */
+        .workspace {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        textarea, input[type="text"], select {
+            width: 100%;
+            background: var(--inner-bg);
+            border: 1px solid var(--inner-border);
+            color: var(--text-main);
+            border-radius: 10px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 13px;
+            outline: none;
+            resize: vertical;
+        }
+
+        textarea:focus, input[type="text"]:focus, select:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--inner-bg);
+            border: 1px solid var(--inner-border);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: var(--inner-border);
+        }
+
+        .error-text {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: -5px;
+            display: none;
+        }
+
+        /* Toast Grid Style Notifications */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        /* Tool Specific CSS */
+        .password-options, .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .chk-lbl {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        .color-picker-workspace {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .color-preview {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            border: 2px solid var(--inner-border);
+            background: #2563eb;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-top">
+            <a href="../../index.html" class="home-btn"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
+            <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i> মোড চেঞ্জ</button>
+        </div>
+        <div class="title-area">
+            <h1>Developer Tools Hub</h1>
+            <p>Professional Developer Utility Collection</p>
+        </div>
+        <div class="controls-area">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="global-search" placeholder="টুলস খুঁজুন (যেমন: JSON, Password, Base64...)" oninput="handleSearch()">
+            </div>
+        </div>
+    </header>
+
+    <div id="recent-row" class="dashboard-row">
+        <div class="row-title"><i class="fas fa-history"></i> সম্প্রতি ব্যবহৃত টুলস</div>
+        <div id="recent-container" class="mini-grid"></div>
+    </div>
+
+    <div id="dark-fav-row" class="dashboard-row">
+        <div class="row-title"><i class="fas fa-star" style="color:#f59e0b"></i> আপনার প্রিয় টুলস</div>
+        <div id="favorite-container" class="mini-grid"></div>
+    </div>
+
+    <div class="tools-grid" id="main-tools-grid">
+
+        <div class="tool-card" id="tool-json" data-keywords="json formatter validator minify layout print data">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-code"></i></div>
+                    <div class="tool-title">
+                        <h2>JSON Formatter & Validator</h2>
+                        <p>Format, minify and validate JSON code data</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-json')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <textarea id="json-input" rows="5" placeholder="এখানে কাঁচা JSON পেস্ট করুন..."></textarea>
+                <div id="json-error" class="error-text">invalid JSON format!</div>
+                <textarea id="json-output" rows="5" readonly placeholder="আউটপুট এখানে দেখা যাবে..."></textarea>
+                <div class="btn-group">
+                    <button class="btn" onclick="processJSON('format')"><i class="fas fa-align-left"></i> Pretty Print</button>
+                    <button class="btn btn-secondary" onclick="processJSON('minify')">Minify</button>
+                    <button class="btn btn-secondary" onclick="copyData('json-output')"><i class="fas fa-copy"></i> কপি</button>
+                    <button class="btn btn-secondary" onclick="downloadFile('json-output', 'tools.json')"><i class="fas fa-download"></i> ডাউনলোড</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-base64" data-keywords="base64 encode decode text crypto utility">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-link"></i></div>
+                    <div class="tool-title">
+                        <h2>Base64 Encoder / Decoder</h2>
+                        <p>Easily encode or decode text strings efficiently</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-base64')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <textarea id="base64-input" rows="4" placeholder="টেক্সট অথবা Base64 কোড দিন..."></textarea>
+                <textarea id="base64-output" rows="4" readonly placeholder="ফলাফল এখানে আসবে..."></textarea>
+                <div class="btn-group">
+                    <button class="btn" onclick="processBase64(true)">Encode</button>
+                    <button class="btn btn-secondary" onclick="processBase64(false)">Decode</button>
+                    <button class="btn btn-secondary" onclick="copyData('base64-output')"><i class="fas fa-copy"></i> কপি</button>
+                    <button class="btn btn-secondary" onclick="resetTool(['base64-input','base64-output'])">রিসেট</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-url" data-keywords="url encode decode link component text web">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-globe"></i></div>
+                    <div class="tool-title">
+                        <h2>URL Encoder / Decoder</h2>
+                        <p>Encode or decode safe URL component parameters</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-url')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <textarea id="url-input" rows="4" placeholder="ইউআরএল বা সাধারণ টেক্সট লিখুন..."></textarea>
+                <textarea id="url-output" rows="4" readonly placeholder="ফলাফল এখানে আসবে..."></textarea>
+                <div class="btn-group">
+                    <button class="btn" onclick="processURL(true)">Encode URL</button>
+                    <button class="btn btn-secondary" onclick="processURL(false)">Decode URL</button>
+                    <button class="btn btn-secondary" onclick="copyData('url-output')"><i class="fas fa-copy"></i> কপি</button>
+                    <button class="btn btn-secondary" onclick="resetTool(['url-input','url-output'])">রিসেট</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-uuid" data-keywords="uuid guid generator random unique id key">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-fingerprint"></i></div>
+                    <div class="tool-title">
+                        <h2>UUID Generator</h2>
+                        <p>Generate secure version 4 random unique UUIDs</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-uuid')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <label>কতগুলো আইডি জেনারেট করবেন?</label>
+                <select id="uuid-count">
+                    <option value="1">1টি</option>
+                    <option value="5">5টি</option>
+                    <option value="10">10টি</option>
+                </select>
+                <textarea id="uuid-output" rows="5" readonly placeholder="জেনারেটেড আইডি এখানে দেখা যাবে..."></textarea>
+                <div class="btn-group">
+                    <button class="btn" onclick="generateUUID()"><i class="fas fa-cogs"></i> Generate UUID</button>
+                    <button class="btn btn-secondary" onclick="copyData('uuid-output')"><i class="fas fa-copy"></i> কপি</button>
+                    <button class="btn btn-secondary" onclick="downloadFile('uuid-output', 'uuids.txt')"><i class="fas fa-download"></i> ডাউনলোড</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-password" data-keywords="password generator secure strength options key crypto">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-key"></i></div>
+                    <div class="tool-title">
+                        <h2>Password Generator</h2>
+                        <p>Create highly secure and complex passwords instantly</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-password')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <label>পাসওয়ার্ডের দৈর্ঘ্য: <span id="pass-length-val">12</span></label>
+                <input type="range" id="pass-length" min="6" max="32" value="12" oninput="document.getElementById('pass-length-val').innerText=this.value">
+                <div class="password-options">
+                    <label class="chk-lbl"><input type="checkbox" id="pass-upper" checked> Uppercase (A-Z)</label>
+                    <label class="chk-lbl"><input type="checkbox" id="pass-lower" checked> Lowercase (a-z)</label>
+                    <label class="chk-lbl"><input type="checkbox" id="pass-num" checked> Numbers (0-9)</label>
+                    <label class="chk-lbl"><input type="checkbox" id="pass-sym" checked> Symbols (#$%&)</label>
+                </div>
+                <input type="text" id="pass-output" readonly placeholder="পাসওয়ার্ড এখানে জেনারেট হবে...">
+                <div id="pass-strength" style="font-size:12px; font-weight:600; text-align:right;"></div>
+                <div class="btn-group">
+                    <button class="btn" onclick="generatePassword()">Generate Password</button>
+                    <button class="btn btn-secondary" onclick="copyData('pass-output')"><i class="fas fa-copy"></i> কপি</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-hash" data-keywords="hash generator md5 sha1 sha256 sha512 encryption crypto text">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="tool-title">
+                        <h2>Hash Generator</h2>
+                        <p>Generate cryptographic MD5, SHA256 hashes instantly</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-hash')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <textarea id="hash-input" rows="3" placeholder="যেকোনো টেক্সট টাইপ করুন (Live Hash)..." oninput="runLiveHash()"></textarea>
+                <label>আউটপুট টাইপ সিলেক্ট করুন</label>
+                <select id="hash-algo" onchange="runLiveHash()">
+                    <option value="SHA256">SHA-256</option>
+                    <option value="MD5">MD5</option>
+                    <option value="SHA1">SHA-1</option>
+                    <option value="SHA512">SHA-512</option>
+                </select>
+                <input type="text" id="hash-output" readonly placeholder="ক্রিপ্টোগ্রাফিক হ্যাশ...">
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="copyData('hash-output')"><i class="fas fa-copy"></i> কপি</button>
+                    <button class="btn btn-secondary" onclick="resetTool(['hash-input','hash-output'])">রিসেট</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-color" data-keywords="color picker converter hex rgb rgba hsl css web design">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-palette"></i></div>
+                    <div class="tool-title">
+                        <h2>Color Picker & Converter</h2>
+                        <p>Pick colors and convert between HEX, RGB and HSL formats</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-color')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <div class="color-picker-workspace">
+                    <input type="color" id="color-picker" value="#2563eb" style="width:60px; height:45px; cursor:pointer;" oninput="syncColorOutputs(this.value)">
+                    <div id="color-box" class="color-preview"></div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div><label>HEX</label><input type="text" id="color-hex" readonly></div>
+                    <div><label>RGB</label><input type="text" id="color-rgb" readonly></div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div><label>RGBA</label><input type="text" id="color-rgba" readonly></div>
+                    <div><label>HSL</label><input type="text" id="color-hsl" readonly></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" onclick="copyData('color-hex')">Copy HEX</button>
+                    <button class="btn btn-secondary" onclick="copyData('color-rgb')">Copy RGB</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-regex" data-keywords="regex tester regular expression match match text syntax">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-search-plus"></i></div>
+                    <div class="tool-title">
+                        <h2>Regex Tester</h2>
+                        <p>Test regex patterns with string data instantly</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-regex')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <label>Regex Pattern (যেমন: [a-z0-9])</label>
+                <input type="text" id="regex-pattern" placeholder="pattern এখানে দিন..." oninput="runRegex()">
+                <label>টেস্ট করার মূল টেক্সট</label>
+                <textarea id="regex-text" rows="3" placeholder="টেক্সট এখানে দিন..." oninput="runRegex()"></textarea>
+                <div id="regex-result-info" style="font-size:12px; font-weight:600;"></div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="resetTool(['regex-pattern','regex-text'])">রিসেট</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-escape" data-keywords="html escape unescape encode decode entities tags">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-code-branch"></i></div>
+                    <div class="tool-title">
+                        <h2>HTML Escape / Unescape</h2>
+                        <p>Escape raw HTML tags characters for safe usage</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-escape')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <textarea id="escape-input" rows="4" placeholder="HTML কোড এখানে পেস্ট করুন..."></textarea>
+                <textarea id="escape-output" rows="4" readonly placeholder="ফলাফল এখানে আসবে..."></textarea>
+                <div class="btn-group">
+                    <button class="btn" onclick="processEscape(true)">Escape HTML</button>
+                    <button class="btn btn-secondary" onclick="processEscape(false)">Unescape HTML</button>
+                    <button class="btn btn-secondary" onclick="copyData('escape-output')"><i class="fas fa-copy"></i> কপি</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card" id="tool-timestamp" data-keywords="timestamp converter epoch date time unix calculations">
+            <div class="tool-header">
+                <div class="tool-info">
+                    <div class="tool-icon"><i class="fas fa-clock"></i></div>
+                    <div class="tool-title">
+                        <h2>Timestamp Converter</h2>
+                        <p>Convert Unix Epoch timestamps to human dates</p>
+                    </div>
+                </div>
+                <button class="fav-btn" onclick="toggleFav('tool-timestamp')"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="workspace">
+                <label>Unix Timestamp</label>
+                <input type="text" id="time-input" placeholder="যেমন: 1719876543">
+                <label>Human readable Date</label>
+                <input type="text" id="time-output" readonly placeholder="ফলাফল এখানে আসবে...">
+                <div class="btn-group">
+                    <button class="btn" onclick="convertTimestamp()">Convert Timestamp</button>
+                    <button class="btn btn-secondary" onclick="setCurrentTimestamp()">Current Time</button>
+                    <button class="btn btn-secondary" onclick="copyData('time-output')"><i class="fas fa-copy"></i> কপি</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+<footer>
+    <p>Generated by <a href="https://salmanfarshi1630.github.io" target="_blank">Salman Farshi</a></p>
+    <p>&copy; 2026 Salman Farshi. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // System Core Configurations & Logic
+    let favorites = JSON.parse(localStorage.getItem('dev_hub_favs')) || [];
+    let recents = JSON.parse(localStorage.getItem('dev_hub_recents')) || [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Init state configurations
+        syncColorOutputs("#2563eb");
+        applyStoredFavoritesUI();
+        renderRecentDashboard();
+        renderFavoriteDashboard();
+        
+        // Add listeners to track usage for recent tools logs
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('focusin', () => trackRecent(card.id));
+            card.addEventListener('click', () => trackRecent(card.id));
+        });
+    });
+
+    // Theme Engine
+    function toggleTheme() {
+        const html = document.documentElement;
+        const toggleBtn = document.querySelector('.theme-toggle i');
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            toggleBtn.className = 'fas fa-sun';
+            showToast('ডার্ক মোড অ্যাক্টিভেটেড!');
+        } else {
+            html.setAttribute('data-theme', 'light');
+            toggleBtn.className = 'fas fa-moon';
+            showToast('লাইট মোড অ্যাক্টিভেটেড!');
+        }
+    }
+
+    // UI Toast Manager
+    function showToast(msg) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="fas fa-check-circle" style="color:#10b981"></i> <span>${msg}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
+    }
+
+    // Live Instant Search Engine
+    function handleSearch() {
+        const query = document.getElementById('global-search').value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.tool-card');
+        
+        cards.forEach(card => {
+            const keywords = card.getAttribute('data-keywords') || '';
+            const title = card.querySelector('.tool-title h2').innerText.toLowerCase();
+            if (title.includes(query) || keywords.includes(query)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Copy & Clipboard Wrapper
+    function copyData(elementId) {
+        const target = document.getElementById(elementId);
+        if(!target.value) {
+            showToast('কপি করার মতো কিছু নেই!');
+            return;
+        }
+        navigator.clipboard.writeText(target.value).then(() => {
+            showToast('ক্লিপবোর্ডে কপি করা হয়েছে!');
+        });
+    }
+
+    // Generic Exporter Core
+    function downloadFile(elementId, filename) {
+        const data = document.getElementById(elementId).value;
+        if(!data) return;
+        const blob = new Blob([data], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('ফাইল সফলভাবে ডাউনলোড হয়েছে!');
+    }
+
+    // Reset fields easily
+    function resetTool(idsArray) {
+        idsArray.forEach(id => document.getElementById(id).value = '');
+        showToast('ইনপুট পরিষ্কার করা হয়েছে!');
+    }
+
+    /* Favoriting Framework logic */
+    function toggleFav(id) {
+        const idx = favorites.indexOf(id);
+        if (idx > -1) {
+            favorites.splice(idx, 1);
+            showToast('প্রিয় তালিকা থেকে সরানো হয়েছে');
+        } else {
+            favorites.push(id);
+            showToast('প্রিয় তালিকায় যুক্ত করা হয়েছে');
+        }
+        localStorage.setItem('dev_hub_favs', JSON.stringify(favorites));
+        applyStoredFavoritesUI();
+        renderFavoriteDashboard();
+    }
+
+    function applyStoredFavoritesUI() {
+        document.querySelectorAll('.tool-card').forEach(card => {
+            const btn = card.querySelector('.fav-btn');
+            if(favorites.includes(card.id)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function renderFavoriteDashboard() {
+        const container = document.getElementById('favorite-container');
+        const row = document.getElementById('dark-fav-row');
+        container.innerHTML = '';
+        if(favorites.length === 0) {
+            row.classList.remove('active');
+            return;
+        }
+        row.classList.add('active');
+        favorites.forEach(id => {
+            const originCard = document.getElementById(id);
+            if(!originCard) return;
+            const title = originCard.querySelector('.tool-title h2').innerText;
+            const item = document.createElement('div');
+            item.className = 'mini-card';
+            item.innerHTML = `<i class="fas fa-star" style="color:#f59e0b"></i> ${title}`;
+            item.onclick = () => document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            container.appendChild(item);
+        });
+    }
+
+    /* Tracking Framework logic for Recent Tools */
+    function trackRecent(id) {
+        recents = recents.filter(x => x !== id);
+        recents.unshift(id);
+        if(recents.length > 3) recents.pop();
+        localStorage.setItem('dev_hub_recents', JSON.stringify(recents));
+        renderRecentDashboard();
+    }
+
+    function renderRecentDashboard() {
+        const container = document.getElementById('recent-container');
+        const row = document.getElementById('recent-row');
+        container.innerHTML = '';
+        if(recents.length === 0) {
+            row.classList.remove('active');
+            return;
+        }
+        row.classList.add('active');
+        recents.forEach(id => {
+            const originCard = document.getElementById(id);
+            if(!originCard) return;
+            const title = originCard.querySelector('.tool-title h2').innerText;
+            const item = document.createElement('div');
+            item.className = 'mini-card';
+            item.innerHTML = `<i class="fas fa-history" style="color:#2563eb"></i> ${title}`;
+            item.onclick = () => document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            container.appendChild(item);
+        });
+    }
+
+    /* --------------------------
+       10 TOOLS FUNCTIONAL LOGIC
+    ----------------------------- */
+
+    // 1. JSON Formatter
+    function processJSON(mode) {
+        const input = document.getElementById('json-input').value;
+        const errBlock = document.getElementById('json-error');
+        errBlock.style.display = 'none';
+        try {
+            if(!input.trim()) return;
+            const obj = JSON.parse(input);
+            if(mode === 'format') {
+                document.getElementById('json-output').value = JSON.stringify(obj, null, 4);
+            } else {
+                document.getElementById('json-output').value = JSON.stringify(obj);
+            }
+            showToast('JSON প্রসেস সম্পন্ন!');
+        } catch(e) {
+            errBlock.style.display = 'block';
+        }
+    }
+
+    // 2. Base64 Encoder/Decoder
+    function processBase64(isEncode) {
+        const input = document.getElementById('base64-input').value;
+        const out = document.getElementById('base64-output');
+        try {
+            if(!input.trim()) return;
+            if(isEncode) {
+                out.value = btoa(unescape(encodeURIComponent(input)));
+            } else {
+                out.value = decodeURIComponent(escape(atob(input)));
+            }
+            showToast('সফলভাবে রুপান্তরিত হয়েছে!');
+        } catch(e) {
+            out.value = "ভুল ইনপুট! ডাটা ডিকোড করা সম্ভব হয়নি।";
+        }
+    }
+
+    // 3. URL Encoder/Decoder
+    function processURL(isEncode) {
+        const input = document.getElementById('url-input').value;
+        const out = document.getElementById('url-output');
+        if(!input.trim()) return;
+        try {
+            if(isEncode) {
+                out.value = encodeURIComponent(input);
+            } else {
+                out.value = decodeURIComponent(input);
+            }
+            showToast('URL প্রসেস সম্পন্ন!');
+        } catch(e) {
+            out.value = "ভুল ইউআরএল ফরম্যাট!";
+        }
+    }
+
+    // 4. UUID Generator
+    function generateUUID() {
+        const count = parseInt(document.getElementById('uuid-count').value);
+        let results = [];
+        for(let i=0; i<count; i++) {
+            results.push('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            }));
+        }
+        document.getElementById('uuid-output').value = results.join('\n');
+        showToast('নতুন UUID তৈরি হয়েছে!');
+    }
+
+    // 5. Password Generator
+    function generatePassword() {
+        const length = document.getElementById('pass-length').value;
+        const upper = document.getElementById('pass-upper').checked;
+        const lower = document.getElementById('pass-lower').checked;
+        const num = document.getElementById('pass-num').checked;
+        const sym = document.getElementById('pass-sym').checked;
+
+        let charPool = "";
+        if(upper) charPool += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if(lower) charPool += "abcdefghijklmnopqrstuvwxyz";
+        if(num) charPool += "0123456789";
+        if(sym) charPool += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+        if(!charPool) {
+            showToast('কমপক্ষে একটি অপশন সিলেক্ট করুন!');
+            return;
+        }
+
+        let pass = "";
+        for(let i=0; i<length; i++) {
+            pass += charPool.charAt(Math.floor(Math.random() * charPool.length));
+        }
+        document.getElementById('pass-output').value = pass;
+
+        // Strength Calculation Indicator logic
+        const indicator = document.getElementById('pass-strength');
+        if(length < 10) { indicator.innerText = "দুর্বল পাসওয়ার্ড ❌"; indicator.style.color = "var(--danger)"; }
+        else if(length < 15) { indicator.innerText = "মাঝারি নিরাপদ ⚠️"; indicator.style.color = "#f59e0b"; }
+        else { indicator.innerText = "অত্যন্ত শক্তিশালী পাসওয়ার্ড  💪"; indicator.style.color = "var(--success)"; }
+    }
+
+    // 6. Hash Generator
+    function runLiveHash() {
+        const text = document.getElementById('hash-input').value;
+        const algo = document.getElementById('hash-algo').value;
+        const out = document.getElementById('hash-output');
+        if(!text) { out.value = ''; return; }
+        
+        if(algo === 'SHA256') out.value = CryptoJS.SHA256(text);
+        else if(algo === 'MD5') out.value = CryptoJS.MD5(text);
+        else if(algo === 'SHA1') out.value = CryptoJS.SHA1(text);
+        else if(algo === 'SHA512') out.value = CryptoJS.SHA512(text);
+    }
+
+    // 7. Color Picker & Converter
+    function syncColorOutputs(hex) {
+        document.getElementById('color-box').style.background = hex;
+        document.getElementById('color-hex').value = hex.toUpperCase();
+        
+        // Convert to RGB
+        let c = hex.substring(1);
+        let rgbInt = parseInt(c, 16);
+        let r = (rgbInt >> 16) & 255;
+        let g = (rgbInt >> 8) & 255;
+        let b = rgbInt & 255;
+        
+        document.getElementById('color-rgb').value = `rgb(${r}, ${g}, ${b})`;
+        document.getElementById('color-rgba').value = `rgba(${r}, ${g}, ${b}, 1.0)`;
+        
+        // Convert to HSL
+        r /= 255; g /= 255; b /= 255;
+        let max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let h, s, l = (max + min) / 2;
+        if(max == min){ h = s = 0; } else {
+            let d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch(max){
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        document.getElementById('color-hsl').value = `hsl(${Math.round(h*360)}, ${Math.round(s*100)}%, ${Math.round(l*100)}%)`;
+    }
+
+    // 8. Regex Tester
+    function runRegex() {
+        const pattern = document.getElementById('regex-pattern').value;
+        const text = document.getElementById('regex-text').value;
+        const info = document.getElementById('regex-result-info');
+        if(!pattern || !text) { info.innerText = ""; return; }
+        
+        try {
+            const regex = new RegExp(pattern, 'g');
+            const matches = text.match(regex);
+            if(matches) {
+                info.innerText = `মিল পাওয়া গেছে: ${matches.length}টি জায়গায়`;
+                info.style.color = "var(--success)";
+            } else {
+                info.innerText = "কোনো মিল পাওয়া যায়নি!";
+                info.style.color = "var(--danger)";
+            }
+        } catch(e) {
+            info.innerText = "ভুল Regex সিনট্যাক্স!";
+            info.style.color = "var(--danger)";
+        }
+    }
+
+    // 9. HTML Escape / Unescape
+    function processEscape(isEscape) {
+        const input = document.getElementById('escape-input').value;
+        const out = document.getElementById('escape-output');
+        if(isEscape) {
+            out.value = input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        } else {
+            out.value = input.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#039;/g, "'");
+        }
+        showToast('HTML প্রসেস সম্পন্ন!');
+    }
+
+    // 10. Timestamp Converter
+    function convertTimestamp() {
+        const input = document.getElementById('time-input').value.trim();
+        const out = document.getElementById('time-output');
+        if(!input) return;
+        
+        let date = new Date(parseInt(input) * 1000);
+        if(input.length > 11) date = new Date(parseInt(input)); // Handle milliseconds seamlessly
+        
+        if(isNaN(date.getTime())) {
+            out.value = "ভুল টাইমস্ট্যাম্প ফরম্যাট!";
+        } else {
+            out.value = date.toUTCString() + " / " + date.toLocaleString();
+            showToast('সফলভাবে কনভার্ট করা হয়েছে!');
+        }
+    }
+
+    function setCurrentTimestamp() {
+        const current = Math.floor(Date.now() / 1000);
+        document.getElementById('time-input').value = current;
+        convertTimestamp();
+    }
+</script>
+</body>
+</html>
