@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="bn" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salman Smart Seba | সালমান স্মার্ট সেবা - Emergency Digital Tools</title>
+    <meta name="description" content="বাংলাদেশের সাধারণ মানুষের জন্য একটি Complete Digital Service Platform">
+    
+    <!-- Google Fonts for Matching Main Website Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0D9488',
+                        secondary: '#0F172A',
+                    },
+                    fontFamily: {
+                        sans: ['"Hind Siliguri"', '"Poppins"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome Icons & Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
+    <!-- Custom Styling -->
+    <style>
+        body {
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+        }
+        .tool-card.active {
+            border-color: #0D9488;
+            background-color: rgba(13, 148, 136, 0.15);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
+        }
+        .drop-zone.dragover {
+            border-color: #0D9488;
+            background-color: rgba(13, 148, 136, 0.2);
+        }
+        @media print {
+            body * { visibility: hidden; }
+            #ageReportArea, #ageReportArea *, #tool-notepad, #tool-notepad * { visibility: visible; }
+            #ageReportArea { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header Section with Centered Title, Left Home, Right Theme Toggle -->
+    <header class="bg-white dark:bg-slate-800 shadow-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            
+            <!-- Left Side: Home Button -->
+            <div class="flex-1 text-left">
+                <a href="https://salmanfarshi1630.github.io/" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-900 hover:text-teal-600 transition text-xs font-bold border border-gray-200 dark:border-gray-600">
+                    <i class="fa-solid fa-house text-teal-600 dark:text-teal-400"></i> 
+                    <span>Home | হোম</span>
+                </a>
+            </div>
+
+            <!-- Middle: Centered Branding Title -->
+            <div class="text-center flex-2">
+                <p class="text-xs text-teal-600 dark:text-teal-400 font-serif tracking-widest mb-0.5">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                <h1 class="text-base sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white tracking-wide leading-tight">Salman Smart Seba | সালমান স্মার্ট সেবা</h1>
+                <p class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 hidden sm:block">Professional Emergency Digital Service Platform | পেশাদার ইমার্জেন্সি ডিজিটাল সেবা</p>
+            </div>
+
+            <!-- Right Side: Dark / Light Theme Toggle -->
+            <div class="flex-1 text-right">
+                <button id="themeToggleBtn" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-900 hover:text-teal-600 transition text-xs font-bold border border-gray-200 dark:border-gray-600">
+                    <i class="fa-solid fa-moon dark:hidden text-indigo-600"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
+                    <span id="themeText" class="hidden sm:inline">Light | লাইট</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-4 py-6">
+        
+        <!-- Tool Navigation Cards Grid (2 per row on Mobile, 3 on tablet, 5 on desktop) -->
+        <section id="toolsMenu" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-8">
+            <button onclick="switchTool('compressor', this)" class="tool-card active p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-file-image text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">Image Compressor</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">ছবি কম্প্রেসর</span>
+            </button>
+            <button onclick="switchTool('resizer', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-expand text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">Image Resizer</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">ছবি রিসাইজার</span>
+            </button>
+            <button onclick="switchTool('cropper', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-crop-simple text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">Image Crop Tool</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">ছবি কাটার টুল</span>
+            </button>
+            <button onclick="switchTool('jpg2pdf', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-file-pdf text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">JPG to PDF</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">JPG থেকে PDF</span>
+            </button>
+            <button onclick="switchTool('pdf2jpg', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-sharp fa-solid fa-images text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">PDF to JPG</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">PDF থেকে JPG</span>
+            </button>
+            <button onclick="switchTool('ageCalc', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-cake-candles text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">Age Calculator</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">বয়স ক্যালকুলেটর</span>
+            </button>
+            <button onclick="switchTool('qrGen', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-qrcode text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">QR Generator</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">কিউআর জেনারেটর</span>
+            </button>
+            <button onclick="switchTool('passGen', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-key text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">Password Gen</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">পাসওয়ার্ড জেনারেটর</span>
+            </button>
+            <button onclick="switchTool('signature', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-signature text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">Digital Signature</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">ডিজিটাল স্বাক্ষর</span>
+            </button>
+            <button onclick="switchTool('notepad', this)" class="tool-card p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-center transition flex flex-col items-center justify-center gap-1">
+                <i class="fa-solid fa-note-sticky text-2xl text-teal-600 dark:text-teal-400"></i>
+                <span class="text-xs font-bold">Smart Notepad</span>
+                <span class="text-[10px] text-gray-500 dark:text-gray-400">স্মার্ট নোটপ্যাড</span>
+            </button>
+        </section>
+
+        <!-- Dynamic Tool Display Container -->
+        <section class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+            
+            <!-- TOOL 1: IMAGE COMPRESSOR -->
+            <div id="tool-compressor" class="tool-pane">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-file-image text-teal-600"></i> Image Compressor | ছবি কম্প্রেসর</h2>
+                <div id="compDropZone" class="drop-zone border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-teal-500 transition">
+                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-400 mb-2"></i>
+                    <p class="text-sm font-semibold">Upload Image | ছবি আপলোড করুন</p>
+                    <p class="text-xs text-gray-400 mt-1">Drag & Drop Image here or Browse | ছবি টেনে এনে ছাড়ুন অথবা ব্রাউজ করুন (JPG, PNG, WEBP)</p>
+                    <input type="file" id="compFileInput" class="hidden" accept="image/jpeg, image/png, image/webp">
+                </div>
+                <div id="compControl" class="mt-6 hidden">
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold mb-1">Compression Quality | কম্প্রেশন মান: <span id="compQualityVal" class="text-teal-600">80</span>%</label>
+                        <input type="range" id="compQuality" min="10" max="100" value="80" class="w-full accent-teal-600">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                        <div class="p-4 bg-gray-50 dark:bg-slate-700 rounded-lg text-center">
+                            <p class="text-xs font-semibold text-gray-500 dark:text-gray-300">Original Size | মূল সাইজ</p>
+                            <img id="compOrigImg" class="max-h-48 mx-auto my-2 rounded object-contain">
+                            <p id="compOrigInfo" class="text-xs font-bold"></p>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-slate-700 rounded-lg text-center">
+                            <p class="text-xs font-semibold text-gray-500 dark:text-gray-300">Compressed Size | কম্প্রেসড সাইজ</p>
+                            <img id="compResultImg" class="max-h-48 mx-auto my-2 rounded object-contain">
+                            <p id="compResultInfo" class="text-xs font-bold text-teal-600 dark:text-teal-400"></p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-end">
+                        <button id="compResetBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-200 dark:bg-slate-600">Reset | রিসেট</button>
+                        <button onclick="downloadCompressed('jpg')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 hover:bg-teal-700 text-white">Download JPG | JPG ডাউনলোড</button>
+                        <button onclick="downloadCompressed('png')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 hover:bg-teal-700 text-white">Download PNG | PNG ডাউনলোড</button>
+                        <button onclick="downloadCompressed('webp')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 hover:bg-teal-700 text-white">Download WEBP | WEBP ডাউনলোড</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 2: IMAGE RESIZER -->
+            <div id="tool-resizer" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-expand text-teal-600"></i> Image Resizer | ছবি রিসাইজার</h2>
+                <div id="resizeDropZone" class="drop-zone border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-teal-500 transition">
+                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-400 mb-2"></i>
+                    <p class="text-sm font-semibold">Upload Image to Resize | রিসাইজ করতে ছবি আপলোড করুন</p>
+                    <input type="file" id="resizeFileInput" class="hidden" accept="image/*">
+                </div>
+                <div id="resizeControl" class="mt-6 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Presets | প্রিসেটসমূহ</label>
+                            <select id="resizePresets" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 dark:border-gray-600 text-xs font-semibold">
+                                <option value="custom">Custom Dimensions | কাস্টম সাইজ</option>
+                                <option value="300x300">Passport Photo | পাসপোর্ট ছবি (300×300)</option>
+                                <option value="300x80">Signature | স্বাক্ষর (300×80)</option>
+                                <option value="820x312">Facebook Cover | ফেসবুক কভার (820×312)</option>
+                                <option value="1280x720">YouTube Thumbnail | ইউটিউব থাম্বনেইল (1280×720)</option>
+                                <option value="1920x1080">Full HD | ফুল এইচডি (1920×1080)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Width | প্রস্থ (px)</label>
+                            <input type="number" id="resizeWidth" class="w-full p-2 rounded-lg border dark:bg-slate-700 dark:border-gray-600 text-xs font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Height | উচ্চতা (px)</label>
+                            <input type="number" id="resizeHeight" class="w-full p-2 rounded-lg border dark:bg-slate-700 dark:border-gray-600 text-xs font-semibold">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <input type="checkbox" id="aspectLock" checked class="accent-teal-600 rounded">
+                        <label for="aspectLock" class="text-xs font-bold">Maintain Aspect Ratio | অনুপাত ঠিক রাখুন</label>
+                    </div>
+                    <div class="text-center my-4">
+                        <canvas id="resizeCanvas" class="max-h-64 mx-auto border rounded shadow-sm hidden"></canvas>
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-end">
+                        <button id="resizeResetBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-200 dark:bg-slate-600">Reset | রিসেট</button>
+                        <button onclick="downloadResized('jpg')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 text-white">Download JPG | JPG ডাউনলোড</button>
+                        <button onclick="downloadResized('png')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 text-white">Download PNG | PNG ডাউনলোড</button>
+                        <button onclick="downloadResized('webp')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 text-white">Download WEBP | WEBP ডাউনলোড</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 3: IMAGE CROPPER -->
+            <div id="tool-cropper" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-crop-simple text-teal-600"></i> Image Crop Tool | ছবি কাটার টুল</h2>
+                <div id="cropDropZone" class="drop-zone border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-teal-500 transition">
+                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-400 mb-2"></i>
+                    <p class="text-sm font-semibold">Upload Image to Crop | ক্রপ করতে ছবি আপলোড করুন</p>
+                    <input type="file" id="cropFileInput" class="hidden" accept="image/*">
+                </div>
+                <div id="cropControl" class="mt-4 hidden">
+                    <div class="max-h-[400px] overflow-hidden mb-4 bg-gray-900 rounded-lg flex justify-center items-center">
+                        <img id="cropTargetImg" class="max-w-full">
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-3 justify-center">
+                        <button onclick="setCropRatio(NaN)" class="px-3 py-1.5 text-xs font-semibold rounded bg-gray-200 dark:bg-slate-700">Free Crop | ফ্রি ক্রপ</button>
+                        <button onclick="setCropRatio(1)" class="px-3 py-1.5 text-xs font-semibold rounded bg-gray-200 dark:bg-slate-700">Passport Size | পাসপোর্ট সাইজ (300×300)</button>
+                        <button onclick="setCropRatio(300/80)" class="px-3 py-1.5 text-xs font-semibold rounded bg-gray-200 dark:bg-slate-700">Signature Size | স্বাক্ষর সাইজ (300×80)</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4 justify-center">
+                        <button onclick="rotateCropper(-90)" class="px-3 py-1.5 text-xs font-semibold rounded bg-gray-200 dark:bg-slate-700"><i class="fa-solid fa-rotate-left"></i> Rotate Left | বামে ঘোরান</button>
+                        <button onclick="rotateCropper(90)" class="px-3 py-1.5 text-xs font-semibold rounded bg-gray-200 dark:bg-slate-700"><i class="fa-solid fa-rotate-right"></i> Rotate Right | ডানে ঘোরান</button>
+                        <button onclick="flipCropper('x')" class="px-3 py-1.5 text-xs font-semibold rounded bg-gray-200 dark:bg-slate-700"><i class="fa-solid fa-arrows-left-right"></i> Flip Horizontal | আড়াআড়ি উল্টান</button>
+                        <button onclick="flipCropper('y')" class="px-3 py-1.5 text-xs font-semibold rounded bg-gray-200 dark:bg-slate-700"><i class="fa-solid fa-arrows-up-down"></i> Flip Vertical | লম্বালম্বি উল্টান</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-end">
+                        <button id="cropResetBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-200 dark:bg-slate-600">Reset | রিসেট</button>
+                        <button onclick="downloadCropped('png')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 text-white">Download PNG | PNG ডাউনলোড</button>
+                        <button onclick="downloadCropped('jpg')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 text-white">Download JPG | JPG ডাউনলোড</button>
+                        <button onclick="downloadCropped('webp')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 text-white">Download WEBP | WEBP ডাউনলোড</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 4: JPG TO PDF -->
+            <div id="tool-jpg2pdf" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-file-pdf text-teal-600"></i> JPG to PDF | JPG থেকে PDF</h2>
+                <div id="jpg2pdfDropZone" class="drop-zone border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-teal-500 transition">
+                    <i class="fa-solid fa-images text-4xl text-gray-400 mb-2"></i>
+                    <p class="text-sm font-semibold">Multiple Images Upload | একাধিক ছবি আপলোড করুন</p>
+                    <input type="file" id="jpg2pdfInput" class="hidden" accept="image/*" multiple>
+                </div>
+                <div id="jpg2pdfControl" class="mt-4 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Page Size | পেজ সাইজ</label>
+                            <select id="pdfPageSize" class="w-full p-2 rounded-lg border dark:bg-slate-700 text-xs font-semibold">
+                                <option value="a4">A4 Page | A4 পেজ</option>
+                                <option value="letter">Letter Page | লেটার পেজ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Orientation | ওরিয়েন্টেশন</label>
+                            <select id="pdfOrientation" class="w-full p-2 rounded-lg border dark:bg-slate-700 text-xs font-semibold">
+                                <option value="portrait">Portrait | লম্বালম্বি</option>
+                                <option value="landscape">Landscape | আড়াআড়ি</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Margin (mm) | মার্জিন</label>
+                            <input type="number" id="pdfMargin" value="10" class="w-full p-2 rounded-lg border dark:bg-slate-700 text-xs font-semibold">
+                        </div>
+                    </div>
+                    <p class="text-xs font-bold text-gray-500 mb-2">Image Preview | ছবি প্রিভিউ:</p>
+                    <div id="jpg2pdfPreviewGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4"></div>
+                    <div class="flex justify-end gap-2">
+                        <button id="jpg2pdfReset" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-200 dark:bg-slate-600">Reset | রিসেট</button>
+                        <button id="jpg2pdfGenerate" class="px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 text-white">Generate & Download PDF | PDF তৈরি ও ডাউনলোড করুন</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 5: PDF TO JPG -->
+            <div id="tool-pdf2jpg" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-sharp fa-solid fa-images text-teal-600"></i> PDF to JPG | PDF থেকে JPG</h2>
+                <div id="pdf2jpgDropZone" class="drop-zone border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-teal-500 transition">
+                    <i class="fa-solid fa-file-pdf text-4xl text-gray-400 mb-2"></i>
+                    <p class="text-sm font-semibold">Upload PDF Document | PDF ফাইল আপলোড করুন</p>
+                    <input type="file" id="pdf2jpgInput" class="hidden" accept="application/pdf">
+                </div>
+                <div id="pdf2jpgControl" class="mt-4 hidden">
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold mb-1">Rendering Quality | রেন্ডারিং কোয়ালিটি</label>
+                        <select id="pdfScale" class="w-full max-w-xs p-2 rounded-lg border dark:bg-slate-700 text-xs font-semibold">
+                            <option value="1.5">HD Quality | HD মান</option>
+                            <option value="2.0">2X Quality | ২X মান</option>
+                            <option value="3.0">3X Quality | ৩X মান</option>
+                            <option value="4.0">4X Quality | ৪X মান</option>
+                        </select>
+                    </div>
+                    <div id="pdfPagesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4"></div>
+                    <div class="flex justify-end gap-2">
+                        <button id="pdf2jpgReset" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-200 dark:bg-slate-600">Reset | রিসেট</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 6: AGE CALCULATOR -->
+            <div id="tool-ageCalc" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-cake-candles text-teal-600"></i> Age Calculator | বয়স ক্যালকুলেটর</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Full Name | পূর্ণ নাম</label>
+                        <input type="text" id="ageName" placeholder="e.g. Salman Farshi | মোঃ সালমান ফারশী" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 dark:border-gray-600 text-xs font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Date of Birth | জন্ম তারিখ</label>
+                        <input type="date" id="ageDob" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 dark:border-gray-600 text-xs font-semibold">
+                    </div>
+                </div>
+                <button onclick="calculateAge()" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs transition">Calculate & Generate Report | হিসাব করুন ও রিপোর্ট তৈরি করুন</button>
+
+                <!-- Official Age Verification Report -->
+                <div id="ageReportArea" class="mt-8 hidden p-6 bg-white text-slate-900 border border-gray-300 rounded-xl shadow-md">
+                    <div class="text-center border-b pb-4 mb-4">
+                        <p class="text-xs font-serif text-teal-700">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800">Salman Smart Seba | সালমান স্মার্ট সেবা</h3>
+                        <p class="text-xs font-bold text-teal-700 mt-1">Official Age Verification Report | সরকারি বয়স যাচাইকরণ রিপোর্ট</p>
+                        <p class="text-[10px] text-gray-400">Report No | রিপোর্ট নম্বর: <span id="repNo" class="font-mono font-bold">---</span></p>
+                    </div>
+                    <div class="text-center mb-6">
+                        <p class="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Name | পূর্ণ নাম</p>
+                        <h1 id="repName" class="text-2xl font-black text-teal-900 my-1">---</h1>
+                        <div class="flex justify-center gap-6 text-xs text-gray-600 mt-2">
+                            <p>Date of Birth | জন্ম তারিখ: <b id="repDob">--/--/----</b></p>
+                            <p>Today's Date | আজকের তারিখ: <b id="repToday">--/--/----</b></p>
+                        </div>
+                    </div>
+                    <p class="text-center text-xs font-bold text-teal-800 mb-2">Current Age | বর্তমান বয়স</p>
+                    <div class="grid grid-cols-3 gap-2 text-center bg-teal-50 p-4 rounded-lg mb-4 border border-teal-100">
+                        <div><p class="text-2xl font-black text-teal-700" id="repYears">0</p><p class="text-[10px] font-bold text-gray-600">Years | বছর</p></div>
+                        <div><p class="text-2xl font-black text-teal-700" id="repMonths">0</p><p class="text-[10px] font-bold text-gray-600">Months | মাস</p></div>
+                        <div><p class="text-2xl font-black text-teal-700" id="repDays">0</p><p class="text-[10px] font-bold text-gray-600">Days | দিন</p></div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs bg-gray-50 p-3 rounded-lg mb-4 border border-gray-200">
+                        <div>Weeks | সপ্তাহ: <b id="repTotalWeeks">0</b></div>
+                        <div>Hours | ঘন্টা: <b id="repTotalHours">0</b></div>
+                        <div>Minutes | মিনিট: <b id="repTotalMins">0</b></div>
+                        <div>Seconds | সেকেন্ড: <b id="repTotalSecs">0</b></div>
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded-lg text-center border border-amber-200 mb-6 text-xs text-amber-900">
+                        Next Birthday | পরবর্তী জন্মদিন: <b id="repNextBirthday">--</b> | Remaining Days | বাকি দিন: <b id="repRemainingDays">0</b>
+                    </div>
+                    <div class="flex items-center justify-between border-t pt-4">
+                        <div>
+                            <p class="text-[10px] text-gray-500">Generated Time | তৈরির সময়: <span id="repGenDate">--</span></p>
+                            <p class="text-[10px] text-gray-500 font-semibold">Generated By Salman Smart Seba</p>
+                        </div>
+                        <div id="repQrCode" class="w-16 h-16"></div>
+                    </div>
+                </div>
+
+                <div id="ageActionBtns" class="mt-4 flex flex-wrap gap-2 justify-end hidden">
+                    <button onclick="downloadAgeReport('png')" class="px-3 py-2 text-xs font-semibold rounded bg-teal-600 text-white">Download PNG | PNG ডাউনলোড</button>
+                    <button onclick="downloadAgeReport('jpg')" class="px-3 py-2 text-xs font-semibold rounded bg-teal-600 text-white">Download JPG | JPG ডাউনলোড</button>
+                    <button onclick="downloadAgeReport('pdf')" class="px-3 py-2 text-xs font-semibold rounded bg-teal-600 text-white">Download PDF | PDF ডাউনলোড</button>
+                    <button onclick="window.print()" class="px-3 py-2 text-xs font-semibold rounded bg-gray-700 text-white"><i class="fa-solid fa-print"></i> Print | প্রিন্ট</button>
+                </div>
+            </div>
+
+            <!-- TOOL 7: QR CODE GENERATOR (UPGRADED WITH AUTO-CLEAR & CUSTOM LABELS) -->
+            <div id="tool-qrGen" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-qrcode text-teal-600"></i> QR Code Generator | কিউআর কোড জেনারেটর</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Type | ধরণ</label>
+                        <select id="qrType" onchange="adjustQrInput()" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 text-xs font-semibold mb-3">
+                            <option value="text">Website / Text | ওয়েবসাইট / টেক্সট</option>
+                            <option value="phone">Phone | ফোন নম্বর</option>
+                            <option value="sms">SMS</option>
+                            <option value="email">Email | ইমেইল</option>
+                            <option value="whatsapp">WhatsApp | হোয়াটসঅ্যাপ</option>
+                            <option value="facebook">Facebook | ফেসবুক</option>
+                            <option value="youtube">YouTube | ইউটিউব</option>
+                            <option value="telegram">Telegram | টেলিগ্রাম</option>
+                            <option value="maps">Google Maps | গুগল ম্যাপস</option>
+                            <option value="wifi">WiFi Network | ওয়াইফাই নেটওয়ার্ক</option>
+                            <option value="vcard">Contact Card | যোগাযোগ কার্ড (vCard)</option>
+                        </select>
+                        <div id="qrInputContainer">
+                            <input type="text" id="qrData" placeholder="Enter Text or URL | টেক্সট বা ইউআরএল লিখুন" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 text-xs font-semibold">
+                        </div>
+                        <button onclick="generateQRCode()" class="w-full mt-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs transition">Generate QR Code | কিউআর কোড তৈরি করুন</button>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-slate-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                        
+                        <!-- QR Code Rendering Box -->
+                        <div id="qrOutputCard" class="text-center p-4 bg-white rounded-lg shadow-sm border border-gray-100 hidden">
+                            <div id="qrOutput" class="flex justify-center p-2"></div>
+                            
+                            <!-- Label Info below QR -->
+                            <div class="mt-2 pt-2 border-t border-gray-200 text-slate-800">
+                                <p id="qrTypeLabel" class="text-xs font-bold text-teal-700 mb-0.5">---</p>
+                                <p class="text-[10px] text-gray-500 font-semibold tracking-wide">Salman Smart Seba | salmanfarshi1630.github.io</p>
+                            </div>
+                        </div>
+
+                        <div id="qrPlaceholderText" class="text-xs text-gray-400 font-semibold text-center">
+                            Enter details and click generate | তথ্য দিয়ে জেনারেট বাটনে চাপুন
+                        </div>
+
+                        <div id="qrDownloads" class="flex flex-wrap gap-2 mt-4 hidden justify-center">
+                            <button onclick="downloadQR('png')" class="px-3 py-1.5 text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white rounded">Download PNG | PNG</button>
+                            <button onclick="downloadQR('jpg')" class="px-3 py-1.5 text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white rounded">Download JPG | JPG</button>
+                            <button onclick="downloadQR('svg')" class="px-3 py-1.5 text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white rounded">Download SVG | SVG</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 8: PASSWORD GENERATOR -->
+            <div id="tool-passGen" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-key text-teal-600"></i> Password Generator | পাসওয়ার্ড জেনারেটর</h2>
+                <div class="max-w-md mx-auto">
+                    <div class="relative mb-3">
+                        <input type="text" id="passDisplay" readonly class="w-full p-3 pr-12 rounded-lg border dark:bg-slate-700 text-center font-mono text-base font-bold">
+                        <button onclick="copyPassword()" class="absolute right-2 top-2.5 p-1.5 text-teal-600 dark:text-teal-400 hover:opacity-80" title="Copy | কপি করুন"><i class="fa-solid fa-copy text-lg"></i></button>
+                    </div>
+                    <div id="passStrengthBadge" class="text-center text-xs font-bold mb-4 text-gray-500">Strength | পাসওয়ার্ড শক্তি: <span id="passStrengthText">--</span></div>
+                    <div class="space-y-3 mb-6 text-xs font-bold">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Password Length | পাসওয়ার্ড দৈর্ঘ্য</span>
+                                <span id="passLenVal" class="text-teal-600">16</span>
+                            </div>
+                            <input type="range" id="passLength" min="6" max="64" value="16" class="w-full accent-teal-600">
+                        </div>
+                        <div class="flex items-center justify-between"><label>Uppercase | বড় হাতের অক্ষর (A-Z)</label><input type="checkbox" id="passUpper" checked class="accent-teal-600"></div>
+                        <div class="flex items-center justify-between"><label>Lowercase | ছোট হাতের অক্ষর (a-z)</label><input type="checkbox" id="passLower" checked class="accent-teal-600"></div>
+                        <div class="flex items-center justify-between"><label>Numbers | সংখ্যা (0-9)</label><input type="checkbox" id="passNum" checked class="accent-teal-600"></div>
+                        <div class="flex items-center justify-between"><label>Symbols | চিহ্ন (!@#$%^&*)</label><input type="checkbox" id="passSym" checked class="accent-teal-600"></div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="generatePassword()" class="flex-grow py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs transition">Generate Password | তৈরি করুন</button>
+                        <button onclick="copyPassword()" class="px-4 py-2.5 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg transition">Copy Password | কপি করুন</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 9: DIGITAL SIGNATURE -->
+            <div id="tool-signature" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-signature text-teal-600"></i> Digital Signature | ডিজিটাল স্বাক্ষর</h2>
+                <div class="flex flex-wrap items-center gap-4 mb-3">
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs font-bold">Pen Color | কলমের রং:</label>
+                        <input type="color" id="sigColor" value="#000000" class="w-8 h-8 rounded border-none cursor-pointer">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs font-bold">Pen Size | কলমের সাইজ:</label>
+                        <input type="range" id="sigSize" min="1" max="10" value="2" class="accent-teal-600">
+                    </div>
+                    <div class="ml-auto flex gap-2">
+                        <button onclick="undoSignature()" class="px-3 py-1 text-xs font-semibold bg-gray-200 dark:bg-slate-700 rounded">Undo | আগের ধাপ</button>
+                        <button onclick="clearSignature()" class="px-3 py-1 text-xs font-semibold bg-red-100 text-red-600 rounded">Clear | মুছুন</button>
+                    </div>
+                </div>
+                <div class="border-2 border-gray-300 dark:border-gray-600 rounded-xl bg-white overflow-hidden mb-4 touch-none">
+                    <canvas id="sigCanvas" class="w-full h-64 block cursor-crosshair"></canvas>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button onclick="downloadSignature('png')" class="px-4 py-2 text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white rounded-lg transition">Transparent PNG | স্বচ্ছ PNG</button>
+                    <button onclick="downloadSignature('jpg')" class="px-4 py-2 text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white rounded-lg transition">White JPG | সাদা JPG</button>
+                </div>
+            </div>
+
+            <!-- TOOL 10: SMART NOTEPAD -->
+            <div id="tool-notepad" class="tool-pane hidden">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-note-sticky text-teal-600"></i> Smart Notepad | স্মার্ট নোটপ্যাড</h2>
+                <textarea id="noteText" placeholder="Start typing here... | লিখা শুরু করুন (Auto Save | স্বয়ংক্রিয় সংরক্ষণ)" class="w-full h-64 p-4 rounded-xl border dark:bg-slate-700 dark:border-gray-600 focus:outline-none font-mono text-xs font-semibold mb-3"></textarea>
+                <div class="flex flex-wrap items-center justify-between text-xs text-gray-500 mb-4 gap-2">
+                    <div>
+                        Word Count | শব্দ সংখ্যা: <span id="noteWordCount" class="font-bold text-teal-600">0</span> | 
+                        Character Count | অক্ষর সংখ্যা: <span id="noteCharCount" class="font-bold text-teal-600">0</span> | 
+                        Reading Time | পড়ার সময়: <span id="noteReadTime" class="font-bold text-teal-600">0 min</span>
+                    </div>
+                    <span id="noteSaveStatus" class="text-teal-600 font-bold">Auto Saved | সংরক্ষিত</span>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-end">
+                    <button onclick="copyNote()" class="px-3 py-2 text-xs font-semibold bg-gray-200 dark:bg-slate-700 rounded">Copy Note | কপি করুন</button>
+                    <button onclick="downloadNote('txt')" class="px-3 py-2 text-xs font-semibold bg-teal-600 text-white rounded">TXT</button>
+                    <button onclick="downloadNote('pdf')" class="px-3 py-2 text-xs font-semibold bg-teal-600 text-white rounded">PDF</button>
+                    <button onclick="downloadNote('doc')" class="px-3 py-2 text-xs font-semibold bg-teal-600 text-white rounded">DOC</button>
+                    <button onclick="downloadNote('html')" class="px-3 py-2 text-xs font-semibold bg-teal-600 text-white rounded">HTML</button>
+                    <button onclick="downloadNote('md')" class="px-3 py-2 text-xs font-semibold bg-teal-600 text-white rounded">Markdown</button>
+                    <button onclick="printNote()" class="px-3 py-2 text-xs font-semibold bg-gray-700 text-white rounded"><i class="fa-solid fa-print"></i> Print | প্রিন্ট</button>
+                    <button onclick="clearNote()" class="px-3 py-2 text-xs font-semibold bg-red-100 text-red-600 rounded">Clear | মুছুন</button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-gray-700 py-4 text-center text-xs text-gray-500">
+        <p>© 2026 Salman Smart Seba | সালমান স্মার্ট সেবা | Maintained by <b>Salman Farshi</b></p>
+    </footer>
+
+    <!-- Vendor Libraries CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- JavaScript Engine -->
+    <script>
+        function showBilingualAlert(en, bn) {
+            alert(`${en}\n${bn}`);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.pdfjsLib) {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+            }
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            themeToggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                document.getElementById('themeText').innerText = isDark ? 'Light | লাইট' : 'Dark | ডার্ক';
+            });
+            initNotepad();
+            initSignature();
+            generatePassword();
+        });
+
+        // Switching tools with QR reset logic
+        function switchTool(toolId, btnEl) {
+            document.querySelectorAll('.tool-pane').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active'));
+            
+            const selectedPane = document.getElementById(`tool-${toolId}`);
+            if(selectedPane) selectedPane.classList.remove('hidden');
+            if(btnEl) btnEl.classList.add('active');
+            
+            // Auto Reset QR when switching tools
+            resetQrCodeState();
+
+            if(toolId === 'signature') setTimeout(resizeSigCanvas, 50);
+        }
+
+        function triggerDownload(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- TOOL 1: COMPRESSOR ---
+        let origCompBlob = null;
+        const compDropZone = document.getElementById('compDropZone');
+        const compFileInput = document.getElementById('compFileInput');
+        const compQuality = document.getElementById('compQuality');
+
+        compDropZone.addEventListener('click', () => compFileInput.click());
+        compFileInput.addEventListener('change', (e) => handleCompFile(e.target.files[0]));
+        compDropZone.addEventListener('dragover', (e) => { e.preventDefault(); compDropZone.classList.add('dragover'); });
+        compDropZone.addEventListener('dragleave', () => compDropZone.classList.remove('dragover'));
+        compDropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            compDropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) handleCompFile(e.dataTransfer.files[0]);
+        });
+
+        function handleCompFile(file) {
+            if (!file || !file.type.startsWith('image/')) {
+                showBilingualAlert('Invalid File | Unsupported Format', 'অবৈধ ফাইল | সমর্থিত নয়');
+                return;
+            }
+            origCompBlob = file;
+            document.getElementById('compOrigInfo').innerText = `${(file.size / 1024).toFixed(1)} KB`;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('compOrigImg').src = e.target.result;
+                processCompression();
+            };
+            reader.readAsDataURL(file);
+            document.getElementById('compControl').classList.remove('hidden');
+        }
+
+        compQuality.addEventListener('input', (e) => {
+            document.getElementById('compQualityVal').innerText = e.target.value;
+            processCompression();
+        });
+
+        function processCompression() {
+            if (!origCompBlob) return;
+            const img = new Image();
+            img.src = document.getElementById('compOrigImg').src;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const q = parseInt(compQuality.value) / 100;
+                canvas.toBlob((blob) => {
+                    document.getElementById('compResultImg').src = URL.createObjectURL(blob);
+                    const savedPct = (((origCompBlob.size - blob.size) / origCompBlob.size) * 100).toFixed(0);
+                    document.getElementById('compResultInfo').innerText = `${(blob.size / 1024).toFixed(1)} KB (Saved | সাশ্রয় ${savedPct}%)`;
+                }, 'image/jpeg', q);
+            };
+        }
+
+        function downloadCompressed(ext) {
+            const img = document.getElementById('compResultImg');
+            fetch(img.src).then(r => r.blob()).then(blob => triggerDownload(blob, `salman-smart-seba-compressed.${ext}`));
+        }
+        document.getElementById('compResetBtn').addEventListener('click', () => {
+            origCompBlob = null; compFileInput.value = '';
+            document.getElementById('compControl').classList.add('hidden');
+        });
+
+        // --- TOOL 2: RESIZER ---
+        let resizeImageEl = new Image();
+        const resizeDropZone = document.getElementById('resizeDropZone');
+        const resizeFileInput = document.getElementById('resizeFileInput');
+        resizeDropZone.addEventListener('click', () => resizeFileInput.click());
+        resizeFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                resizeImageEl.src = evt.target.result;
+                resizeImageEl.onload = () => {
+                    document.getElementById('resizeWidth').value = resizeImageEl.width;
+                    document.getElementById('resizeHeight').value = resizeImageEl.height;
+                    document.getElementById('resizeControl').classList.remove('hidden');
+                    renderResizeCanvas();
+                };
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('resizePresets').addEventListener('change', (e) => {
+            if (e.target.value !== 'custom') {
+                const [w, h] = e.target.value.split('x').map(Number);
+                document.getElementById('resizeWidth').value = w;
+                document.getElementById('resizeHeight').value = h;
+                renderResizeCanvas();
+            }
+        });
+
+        document.getElementById('resizeWidth').addEventListener('input', () => {
+            if (document.getElementById('aspectLock').checked && resizeImageEl.width) {
+                const ratio = resizeImageEl.height / resizeImageEl.width;
+                document.getElementById('resizeHeight').value = Math.round(document.getElementById('resizeWidth').value * ratio);
+            }
+            renderResizeCanvas();
+        });
+
+        function renderResizeCanvas() {
+            const canvas = document.getElementById('resizeCanvas');
+            const w = parseInt(document.getElementById('resizeWidth').value) || 100;
+            const h = parseInt(document.getElementById('resizeHeight').value) || 100;
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(resizeImageEl, 0, 0, w, h);
+            canvas.classList.remove('hidden');
+        }
+
+        function downloadResized(mime) {
+            document.getElementById('resizeCanvas').toBlob((blob) => {
+                triggerDownload(blob, `salman-smart-seba-resized.${mime}`);
+            }, `image/${mime === 'jpg' ? 'jpeg' : mime}`);
+        }
+        document.getElementById('resizeResetBtn').addEventListener('click', () => {
+            document.getElementById('resizeControl').classList.add('hidden');
+            resizeFileInput.value = '';
+        });
+
+        // --- TOOL 3: CROPPER ---
+        let cropperInstance = null;
+        const cropFileInput = document.getElementById('cropFileInput');
+        document.getElementById('cropDropZone').addEventListener('click', () => cropFileInput.click());
+        cropFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = document.getElementById('cropTargetImg');
+                img.src = evt.target.result;
+                document.getElementById('cropControl').classList.remove('hidden');
+                if (cropperInstance) cropperInstance.destroy();
+                cropperInstance = new Cropper(img, { viewMode: 1 });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function setCropRatio(r) { if (cropperInstance) cropperInstance.setAspectRatio(r); }
+        function rotateCropper(deg) { if (cropperInstance) cropperInstance.rotate(deg); }
+        function flipCropper(axis) {
+            if (!cropperInstance) return;
+            if (axis === 'x') cropperInstance.scaleX(-cropperInstance.getData().scaleX || -1);
+            if (axis === 'y') cropperInstance.scaleY(-cropperInstance.getData().scaleY || -1);
+        }
+        function downloadCropped(format) {
+            if (!cropperInstance) return;
+            cropperInstance.getCroppedCanvas().toBlob((blob) => {
+                triggerDownload(blob, `salman-smart-seba-cropped.${format}`);
+            }, `image/${format === 'jpg' ? 'jpeg' : format}`);
+        }
+        document.getElementById('cropResetBtn').addEventListener('click', () => {
+            if (cropperInstance) cropperInstance.destroy();
+            document.getElementById('cropControl').classList.add('hidden');
+        });
+
+        // --- TOOL 4: JPG TO PDF ---
+        let pdfImages = [];
+        document.getElementById('jpg2pdfDropZone').addEventListener('click', () => document.getElementById('jpg2pdfInput').click());
+        document.getElementById('jpg2pdfInput').addEventListener('change', (e) => {
+            pdfImages = [];
+            const grid = document.getElementById('jpg2pdfPreviewGrid');
+            grid.innerHTML = '';
+            Array.from(e.target.files).forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    pdfImages.push(evt.target.result);
+                    const img = document.createElement('img');
+                    img.src = evt.target.result;
+                    img.className = 'w-full h-24 object-cover rounded border';
+                    grid.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+            document.getElementById('jpg2pdfControl').classList.remove('hidden');
+        });
+
+        document.getElementById('jpg2pdfGenerate').addEventListener('click', () => {
+            if (!pdfImages.length) return;
+            const { jsPDF } = window.jspdf;
+            const orientation = document.getElementById('pdfOrientation').value;
+            const size = document.getElementById('pdfPageSize').value;
+            const doc = new jsPDF(orientation, 'mm', size);
+            pdfImages.forEach((dataUri, i) => {
+                if (i > 0) doc.addPage();
+                doc.addImage(dataUri, 'JPEG', 10, 10, 180, 240);
+            });
+            doc.save('salman-smart-seba-document.pdf');
+        });
+        document.getElementById('jpg2pdfReset').addEventListener('click', () => {
+            pdfImages = []; document.getElementById('jpg2pdfControl').classList.add('hidden');
+        });
+
+        // --- TOOL 5: PDF TO JPG ---
+        document.getElementById('pdf2jpgDropZone').addEventListener('click', () => document.getElementById('pdf2jpgInput').click());
+        document.getElementById('pdf2jpgInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) renderPdfToJpg(e.target.files[0]);
+        });
+
+        async function renderPdfToJpg(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const container = document.getElementById('pdfPagesContainer');
+            const scale = parseFloat(document.getElementById('pdfScale').value) || 1.5;
+            container.innerHTML = '';
+            document.getElementById('pdf2jpgControl').classList.remove('hidden');
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: scale });
+                const canvas = document.createElement('canvas');
+                canvas.height = viewport.height; canvas.width = viewport.width;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise;
+
+                const card = document.createElement('div');
+                card.className = 'p-2 border rounded bg-gray-50 dark:bg-slate-700 text-center';
+                const img = document.createElement('img');
+                img.src = canvas.toDataURL('image/jpeg');
+                img.className = 'max-h-40 mx-auto rounded mb-2';
+                const btn = document.createElement('button');
+                btn.className = 'px-3 py-1.5 text-xs font-bold bg-teal-600 text-white rounded w-full';
+                btn.innerText = `Download Page ${i} | পৃষ্ঠা ${i} ডাউনলোড`;
+                btn.onclick = () => canvas.toBlob((blob) => triggerDownload(blob, `salman-smart-seba-page-${i}.jpg`), 'image/jpeg');
+
+                card.appendChild(img); card.appendChild(btn);
+                container.appendChild(card);
+            }
+        }
+        document.getElementById('pdf2jpgReset').addEventListener('click', () => document.getElementById('pdf2jpgControl').classList.add('hidden'));
+
+        // --- TOOL 6: AGE CALCULATOR ---
+        function calculateAge() {
+            const name = document.getElementById('ageName').value.trim() || 'Valued Person | সম্মানিত ব্যক্তি';
+            const dobInput = document.getElementById('ageDob').value;
+            if (!dobInput) {
+                showBilingualAlert('Please select a valid birth date.', 'অনুগ্রহ করে একটি বৈধ জন্ম তারিখ নির্বাচন করুন।');
+                return;
+            }
+            const dob = new Date(dobInput);
+            const now = new Date();
+
+            let years = now.getFullYear() - dob.getFullYear();
+            let months = now.getMonth() - dob.getMonth();
+            let days = now.getDate() - dob.getDate();
+
+            if (days < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+            if (months < 0) { years--; months += 12; }
+
+            const totalDays = Math.floor(Math.abs(now - dob) / (1000 * 60 * 60 * 24));
+
+            let nextBday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+            if (now > nextBday) nextBday.setFullYear(now.getFullYear() + 1);
+            const remDays = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
+
+            document.getElementById('repNo').innerText = 'SSS-AGE-' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('repName').innerText = name;
+            document.getElementById('repDob').innerText = dob.toLocaleDateString('en-GB');
+            document.getElementById('repToday').innerText = now.toLocaleDateString('en-GB');
+            document.getElementById('repYears').innerText = years;
+            document.getElementById('repMonths').innerText = months;
+            document.getElementById('repDays').innerText = days;
+            document.getElementById('repTotalWeeks').innerText = Math.floor(totalDays / 7);
+            document.getElementById('repTotalHours').innerText = totalDays * 24;
+            document.getElementById('repTotalMins').innerText = totalDays * 24 * 60;
+            document.getElementById('repTotalSecs').innerText = totalDays * 24 * 60 * 60;
+            document.getElementById('repNextBirthday').innerText = nextBday.toLocaleDateString('en-GB');
+            document.getElementById('repRemainingDays').innerText = remDays;
+            document.getElementById('repGenDate').innerText = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+
+            const qrContainer = document.getElementById('repQrCode');
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, {
+                text: `Salman Smart Seba Verified Age Report | Name: ${name} | Age: ${years}Y ${months}M ${days}D`,
+                width: 64, height: 64
+            });
+
+            document.getElementById('ageReportArea').classList.remove('hidden');
+            document.getElementById('ageActionBtns').classList.remove('hidden');
+        }
+
+        function downloadAgeReport(type) {
+            const report = document.getElementById('ageReportArea');
+            html2canvas(report, { scale: 2 }).then(canvas => {
+                if (type === 'pdf') {
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 190, 0);
+                    pdf.save('salman-smart-seba-age-report.pdf');
+                } else {
+                    canvas.toBlob((blob) => triggerDownload(blob, `salman-smart-seba-age-report.${type}`), `image/${type === 'jpg' ? 'jpeg' : 'png'}`);
+                }
+            });
+        }
+
+        // --- TOOL 7: QR GENERATOR WITH AUTO RESET ---
+        function adjustQrInput() {
+            resetQrCodeState();
+            const type = document.getElementById('qrType').value;
+            const container = document.getElementById('qrInputContainer');
+            if (type === 'wifi') {
+                container.innerHTML = `
+                    <input type="text" id="qrWifiSSID" placeholder="SSID (Network Name | ওয়াইফাই নাম)" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 text-xs font-semibold mb-2">
+                    <input type="password" id="qrWifiPass" placeholder="Password | পাসওয়ার্ড" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 text-xs font-semibold">
+                `;
+            } else if (type === 'vcard') {
+                container.innerHTML = `
+                    <input type="text" id="vName" placeholder="Full Name | নাম" class="w-full p-2 rounded border dark:bg-slate-700 text-xs mb-2">
+                    <input type="text" id="vPhone" placeholder="Phone | ফোন" class="w-full p-2 rounded border dark:bg-slate-700 text-xs mb-2">
+                    <input type="text" id="vEmail" placeholder="Email | ইমেইল" class="w-full p-2 rounded border dark:bg-slate-700 text-xs">
+                `;
+            } else {
+                container.innerHTML = `<input type="text" id="qrData" placeholder="Enter Input Data | তথ্য প্রদান করুন" class="w-full p-2.5 rounded-lg border dark:bg-slate-700 text-xs font-semibold">`;
+            }
+        }
+
+        function resetQrCodeState() {
+            const output = document.getElementById('qrOutput');
+            if (output) output.innerHTML = '';
+            const card = document.getElementById('qrOutputCard');
+            if (card) card.classList.add('hidden');
+            const placeholder = document.getElementById('qrPlaceholderText');
+            if (placeholder) placeholder.classList.remove('hidden');
+            const downloads = document.getElementById('qrDownloads');
+            if (downloads) downloads.classList.add('hidden');
+        }
+
+        function generateQRCode() {
+            const typeSelect = document.getElementById('qrType');
+            const type = typeSelect.value;
+            const typeText = typeSelect.options[typeSelect.selectedIndex].text;
+            let qrString = '';
+
+            if (type === 'wifi') {
+                const ssid = document.getElementById('qrWifiSSID').value;
+                const pass = document.getElementById('qrWifiPass').value;
+                if(ssid) qrString = `WIFI:T:WPA;S:${ssid};P:${pass};;`;
+            } else if (type === 'vcard') {
+                const name = document.getElementById('vName').value;
+                const phone = document.getElementById('vPhone').value;
+                const email = document.getElementById('vEmail').value;
+                if(name || phone) qrString = `BEGIN:VCARD\nVERSION:3.0\nN:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
+            } else if (type === 'whatsapp') {
+                const val = document.getElementById('qrData').value;
+                if(val) qrString = `https://wa.me/${val}`;
+            } else {
+                qrString = document.getElementById('qrData') ? document.getElementById('qrData').value.trim() : '';
+            }
+
+            if (!qrString) {
+                showBilingualAlert('Please enter valid input data.', 'অনুগ্রহ করে তথ্য প্রদান করুন।');
+                return;
+            }
+
+            const output = document.getElementById('qrOutput');
+            output.innerHTML = '';
+            new QRCode(output, { text: qrString, width: 170, height: 170 });
+
+            // Display Label & QR Area
+            document.getElementById('qrTypeLabel').innerText = `QR Type: ${typeText}`;
+            document.getElementById('qrOutputCard').classList.remove('hidden');
+            document.getElementById('qrPlaceholderText').classList.add('hidden');
+            document.getElementById('qrDownloads').classList.remove('hidden');
+        }
+
+        function downloadQR(format) {
+            const card = document.getElementById('qrOutputCard');
+            html2canvas(card, { backgroundColor: "#ffffff", scale: 3 }).then(canvas => {
+                canvas.toBlob((blob) => triggerDownload(blob, `salman-smart-seba-qrcode.${format}`), `image/${format === 'jpg' ? 'jpeg' : 'png'}`);
+            });
+        }
+
+        // --- TOOL 8: PASSWORD GENERATOR ---
+        document.getElementById('passLength').addEventListener('input', (e) => {
+            document.getElementById('passLenVal').innerText = e.target.value;
+            generatePassword();
+        });
+
+        function generatePassword() {
+            const len = parseInt(document.getElementById('passLength').value);
+            let chars = '';
+            if (document.getElementById('passUpper').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (document.getElementById('passLower').checked) chars += 'abcdefghijklmnopqrstuvwxyz';
+            if (document.getElementById('passNum').checked) chars += '0123456789';
+            if (document.getElementById('passSym').checked) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+            if (!chars) {
+                document.getElementById('passDisplay').value = '';
+                return;
+            }
+
+            let password = '';
+            for (let i = 0; i < len; i++) password += chars.charAt(Math.floor(Math.random() * chars.length));
+            document.getElementById('passDisplay').value = password;
+
+            const badge = document.getElementById('passStrengthText');
+            if (len < 8) badge.innerText = 'Weak | দুর্বল', badge.className = 'text-red-500';
+            else if (len < 12) badge.innerText = 'Medium | মাঝারি', badge.className = 'text-amber-500';
+            else if (len < 18) badge.innerText = 'Strong | শক্তিশালী', badge.className = 'text-teal-600';
+            else badge.innerText = 'Very Strong | অত্যন্ত শক্তিশালী', badge.className = 'text-green-600';
+        }
+
+        function copyPassword() {
+            const val = document.getElementById('passDisplay').value;
+            if (val) {
+                navigator.clipboard.writeText(val);
+                showBilingualAlert('Password copied to clipboard!', 'পাসওয়ার্ড কপি করা হয়েছে!');
+            }
+        }
+
+        // --- TOOL 9: DIGITAL SIGNATURE ---
+        let sigCanvas, sigCtx, isDrawing = false, sigHistory = [];
+        function initSignature() {
+            sigCanvas = document.getElementById('sigCanvas');
+            sigCtx = sigCanvas.getContext('2d');
+            sigCanvas.addEventListener('mousedown', startDrawing);
+            sigCanvas.addEventListener('mousemove', draw);
+            sigCanvas.addEventListener('mouseup', stopDrawing);
+            sigCanvas.addEventListener('touchstart', startDrawing);
+            sigCanvas.addEventListener('touchmove', draw);
+            sigCanvas.addEventListener('touchend', stopDrawing);
+        }
+        function resizeSigCanvas() {
+            if (!sigCanvas) return;
+            sigCanvas.width = sigCanvas.offsetWidth;
+            sigCanvas.height = sigCanvas.offsetHeight;
+        }
+        function getPos(e) {
+            const rect = sigCanvas.getBoundingClientRect();
+            return { x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top };
+        }
+        function startDrawing(e) {
+            isDrawing = true;
+            sigHistory.push(sigCtx.getImageData(0, 0, sigCanvas.width, sigCanvas.height));
+            const pos = getPos(e);
+            sigCtx.beginPath(); sigCtx.moveTo(pos.x, pos.y);
+        }
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            sigCtx.lineTo(pos.x, pos.y);
+            sigCtx.strokeStyle = document.getElementById('sigColor').value;
+            sigCtx.lineWidth = document.getElementById('sigSize').value;
+            sigCtx.lineCap = 'round'; sigCtx.stroke();
+        }
+        function stopDrawing() { isDrawing = false; }
+        function clearSignature() { sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height); }
+        function undoSignature() { if (sigHistory.length) sigCtx.putImageData(sigHistory.pop(), 0, 0); }
+        function downloadSignature(type) {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = sigCanvas.width; tempCanvas.height = sigCanvas.height;
+            const tCtx = tempCanvas.getContext('2d');
+            if (type === 'jpg') { tCtx.fillStyle = '#FFFFFF'; tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height); }
+            tCtx.drawImage(sigCanvas, 0, 0);
+            tempCanvas.toBlob((blob) => triggerDownload(blob, `salman-smart-seba-signature.${type}`), `image/${type === 'jpg' ? 'jpeg' : 'png'}`);
+        }
+
+        // --- TOOL 10: SMART NOTEPAD ---
+        let noteArea;
+        function initNotepad() {
+            noteArea = document.getElementById('noteText');
+            noteArea.value = localStorage.getItem('salman_smart_note') || '';
+            updateNoteStats();
+            noteArea.addEventListener('input', () => {
+                localStorage.setItem('salman_smart_note', noteArea.value);
+                updateNoteStats();
+            });
+        }
+        function updateNoteStats() {
+            const text = noteArea.value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            document.getElementById('noteCharCount').innerText = text.length;
+            document.getElementById('noteWordCount').innerText = words;
+            document.getElementById('noteReadTime').innerText = Math.ceil(words / 200) + ' min';
+        }
+        function copyNote() { navigator.clipboard.writeText(noteArea.value); showBilingualAlert('Note copied!', 'নোট কপি করা হয়েছে!'); }
+        function downloadNote(ext) {
+            const content = noteArea.value || 'Empty Note | খালি নোট';
+            if (ext === 'pdf') {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                doc.text(content, 10, 10);
+                doc.save('salman-smart-seba-note.pdf');
+            } else {
+                let mime = 'text/plain';
+                if(ext === 'html') mime = 'text/html';
+                triggerDownload(new Blob([content], { type: `${mime};charset=utf-8` }), `salman-smart-seba-note.${ext}`);
+            }
+        }
+        function printNote() { window.print(); }
+        function clearNote() {
+            if (confirm('Are you sure to clear note? | আপনি কি নোটটি মুছে ফেলতে চান?')) { 
+                noteArea.value = ''; localStorage.removeItem('salman_smart_note'); updateNoteStats(); 
+            }
+        }
+    </script>
+</body>
+</html>
